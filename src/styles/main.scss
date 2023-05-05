@@ -1,0 +1,88 @@
+$theamColor: #032325;
+$theamColorTrans: #01464b7d;
+$theamText: #02838c;
+$theamTextHovered: #006f77;
+
+body {
+    background: $theamColor;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+.navbar-theam {
+    background: $theamColorTrans;
+    padding: 0rem 3rem;
+}
+
+.theam-text {
+    color: $theamText;
+}
+
+.date {
+    font-size: 1.5rem;
+}
+
+.report-problem-btn {
+    border: 2.5px solid $theamText;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+i {
+    color: $theamText;
+}
+
+.btn-login-custom,
+.btn2-login-custom {
+    position: relative;
+    background: $theamText;
+    padding: 0.2rem 1rem;
+    font-size: 1.3rem;
+    color: $theamColor;
+    font-weight: 500;
+}
+
+.btn-login-custom:hover,
+.btn2-login-custom:hover {
+    background: $theamText;
+    top: -.2rem;
+    box-shadow: -3px 1px 3px 0 $theamColor;
+}
+
+.btn2-login-custom:hover {
+    box-shadow: 3px 1px 3px 0 $theamColor;
+}
+
+.login-mid-bar {
+    height: 100%;
+    width: 5px;
+    position: relative;
+    background: $theamText;
+    color: #032325;
+}
+
+.custom-tooltip-btn:hover .custom-tooltip{
+    display: block!important;
+    transition: all .3s ease-in;
+}
+
+.custom-tooltip {
+    position: absolute;
+    display: none;
+    color: $theamText;
+    margin-right: 25rem;
+    padding: 0.3rem 1rem;
+    border-radius: 5px;
+    backdrop-filter: blur(5px);
+    font-size: 1.5rem;
+    box-shadow: 1px 1px 3px $theamColor,
+        -1px -1px 3px $theamColor;
+    font-weight: 500;
+    transition: all .3s ease-in;
+}
