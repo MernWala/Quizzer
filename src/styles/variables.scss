@@ -1,0 +1,10 @@
+$theamColor: #032325;
+$theamColorTrans: #01464b7d;
+$theamText: #02838c;
+$theamTextHovered: #006f77;
+
+@mixin center-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

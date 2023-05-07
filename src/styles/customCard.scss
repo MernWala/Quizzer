@@ -1,0 +1,100 @@
+@import './variables.scss';
+@import "./fonts.scss";
+
+.height-90vh{
+    height: 90vh!important;
+}
+
+.height-80vh{
+    height: 80vh!important;
+}
+
+.special-container{
+    height: calc(100vh - 8rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-card{
+    @include center-center;
+    background-image: url("../storyset/random2.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 50rem;
+    min-width: 55rem;
+}
+
+.custom-card-header{
+    @include center-center;
+    flex-direction: column;
+    span{
+        font-family: 'Dancing Script', cursive;
+        font-size: 3.5rem;
+        line-height: 1;
+    }
+}
+
+.custom-card-header::after{
+    content: "";
+    position: relative;
+    height: .4rem;
+    width: 2rem;
+    background-color: #fff;
+    margin-top: .5rem;
+    border-radius: 1rem;
+}
+
+.report-desc{
+    @include center-center;
+    flex-direction: column;
+}
+
+.report-des-text{
+    font-size: 1.3rem!important;
+    font-family: 'Dosis', sans-serif!important;
+    font-weight: 600;
+}
+
+textarea{
+    background-color: rgba(255, 255, 255, .5);
+    padding: 1rem 1rem;
+    backdrop-filter: blur(5px);
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+    color: #fff;
+    border: 1px solid $theamTextHovered;
+    border-radius: 5px;
+    transition: all .2s ease-in;
+}
+
+textarea:focus{
+    outline: none;
+    box-shadow: 1px 1px 3px 4px $theamTextHovered;
+    transition: all .2s ease-in;
+}
+
+.report-form{
+    form{
+        @include center-center;
+        flex-direction: column;
+    }
+}
+
+.btn-custom{
+    background: $theamColorTrans;
+    width: 100%;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+.report-img-desc{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.center-center{
+    @include center-center;
+}

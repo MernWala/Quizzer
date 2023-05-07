@@ -1,14 +1,18 @@
-$theamColor: #032325;
-$theamColorTrans: #01464b7d;
-$theamText: #02838c;
-$theamTextHovered: #006f77;
+@import "./fonts.scss";
+@import './variables.scss';
 
 body {
     background: $theamColor;
+    overflow-x: hidden;
 }
 
 html {
     font-size: 62.5%;
+}
+
+nav {
+    z-index: 999;
+    backdrop-filter: blur(5px);
 }
 
 .navbar-theam {
@@ -38,37 +42,26 @@ i {
     color: $theamText;
 }
 
-.btn-login-custom,
-.btn2-login-custom {
+.btn-login-custom {
     position: relative;
-    background: $theamText;
     padding: 0.2rem 1rem;
     font-size: 1.3rem;
     color: $theamColor;
     font-weight: 500;
+    border: 1px solid #02838c;
+    color: #02838c;
 }
 
-.btn-login-custom:hover,
-.btn2-login-custom:hover {
-    background: $theamText;
+.btn-login-custom:hover {
     top: -.2rem;
-    box-shadow: -3px 1px 3px 0 $theamColor;
+    box-shadow: -3px 1px 3px $theamColor;
+    background: none;
+    border: 1px solid #02838c;
+    color: #02838c;
 }
 
-.btn2-login-custom:hover {
-    box-shadow: 3px 1px 3px 0 $theamColor;
-}
-
-.login-mid-bar {
-    height: 100%;
-    width: 5px;
-    position: relative;
-    background: $theamText;
-    color: #032325;
-}
-
-.custom-tooltip-btn:hover .custom-tooltip{
-    display: block!important;
+.custom-tooltip-btn:hover .custom-tooltip {
+    display: block !important;
     transition: all .3s ease-in;
 }
 
@@ -76,7 +69,7 @@ i {
     position: absolute;
     display: none;
     color: $theamText;
-    margin-right: 25rem;
+    margin-right: 22.8rem;
     padding: 0.3rem 1rem;
     border-radius: 5px;
     backdrop-filter: blur(5px);
@@ -85,4 +78,84 @@ i {
         -1px -1px 3px $theamColor;
     font-weight: 500;
     transition: all .3s ease-in;
+    width: 19.15rem;
+    background-color: $theamColor;
+}
+
+.top-right-random-desine-custom {
+    position: absolute;
+    height: auto;
+    width: 60%;
+    top: -21rem;
+    right: -15rem;
+    z-index: -1;
+}
+
+.accountAccess-card-img-body {
+    height: fit-content;
+    background-image: url('../storyset/accessControl.gif');
+    background-size: cover;
+    background-position: center center;
+    min-height: 50rem;
+    max-height: 80vh;
+    border-radius: 25%;
+}
+
+.acc-acess-text-box-left {
+    font-family: 'Nunito', sans-serif;
+
+    .acc-acess-text-box-1 {
+        color: $theamText;
+        font-weight: 800;
+        font-size: 5rem;
+
+        span {
+            color: transparent;
+            -webkit-text-stroke: 1px $theamText;
+        }
+    }
+}
+
+.f-size-3 {
+    font-size: 3rem !important;
+}
+
+.custom-btn,
+.custom-btn2 {
+    background: transparent;
+    border: 1px solid $theamText;
+    font-size: 2.5rem;
+    color: $theamColor;
+    background-color: $theamText;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    border-radius: 3px;
+    transition: all .3s ease-in;
+}
+
+.custom-btn:hover{
+    color: $theamText;
+    background-color: $theamColor;
+    transition: all .3s ease-in;
+}
+
+.custom-btn2 {
+    color: $theamText;
+    background-color: $theamColor;
+}
+
+.custom-btn2:hover{
+    color: $theamColor;
+    background-color: $theamText;
+    transition: all .3s ease-in;
+}
+
+.suggestion-text{
+    font-family: 'Dosis', sans-serif;
+    
+    p{
+        color: var(--bs-light);
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
 }

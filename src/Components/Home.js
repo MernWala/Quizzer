@@ -1,11 +1,11 @@
 import React from 'react'
-import Navbar from './Navbar'
+
 
 const Home = () => {
     return (
-        <>
-            <Navbar/>
-        </>
+        <span className='text-white'>
+          this is home page  
+        </span>
     )
 }
 
