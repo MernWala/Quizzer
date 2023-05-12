@@ -1,18 +1,20 @@
-const express = require('express');
-const connectToMongoose = require('./db')
-const port = 5000
-const app = express();
+require('dotenv').config()
+const express = require('express')
+const connectToMongoose = require('./db');
 var cors = require('cors')
 
 connectToMongoose();
-app.use(cors());
 
-// Default route
-app.get('/', require('./routes/default'));
+const app = express();
+const port = 5001
+app.use(express.json())
+app.use(cors())
 
-// Login route
 
+app.use('/', require('./routes/default'));
+app.use('/auth-register', require('./routes/register'));
+app.use('/auth-login', require('./routes/login'))
 
 app.listen(port, () => {
-    console.log(`Quizer is listning at ${port}`);
+    console.log(`Quizer is listening at ${port}`);
 })

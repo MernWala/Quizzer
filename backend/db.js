@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
-const mongoURI = "mongodb://127.0.0.1:27017/Quizer"
+const mongoose = require('mongoose')
+const mongoUri = process.env.URI;
 
-const connectToMongoose = () => {
-    mongoose.set("strictQuery", false);
-    mongoose.connect(mongoURI, () => {
-        console.log(`Connected to mongoo sucessfull`);
+const connecToMongoose = () => {
+    mongoose.connect(mongoUri, () => {
+        console.log('Connected with backend - Quizer');
     })
 }
 
-module.exports = connectToMongoose;
+module.exports = connecToMongoose;

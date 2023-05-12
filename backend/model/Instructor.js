@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const InstructorSchema = new Schema({
+    fName: {
+        type: String,
+        require: true
+    },
+    lName: {
+        type: String,
+        require: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        require: true
+    },
+    verified: {
+        type: Boolean,
+        require: true,
+        default: false
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+const inst = mongoose.model('instructor', InstructorSchema);
+inst.createIndexes();
+
+module.exports = inst;
