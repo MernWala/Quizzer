@@ -1,8 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "../styles/main.scss"
 
 const Navbar = () => {
+
+    let navigate = useNavigate();
 
     const getDayName = (ele) => {
         if (ele === 0)
@@ -48,6 +50,11 @@ const Navbar = () => {
             return "Dec";
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('quizer-auth-token');
+        navigate('/')
+    }
+
     return (
         <>
             {/* Navbar */}
@@ -77,7 +84,13 @@ const Navbar = () => {
                         </Link>
 
                         <div className='mx-3 d-flex justify-content-center align-items-center'>
-                            <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
+                            {
+                                !localStorage.getItem('quizer-auth-token') ? 
+                                
+                                <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
+                                :
+                                <button onClick={handleLogout} className='btn btn-login-custom'>Logout</button>
+                            }
                         </div>
                     </div>
                 </div>

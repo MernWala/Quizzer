@@ -1,8 +1,16 @@
 import React from 'react'
 import randomStory from '../storyset/random.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const AccountAcess = () => {
+const AccountAcess = (props) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = (data) => {
+        props.setAccess(data);
+        navigate("/app/acess-account/auth");
+    }
+
     return (
         <>
             <div className='top-right-random-desine-custom'>
@@ -19,12 +27,12 @@ const AccountAcess = () => {
                                         H<span>i</span>,
                                     </span>
                                     <br />
-                                    <span className='acc-acess-text-box-1 f-size-3' style={{ lineHeight: '1.2' }}>You should select a<br />Accout Type <i class="fa-regular fa-light fa-face-smile"></i></span>
+                                    <span className='acc-acess-text-box-1 f-size-3' style={{ lineHeight: '1.2' }}>You should select a<br />Accout Type <i className="fa-regular fa-light fa-face-smile"></i></span>
                                 </div>
 
                                 <div className="btn-group my-5">
-                                    <button className="custom-btn">Instructor</button>
-                                    <button className="custom-btn2 mx-3">Student</button>
+                                    <button onClick={() => handleClick(true)} className="custom-btn no-text-decor px-3">Instructor</button>
+                                    <button onClick={() => handleClick(false)} className="custom-btn2 mx-3 no-text-decor px-3">Student</button>
                                 </div>
 
                                 <div className='suggestion-text'>

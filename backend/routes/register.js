@@ -56,6 +56,7 @@ router.post('/inst', [
     }
 });
 
+// Route 2 - Create Student account
 router.post('/stu', [
     body("fName", "First name is too short").isLength({ min: 3 }),
     body("lName", "First name is too short").isLength({ min: 3 }),

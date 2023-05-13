@@ -133,7 +133,7 @@ i {
     transition: all .3s ease-in;
 }
 
-.custom-btn:hover{
+.custom-btn:hover {
     color: $theamText;
     background-color: $theamColor;
     transition: all .3s ease-in;
@@ -144,18 +144,150 @@ i {
     background-color: $theamColor;
 }
 
-.custom-btn2:hover{
+.custom-btn2:hover {
     color: $theamColor;
     background-color: $theamText;
     transition: all .3s ease-in;
 }
 
-.suggestion-text{
+.suggestion-text {
     font-family: 'Dosis', sans-serif;
-    
-    p{
+
+    p {
         color: var(--bs-light);
         font-size: 1.4rem;
         letter-spacing: 1px;
     }
+}
+
+.no-text-decor {
+    text-decoration: none !important;
+}
+
+.custom-row {
+    width: 55%;
+}
+
+.width-50 {
+    width: 50% !important;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+#loginTabContent {
+    border: 1px solid $theamText;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 2px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+}
+
+#myTab {
+    border-bottom: 1px solid $theamText;
+}
+
+.nav-tabs .nav-item .active {
+    background: $theamColorTrans;
+    border-color: $theamText;
+    border-bottom: 0px;
+    color: #fff;
+}
+
+.nav-tabs .nav-item:hover,
+.nav-tabs .nav-item:focus {
+    border-color: $theamText !important;
+}
+
+.custom-row {
+    background: #ffffff1a;
+    padding: 3rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+}
+
+.input-group {
+    // border: 1px solid red;
+
+    span {
+        display: none;
+    }
+
+    input {
+        border: none;
+        font-size: 2rem;
+        width: 100%;
+        padding: 1rem 2rem;
+        border-radius: 1.5rem !important;
+        background: $theamColorTrans;
+        backdrop-filter: blur(5px);
+        box-shadow: 1px 1px 3px $theamText,
+            -1px -1px 3px $theamText;
+        color: #fff;
+
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    input[type=submit] {
+        &:hover {
+            top: 3px;
+            box-shadow: 0rem .2rem 0rem $theamText;
+        }
+
+        position: relative;
+        margin: 3rem 0rem;
+        box-shadow: 0rem .5rem 0rem $theamText;
+    }
+}
+
+#loginTabContent {
+    border-top: 0px !important;
+    background-color: $theamColorTrans;
+}
+
+.loginForm input {
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem;
+    letter-spacing: 2px;
+}
+
+.input-group-label {
+    font-size: 1.5rem;
+    color: #fff;
+    position: relative;
+    top: 3rem;
+    left: 2.5rem;
+    height: 2rem;
+    transition: all .1s ease-in;
+}
+
+.input-group {
+    &:focus-within {
+        .input-group-label {
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            z-index: 1;
+            padding: 0rem 1rem;
+            background-color: $theamColorTrans;
+            transition: all .1s ease-in;
+        }
+    }
+}
+
+.no-text {
+    display: none;
+}
+
+.no-text-reverse {
+    position: relative;
+    height: 2rem!important;
 }

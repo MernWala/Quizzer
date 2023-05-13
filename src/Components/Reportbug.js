@@ -20,7 +20,7 @@ const Reportbug = () => {
 
                         <div className="report-desc my-3">
                             <span className='report-des-text'>We really want to help you with</span>
-                            <span className='report-des-text'>Improve features of Us.</span>
+                            <span className='report-des-text'>Improved features of Us.</span>
                         </div>
 
                         <div className='report-form'>
