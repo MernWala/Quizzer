@@ -1,10 +1,12 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import "../styles/main.scss"
+import React, { useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import "../styles/main.scss";
+import DataContext from '../context/userData/DataContext';
+import Profile from './Profile';
 
 const Navbar = () => {
-
     let navigate = useNavigate();
+    const { resetData } = useContext(DataContext)
 
     const getDayName = (ele) => {
         if (ele === 0)
@@ -52,7 +54,8 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('quizer-auth-token');
-        navigate('/')
+        resetData();
+        navigate('/');
     }
 
     return (
@@ -76,7 +79,7 @@ const Navbar = () => {
                             </p>
                         </div>
 
-                        <Link to="/reportbug" style={{textDecoration: 'none'}}>
+                        <Link to="/reportbug" style={{ textDecoration: 'none' }}>
                             <div className='mx-3 report-problem-btn custom-tooltip-btn' style={{ cursor: 'pointer' }}>
                                 <i className="fa-solid fa-flag"></i>
                                 <span className='custom-tooltip'>Click to report a problem</span>
@@ -85,12 +88,14 @@ const Navbar = () => {
 
                         <div className='mx-3 d-flex justify-content-center align-items-center'>
                             {
-                                !localStorage.getItem('quizer-auth-token') ? 
-                                
-                                <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
-                                :
-                                <button onClick={handleLogout} className='btn btn-login-custom'>Logout</button>
+                                !localStorage.getItem('quizer-auth-token') ?
+
+                                    <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
+                                    :
+                                    <button onClick={handleLogout} className='btn btn-login-custom'>Logout</button>
+
                             }
+                            <Profile />
                         </div>
                     </div>
                 </div>

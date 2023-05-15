@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import UtilityContext from '../context/utility/UtilityContext';
+import DataContext from '../context/userData/DataContext';
 
-const Auth = (props) => {
-
-    const handleClick = (data) => {
-        props.setAccess(data)
-    }
-
+const Auth = () => {
     let navigate = useNavigate();
+    const utilContext = useContext(UtilityContext);
+    const { accessType, setAccess } = utilContext;
+    const dataContext = useContext(DataContext)
+    const { loadData_inst, loadData_stu } = dataContext
 
     // Instructuctor handle submit function
     const handleSubmit = async (e) => {
@@ -26,6 +27,7 @@ const Auth = (props) => {
 
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
+            await loadData_inst(json.authTocken);
             navigate("/");
         } else {
             localStorage.removeItem('quizer-auth-token');
@@ -55,6 +57,7 @@ const Auth = (props) => {
 
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
+            await loadData_stu(json.authTocken);
             navigate("/");
         } else {
             localStorage.removeItem('quizer-auth-token');
@@ -73,37 +76,37 @@ const Auth = (props) => {
                 <div className="custom-row mt-5">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                         <li className="nav-item width-50" role="presentation">
-                            <button className={`nav-link text-white ${props.access === true ? "active" : ""} width-100`} id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
-                                role="tab" aria-controls="home-tab-pane" aria-selected="true" onClick={() => handleClick(true)}>Instructor</button>
+                            <button className={`nav-link text-white ${accessType === true ? "active" : ""} width-100`} id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
+                                role="tab" aria-controls="home-tab-pane" aria-selected="true" onClick={() => setAccess(true)}>Instructor</button>
                         </li>
                         <li className="nav-item width-50" role="presentation">
-                            <button className={`nav-link text-white ${props.access === false ? "active" : ""} width-100`} id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
-                                role="tab" aria-controls="profile-tab-pane" aria-selected="false" onClick={() => handleClick(false)}>Student</button>
+                            <button className={`nav-link text-white ${accessType === false ? "active" : ""} width-100`} id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
+                                role="tab" aria-controls="profile-tab-pane" aria-selected="false" onClick={() => setAccess(false)}>Student</button>
                         </li>
                     </ul>
 
                     <div className="tab-content px-5" id="loginTabContent">
-                        <div className={`tab-pane fade text-white py-3 px-2 ${props.access === true ? "show active" : ""} `} id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
+                        <div className={`tab-pane fade text-white py-3 px-2 ${accessType === true ? "show active" : ""} `} id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
                             <div className="form" id="instructor-form">
                                 <form className='loginForm' onSubmit={handleSubmit}>
                                     <div className="input-group mx-3">
                                         <label htmlFor="email" className={`input-group-label ${credential.email && 'no-text'}`} >Instructor mail*</label>
                                         {credential.email ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type="email" id="email" name='email' onChange={onChange} required autoComplete='off' />
+                                        <input type="email" id="email" name='email' onChange={onChange} required />
                                     </div>
                                     <div className="input-group mx-3">
                                         <label htmlFor="password" className={`input-group-label ${credential.password && 'no-text'}`}>Your password*</label>
                                         {credential.email ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type="password" name="password" id="password" onChange={onChange} required autoComplete='off' />
+                                        <input type="password" name="password" id="password" onChange={onChange} required />
                                     </div>
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" />
+                                        <input type="Submit" value="Login" readOnly/>
                                     </div>
                                 </form>
                             </div>
                         </div>
 
-                        <div className={`tab-pane fade text-white py-3 px-2 ${props.access === false ? "show active" : ""}`} id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
+                        <div className={`tab-pane fade text-white py-3 px-2 ${accessType === false ? "show active" : ""}`} id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
                             <div className="form" id="instructor-form">
                                 <form className='loginForm' onSubmit={handleSubmit2}>
                                     <div className="input-group mx-3">
@@ -121,7 +124,7 @@ const Auth = (props) => {
                                         <input type="text" name="" id="" />
                                     </div> */}
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" />
+                                        <input type="Submit" value="Login" readOnly/>
                                     </div>
                                 </form>
                             </div>
