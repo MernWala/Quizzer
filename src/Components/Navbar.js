@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import "../styles/main.scss";
 import Profile from './Profile';
+import UtilityContext from '../context/utility/UtilityContext';
 
 const Navbar = () => {
+
+    const utilContext = useContext(UtilityContext);
+    const { isLogin } = utilContext;
 
     const getDayName = (ele) => {
         if (ele === 0)
@@ -78,8 +82,9 @@ const Navbar = () => {
                         </Link>
 
                         <div className='mx-3 d-flex justify-content-center align-items-center'>
+                            {/* !localStorage.getItem('userProfileData') ? */}
                             {
-                                !localStorage.getItem('userProfileData') ?
+                                !isLogin ?
                                     <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
                                     :
                                     <Profile />

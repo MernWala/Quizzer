@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import UtilityContext from '../context/utility/UtilityContext';
 
 const ProfileModal = () => {
+
+    const utilContext = useContext(UtilityContext);
+    const { setLogin } = utilContext
 
     const navigate = useNavigate();
     const customStyleProfile = {
@@ -10,10 +14,11 @@ const ProfileModal = () => {
         marginTop: '10rem',
         marginRight: '5rem'
     }
-    
+
     const handleLogout = () => {
         localStorage.removeItem('quizer-auth-token');
         localStorage.removeItem('userProfileData');
+        setLogin(false);
         navigate('/')
     }
 

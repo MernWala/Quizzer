@@ -10,8 +10,13 @@ const UtilityState = (props) => {
         setAccessType(e)
     }
 
+    const [isLogin, setIsLogin] = useState(false);
+    const setLogin = (e) => {
+        setIsLogin(e);
+    }
+
     return (
-        <UtilitContext.Provider value={{ accessType, setAccess }}>
+        <UtilitContext.Provider value={{ accessType, setAccess, isLogin, setLogin }}>
             {props.children}
         </UtilitContext.Provider>
     )
