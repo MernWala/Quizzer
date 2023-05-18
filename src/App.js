@@ -8,7 +8,6 @@ import Auth from './Components/Auth';
 import DataState from './context/userData/DataState';
 import UtilityState from './context/utility/UtilityState';
 
-
 function App() {
   
   return (

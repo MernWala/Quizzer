@@ -12,7 +12,6 @@ router.post('/inst', [
     body("lName", "First name is too short").isLength({ min: 3 }),
     body('email', "Invalied email address").isEmail(),
     body('password', "Length of password is short").isLength({ min: 6 }),
-
 ], async (req, res) => {
 
     const error = validationResult(req);
@@ -36,6 +35,7 @@ router.post('/inst', [
             lName: req.body.lName,
             email: req.body.email,
             password: secPass,
+            picture: req.body.picture
         });
 
         const data = {
@@ -86,6 +86,7 @@ router.post('/stu', [
             lName: req.body.lName,
             email: req.body.email,
             password: secPass,
+            picture: req.body.picture
         });
 
         const data = {

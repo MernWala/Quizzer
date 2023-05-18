@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
@@ -7,8 +7,8 @@ const Auth = () => {
     let navigate = useNavigate();
     const utilContext = useContext(UtilityContext);
     const { accessType, setAccess } = utilContext;
-    const dataContext = useContext(DataContext)
-    const { loadData_inst, loadData_stu } = dataContext
+    const dataContext = useContext(DataContext);
+    const { loadData_inst, loadData_stu } = dataContext;
 
     // Instructuctor handle submit function
     const handleSubmit = async (e) => {
@@ -70,6 +70,15 @@ const Auth = () => {
         setStuCred({ ...stuCred, [e.target.name]: e.target.value })
     }
 
+    const [eyeBtn, setEyeBtn] = useState('fa-eye-slash')
+    const handleEyeBtn = () => {
+        if (eyeBtn === 'fa-eye') {
+            setEyeBtn('fa-eye-slash');
+        } else {
+            setEyeBtn('fa-eye');
+        }
+    }
+
     return (
         <>
             <div className="container center-center">
@@ -96,11 +105,12 @@ const Auth = () => {
                                     </div>
                                     <div className="input-group mx-3">
                                         <label htmlFor="password" className={`input-group-label ${credential.password && 'no-text'}`}>Your password*</label>
-                                        {credential.email ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type="password" name="password" id="password" onChange={onChange} required />
+                                        {credential.password ? <div className="no-text-reverse">&nbsp;</div> : ''}
+                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="password" id="password" onChange={onChange} required autoComplete='off' />
+                                        <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" readOnly/>
+                                        <input type="Submit" value="Login" readOnly />
                                     </div>
                                 </form>
                             </div>
@@ -117,14 +127,15 @@ const Auth = () => {
                                     <div className="input-group mx-3">
                                         <label className={`input-group-label ${stuCred.studentPassword && 'no-text'}`} htmlFor="studentPassword" id='pass_label_2'>Your password*</label>
                                         {stuCred.studentPassword ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type="password" name="studentPassword" id="studentPassword" onChange={onChange2} required />
+                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="studentPassword" id="studentPassword" onChange={onChange2} required autoComplete='off' />
+                                        <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
                                     {/* <div className="input-group mx-3">
                                         <label className='input-group-label'>Exam code</label>
                                         <input type="text" name="" id="" />
                                     </div> */}
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" readOnly/>
+                                        <input type="Submit" value="Login" readOnly />
                                     </div>
                                 </form>
                             </div>

@@ -24,6 +24,13 @@ const InstructorSchema = new Schema({
         require: true,
         default: false
     },
+    picture: {
+        type: String,
+    },
+    accountType: {
+        type: String,
+        default: 'Instructor'
+    },
     date: {
         type: Date,
         default: Date.now

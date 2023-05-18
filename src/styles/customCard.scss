@@ -1,22 +1,22 @@
 @import './variables.scss';
 @import "./fonts.scss";
 
-.height-90vh{
-    height: 90vh!important;
+.height-90vh {
+    height: 90vh !important;
 }
 
-.height-80vh{
-    height: 80vh!important;
+.height-80vh {
+    height: 80vh !important;
 }
 
-.special-container{
+.special-container {
     height: calc(100vh - 8rem);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.custom-card{
+.custom-card {
     @include center-center;
     background-image: url("../storyset/random2.svg");
     background-repeat: no-repeat;
@@ -25,17 +25,18 @@
     min-width: 55rem;
 }
 
-.custom-card-header{
+.custom-card-header {
     @include center-center;
     flex-direction: column;
-    span{
+
+    span {
         font-family: 'Dancing Script', cursive;
         font-size: 3.5rem;
         line-height: 1;
     }
 }
 
-.custom-card-header::after{
+.custom-card-header::after {
     content: "";
     position: relative;
     height: .4rem;
@@ -45,19 +46,19 @@
     border-radius: 1rem;
 }
 
-.report-desc{
+.report-desc {
     @include center-center;
     flex-direction: column;
 }
 
-.report-des-text{
-    font-size: 1.5rem!important;
-    font-family: 'Dosis', sans-serif!important;
+.report-des-text {
+    font-size: 1.5rem !important;
+    font-family: 'Dosis', sans-serif !important;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
-textarea{
+textarea {
     background-color: rgba(255, 255, 255, .5);
     padding: 1rem 1rem;
     backdrop-filter: blur(5px);
@@ -70,56 +71,59 @@ textarea{
     transition: all .2s ease-in;
 }
 
-textarea:focus{
+textarea:focus {
     outline: none;
     box-shadow: 1px 1px 3px 4px $theamTextHovered;
     transition: all .2s ease-in;
 }
 
-.report-form{
-    form{
+.report-form {
+    form {
         @include center-center;
         flex-direction: column;
-        textarea::placeholder{
+
+        textarea::placeholder {
             color: rgba(255, 255, 255, .5);
         }
     }
 }
 
-.btn-custom{
+.btn-custom {
     background: $theamColorTrans;
     width: 100%;
     color: #fff;
     font-size: 1.5rem;
     box-shadow: 0rem .5rem 0rem rgba(255, 255, 255, .5);
+    transition: all .1s ease-in;
+
+    &:hover {
+        background: $theamColorTrans;
+        position: relative;        
+        top: .3rem;
+        box-shadow: 0rem .2rem 0rem rgba(255, 255, 255, .5);
+        transition: all .1s ease-in;
+    }
 }
 
-.btn-custom:hover{
-    background: $theamColorTrans;
-    top: .3rem;
-    position: relative;
-    box-shadow: 0rem .2rem 0rem rgba(255, 255, 255, .5);
-}
-
-.report-img-desc{
+.report-img-desc {
     font-family: 'Nunito', sans-serif;
     font-size: 1.5rem;
     color: #fff;
     letter-spacing: 1.5px
 }
 
-.center-center{
+.center-center {
     @include center-center;
 }
 
-.nav-tabs .active{
-    border-color: $theamText!important;
+.nav-tabs .active {
+    border-color: $theamText !important;
 }
 
-.nav-tabs .nav-link:hover{
+.nav-tabs .nav-link:hover {
     border-color: transparent;
 }
 
-#loginTabContent{
-    border-top: 0px!important;
+#loginTabContent {
+    border-top: 0px !important;
 }

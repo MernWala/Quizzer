@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+@mixin center-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.__profileMain{
+    @include center-center();
+    border: 2px solid $theamText;
+    border-radius: 50%;
+    height: 4.5rem;
+    width: 4.5rem;
+
+    .profileCloser{
+        margin: 1px;
+        height: 4.5rem;
+        width: 4.5rem;
+        border-radius: 50%;
+
+        img{
+            height: 4.5rem;
+            width: 4.5rem;
+            border-radius: 50%;
+        }
+    }
+
+    &:hover{
+        cursor: pointer;
+    }
+}

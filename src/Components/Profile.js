@@ -1,36 +1,36 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import '../styles/profile.scss';
 import DataContext from '../context/userData/DataContext';
 
 const Profile = () => {
 
-    const dataContext = useContext(DataContext);
-    const { loadData_inst, loadData_stu } = dataContext;
+    const datacontext = useContext(DataContext)
+    const { defaultImg } = datacontext;
+
+    const [imgSource, setImgSource] = useState();
 
     useEffect(() => {
-        const token = localStorage.getItem('quizer-auth-token')
+        let data = localStorage.getItem('userProfileData');
+        let token = localStorage.getItem('quizer-auth-token')
         return async () => {
-            await loadData_inst(token).then(async (e) => {
-                if(e !== null){
-                    console.log(e);
-                }else{
-                    await loadData_stu(token).then((e) => {
-                        if(e !== null){
-                            console.log(e);
-                        }else{
-                            console.log('No authentication key found');
-                        }
-                    })
+            if(token && !(JSON.parse(data).error)){
+                data = JSON.parse(data);
+                if (data.picture) {
+                    setImgSource(data.picture)
+                } else {
+                    setImgSource(defaultImg);
                 }
-            })
+            }else{
+                return;
+            }
         }
     }, [])
 
-
     return (
         <>
-            <div className="__profileMain">
+            <div className="__profileMain" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <div className="profileCloser">
-                    <img src="" alt="" />
+                    <img src={imgSource} alt="" />
                 </div>
             </div>
         </>

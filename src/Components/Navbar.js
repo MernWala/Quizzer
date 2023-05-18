@@ -1,12 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import "../styles/main.scss";
-import DataContext from '../context/userData/DataContext';
 import Profile from './Profile';
 
 const Navbar = () => {
-    let navigate = useNavigate();
-    const { resetData } = useContext(DataContext)
 
     const getDayName = (ele) => {
         if (ele === 0)
@@ -52,12 +49,6 @@ const Navbar = () => {
             return "Dec";
     }
 
-    const handleLogout = () => {
-        localStorage.removeItem('quizer-auth-token');
-        resetData();
-        navigate('/');
-    }
-
     return (
         <>
             {/* Navbar */}
@@ -88,14 +79,11 @@ const Navbar = () => {
 
                         <div className='mx-3 d-flex justify-content-center align-items-center'>
                             {
-                                !localStorage.getItem('quizer-auth-token') ?
-
+                                !localStorage.getItem('userProfileData') ?
                                     <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
                                     :
-                                    <button onClick={handleLogout} className='btn btn-login-custom'>Logout</button>
-
+                                    <Profile />
                             }
-                            <Profile />
                         </div>
                     </div>
                 </div>
