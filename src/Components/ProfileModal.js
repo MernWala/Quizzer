@@ -20,6 +20,7 @@ const ProfileModal = () => {
         localStorage.removeItem('userProfileData');
         setLogin(false);
         navigate('/')
+        window.location.reload();
     }
 
     return (

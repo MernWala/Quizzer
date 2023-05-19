@@ -6,8 +6,8 @@ import UtilityContext from '../context/utility/UtilityContext';
 const AccountAcess = () => {
 
     const navigate = useNavigate();
+    
     const utilContext = useContext(UtilityContext);
-
     const handleClick = (e) => {
         utilContext.setAccess(e);
         navigate("/app/acess-account/auth");

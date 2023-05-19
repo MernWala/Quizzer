@@ -6,7 +6,6 @@ const UtilityState = (props) => {
     const [accessType, setAccessType] = useState(true);
 
     const setAccess = (e) => {
-        console.log(e);
         setAccessType(e)
     }
 

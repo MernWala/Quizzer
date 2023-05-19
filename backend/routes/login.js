@@ -3,7 +3,6 @@ const router = express.Router();
 const Instructor = require('../model/Instructor');
 const Student = require('../model/Student');
 const { body, validationResult } = require('express-validator');
-// const fetchuser = require('../middleware/fetchuser');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -85,6 +84,5 @@ router.post('/stu', [
         res.status(500).send("Internal Server Error")
     }
 });
-
 
 module.exports = router;

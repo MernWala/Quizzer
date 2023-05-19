@@ -1,13 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/customCard.scss'
 import reportSvg from '../storyset/report.gif'
 import ProfileModal from './ProfileModal'
+import { useNavigate } from 'react-router-dom'
 
 const Reportbug = () => {
+
+    const navigate = useNavigate();
+
+    const [data, setData] = useState({
+        fName: '',
+        lName: '',
+        email: '',
+        accountType: '',
+        report: '',
+    });
+
+    const setAuxilaryData = (e) => {
+        let userData = localStorage.getItem('userProfileData');
+        let token = localStorage.getItem('quizer-auth-token')
+        if (token && !(JSON.parse(userData).error)) {
+            userData = JSON.parse(userData);
+            setData({
+                fName: userData.fName,
+                lName: userData.lName,
+                email: userData.email,
+                accountType: userData.accountType,
+                report: e.target.value
+            })
+        }
+    }
+
+    const handleOnChange = (e) => {
+        setAuxilaryData(e);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const reponse = await fetch(`http://localhost:5001/api/report-bug/default`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fName: data.fName,
+                lName: data.lName,
+                email: data.email,
+                accountType: data.accountType,
+                report: data.report,
+            })
+        }).then((e) => {
+            if (e.status === 201) {
+                console.log('Report sucessfully');
+                navigate('/')
+            } else {
+                console.log(`Error on reporting`);
+                navigate('/')
+            }
+        })
+    }
+
     return (
         <>
             <ProfileModal />
-
             <div className='container special-container height-80vh'>
                 <div className='row d-flex flex-wrap justify-content-evenly' style={{ width: '100%' }} >
                     <div className="col-5 center-center flex-column">
@@ -28,8 +83,8 @@ const Reportbug = () => {
                             </div>
 
                             <div className='report-form'>
-                                <form action="" className='text-white'>
-                                    <textarea name="reportdata" id="reportTextBox" cols="30" rows="7" placeholder='Please Describe problem shortly'></textarea>
+                                <form className='text-white' onSubmit={handleSubmit}>
+                                    <textarea name="report" id="reportTextBox" cols="30" rows="7" placeholder='Please Describe problem shortly' onChange={handleOnChange}></textarea>
                                     <button className='btn btn-custom m-2' type='submit'>Report</button>
                                 </form>
                             </div>

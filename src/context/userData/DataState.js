@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import DataContext from './DataContext'
+import UtilityContext from '../utility/UtilityContext';
 
 const DataState = (props) => {
+
+    const utilContext = useContext(UtilityContext);
+    const { setLogin } = utilContext;
+    
+    const [userData, setUserData] = useState();
 
     const loadData_inst = async (token) => {
         try {
@@ -12,8 +18,8 @@ const DataState = (props) => {
                 }
             })
             const data = await response.json();
-            // console.log(data);      // remove in beta release
             localStorage.setItem('userProfileData', JSON.stringify(data))
+            setLogin(true)
             return data
         } catch (error) {
             console.warn(`Can't get authentication token!`);
@@ -29,8 +35,8 @@ const DataState = (props) => {
                 }
             })
             const data = await response.json();
-            console.log(data);      // remove in beta release
             localStorage.setItem('userProfileData', JSON.stringify(data))
+            setLogin(true)
             return data
         } catch (error) {
             console.warn(`Can't get authentication token!`);
@@ -39,17 +45,23 @@ const DataState = (props) => {
 
     useEffect(() => {
         const token = localStorage.getItem('quizer-auth-token')
-        const data = localStorage.getItem('userProfileData')
         return async () => {
-            if (token && !(JSON.parse(data).error)) {
+            if (token) {
                 await loadData_inst(token).then(async (e) => {
                     if (e !== null) {
                         localStorage.setItem('userProfileData', JSON.stringify(e))
+                        let data = localStorage.getItem('userProfileData');
+                        data = await JSON.parse(data);
+                        setUserData(data)
+                        setLogin(true)
                     } else {
-                        await loadData_stu(token).then((e) => {
+                        await loadData_stu(token).then(async (e) => {
                             if (e !== null) {
                                 localStorage.setItem('userProfileData', JSON.stringify(e))
-
+                                let data = localStorage.getItem('userProfileData');
+                                data = await JSON.parse(data);
+                                setUserData(data)
+                                setLogin(true)
                             } else {
                                 console.log('No authentication key found');
                             }
@@ -63,7 +75,7 @@ const DataState = (props) => {
     }, [])
 
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData }}>
             {props.children}
         </DataContext.Provider>
     )

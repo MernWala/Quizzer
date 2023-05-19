@@ -7,7 +7,7 @@ const Auth = () => {
     let navigate = useNavigate();
     
     const utilContext = useContext(UtilityContext);
-    const { accessType, setAccess, setLogin } = utilContext;
+    const { accessType, setAccess } = utilContext;
 
     const dataContext = useContext(DataContext);
     const { loadData_inst, loadData_stu } = dataContext;
@@ -30,7 +30,6 @@ const Auth = () => {
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
             await loadData_inst(json.authTocken);
-            setLogin(true);
             navigate("/");
         } else {
             localStorage.removeItem('quizer-auth-token');
@@ -61,7 +60,6 @@ const Auth = () => {
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
             await loadData_stu(json.authTocken);
-            setLogin(true);
             navigate("/");
         } else {
             localStorage.removeItem('quizer-auth-token');
