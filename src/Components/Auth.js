@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
@@ -7,7 +7,7 @@ const Auth = () => {
     let navigate = useNavigate();
     
     const utilContext = useContext(UtilityContext);
-    const { accessType, setAccess } = utilContext;
+    const { accessType, setAccess, sendMess } = utilContext;
 
     const dataContext = useContext(DataContext);
     const { loadData_inst, loadData_stu } = dataContext;
@@ -30,8 +30,10 @@ const Auth = () => {
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
             await loadData_inst(json.authTocken);
+            sendMess('success', 'Login Successfully')
             navigate("/");
         } else {
+            sendMess('warning', 'Invalid Email or Password')
             localStorage.removeItem('quizer-auth-token');
         }
     }
@@ -60,9 +62,11 @@ const Auth = () => {
         if (json.authTocken) {
             localStorage.setItem('quizer-auth-token', json.authTocken);
             await loadData_stu(json.authTocken);
+            sendMess('success', 'Login Successfully')
             navigate("/");
         } else {
             localStorage.removeItem('quizer-auth-token');
+            sendMess('warning', 'Invalid Email or Password')
         }
     }
 
@@ -76,8 +80,10 @@ const Auth = () => {
     const handleEyeBtn = () => {
         if (eyeBtn === 'fa-eye') {
             setEyeBtn('fa-eye-slash');
+            sendMess('info', 'Password eye is off')
         } else {
             setEyeBtn('fa-eye');
+            sendMess('info', 'Password eye is on')
         }
     }
 

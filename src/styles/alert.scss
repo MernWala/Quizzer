@@ -1,0 +1,53 @@
+@import "./variables.scss";
+
+@mixin center-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes intranceExit {
+    0%{
+        right: -5rem;
+        transition: all ease-in .2s;
+    }
+
+    50%{
+        right: 2rem;
+        transition: all ease-in .2s
+
+    }
+
+    90%{
+        right: 0rem;
+        transition: all ease-in .3s
+    }
+}
+
+.alerMainContainer {
+    @include center-center();
+    position: absolute;
+    width: fit-content;
+    border: 1px solid #fff;
+    padding: .5rem 1rem;
+    margin: 1rem 2rem;
+    right: 0rem;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    animation-name: intranceExit;
+    animation-duration: 1s;
+    transition: all ease-in .3s;
+    max-width: 20vw;
+    word-wrap: wrap;
+
+    .alert-closer{
+        @include center-center();
+        align-items: baseline;
+
+        .alert-header{
+            min-width: fit-content;
+        }
+    }
+
+}

@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../styles/customCard.scss'
 import reportSvg from '../storyset/report.gif'
 import ProfileModal from './ProfileModal'
 import { useNavigate } from 'react-router-dom'
+import UtilityContext from '../context/utility/UtilityContext'
 
 const Reportbug = () => {
 
     const navigate = useNavigate();
+    const utilContext = useContext(UtilityContext);
+    const { sendMess } = utilContext;
 
     const [data, setData] = useState({
         fName: '',
@@ -37,7 +40,7 @@ const Reportbug = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const reponse = await fetch(`http://localhost:5001/api/report-bug/default`, {
+        await fetch(`http://localhost:5001/api/report-bug/default`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,11 +54,16 @@ const Reportbug = () => {
             })
         }).then((e) => {
             if (e.status === 201) {
-                console.log('Report sucessfully');
-                navigate('/')
+                sendMess('success', 'Report sucessfully')
+
+                setTimeout(() => {
+                    sendMess('info', 'We redirecting you to home page')
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 2000);
+                }, 4000);
             } else {
-                console.log(`Error on reporting`);
-                navigate('/')
+                sendMess('danger', 'Somthing went wrong.')
             }
         })
     }

@@ -7,7 +7,7 @@ import UtilityContext from '../context/utility/UtilityContext';
 const Navbar = () => {
 
     const utilContext = useContext(UtilityContext);
-    const { isLogin } = utilContext;
+    const { isLogin, sendMess } = utilContext;
 
     const getDayName = (ele) => {
         if (ele === 0)
@@ -52,6 +52,10 @@ const Navbar = () => {
         else
             return "Dec";
     }
+
+    const handleReportFunction = () => {
+        sendMess('primary', 'Hey! Is there any correction feel free to tell us.');
+    }
     
     return (
         <>
@@ -74,7 +78,7 @@ const Navbar = () => {
                             </p>
                         </div>
 
-                        <Link to="/reportbug" style={{ textDecoration: 'none' }}>
+                        <Link to="/reportbug" onClick={handleReportFunction} style={{ textDecoration: 'none' }}>
                             <div className='mx-3 report-problem-btn custom-tooltip-btn' style={{ cursor: 'pointer' }}>
                                 <i className="fa-solid fa-flag"></i>
                                 <span className='custom-tooltip'>Click to report a problem</span>

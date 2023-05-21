@@ -14,8 +14,16 @@ const UtilityState = (props) => {
         setIsLogin(e);
     }
 
+    const [alert, setAlert] = useState({ head: '', body: '' });
+    const sendMess = (h, m) => {
+        setAlert({ head: h, body: m });
+        setTimeout(() => {
+            setAlert({ head: '', body: '' });
+        }, 7000);
+    }
+
     return (
-        <UtilitContext.Provider value={{ accessType, setAccess, isLogin, setLogin }}>
+        <UtilitContext.Provider value={{ accessType, setAccess, isLogin, setLogin, alert, sendMess }}>
             {props.children}
         </UtilitContext.Provider>
     )
