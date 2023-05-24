@@ -69,7 +69,7 @@ const Home = () => {
             <hr className='my-5'/>
 
             <div className="homeLoginDescription">
-              <a href="./Auth.js" className='description-link'>Learn More</a> about Quizzer
+              <a href="/" className='description-link' target='_blank' rel="noopener noreferrer">Learn More</a> <span>about Quizzer</span>
             </div>
 
           </div>

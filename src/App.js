@@ -8,6 +8,7 @@ import Auth from './Components/Auth';
 import DataState from './context/userData/DataState';
 import Alert from './Components/Alert';
 import UtilityContext from './context/utility/UtilityContext';
+import Register from './Components/Register';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/app/access-account" element={<AccountAcess />} />
             <Route path="/reportbug" element={<Reportbug />} />
             <Route path="/app/acess-account/auth" element={<Auth />} />
+            <Route path='/app/new-user' element={<Register />}/>
           </Routes>
         </BrowserRouter>
       </DataState>

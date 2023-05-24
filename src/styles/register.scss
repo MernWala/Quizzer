@@ -1,0 +1,103 @@
+@import "./variables.scss";
+@import "./fonts.scss";
+
+.registration-container {
+    user-select: none;
+    display: flex;
+    align-items: baseline;
+    border: 1px solid $theamColorTrans;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 90%;
+    justify-content: space-evenly;
+
+    form {
+        width: 70%;
+
+        .row {
+            .input-group {
+                @include center-center();
+                justify-content: flex-start;
+
+                label {
+                    color: $theamText;
+                    font-family: 'Nunito', sans-serif;
+                    font-size: 1.5rem;
+                    letter-spacing: 1px;
+                    margin: 0rem 2rem;
+                }
+
+                input {
+                    border-radius: 5px;
+                    font-size: 1.4rem;
+                    margin: 1rem 0rem;
+                    max-width: 75%;
+                    margin-left: auto !important;
+                    letter-spacing: 1px;
+                }
+
+                .radio-group {
+                    width: 75%;
+                    margin-left: auto!important;
+                    display: flex;
+                    .radio-wrap {
+                        margin-right: 2rem;
+
+                        input[type=radio] {
+                            width: fit-content;
+                            box-shadow: none;
+                        }
+
+                        input[type=checkbox] {
+                            width: fit-content!important;
+                            box-shadow: none;
+                        }
+
+                        label{
+                            margin: 0rem .5rem;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .registration-description-box {
+        border: 1px solid $theamText;
+        min-height: fit-content;
+        top: 2rem;
+        position: relative;
+        min-width: 30rem;
+        border-radius: 5px;
+        padding: 3rem;
+        background: $theamColorTrans;
+        align-items: baseline;
+
+        ul {
+            li {
+                font-size: 1.3rem;
+            }
+        }
+    }
+}
+
+.width-100 {
+    width: 100% !important;
+}
+
+.declaration-label{
+    font-size: 1.4rem;
+    color: $theamText;
+}
+
+.submit-btn{
+    button{
+        border: 1px solid $theamText;
+        background-color: $theamColorTrans;
+        color: #fff;
+        font-size: 1.4rem;
+        padding: .5rem 2rem;
+        border-radius: 5px;
+    }
+}

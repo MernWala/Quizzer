@@ -1,0 +1,46 @@
+@import "./variables.scss";
+@import "./fonts.scss";
+
+.header {
+    user-select: none;
+    @include center-center();
+    padding-top: 2rem;
+    position: relative;
+    width: calc(100% - 1rem);
+    flex-direction: column;
+    min-height: 15rem;
+
+    span:nth-child(1) {
+        position: relative;
+        z-index: -5;
+        font-size: 6rem;
+        font-weight: 800;
+        line-height: 5rem;
+        background-image: linear-gradient(to bottom, #02838c, #046970, #055155, #04393c, #032325);
+        font-family: 'Poppins', sans-serif;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+    }
+
+    span:nth-child(2) {
+        @include center-center();
+        color: #02838c;
+        font-size: 3rem;
+        font-family: 'Poppins', sans-serif;
+        flex-direction: column;
+        font-weight: 800;
+        line-height: .5;
+        margin-bottom: 1rem;
+    }
+
+    p{
+        position: relative;
+        background-color: #02838c;
+        height: .4rem;
+        width: 5rem;
+        border-radius: 1rem;
+        margin-bottom: 0;
+    }
+}
