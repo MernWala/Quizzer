@@ -4,12 +4,16 @@ import reportSvg from '../storyset/report.gif'
 import ProfileModal from './ProfileModal'
 import { useNavigate } from 'react-router-dom'
 import UtilityContext from '../context/utility/UtilityContext'
+import DataContext from '../context/userData/DataContext'
 
 const Reportbug = () => {
 
     const navigate = useNavigate();
     const utilContext = useContext(UtilityContext);
     const { sendMess } = utilContext;
+
+    const dataContext = useContext(DataContext);
+    const { isLogin } = dataContext;
 
     const [data, setData] = useState({
         fName: '',
@@ -40,6 +44,11 @@ const Reportbug = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!isLogin){
+            sendMess('warning', "It's seems like you have not login yet");
+            return;
+        }
+
         await fetch(`http://localhost:5001/api/report-bug/default`, {
             method: 'POST',
             headers: {

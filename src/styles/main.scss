@@ -50,14 +50,12 @@ i {
     font-weight: 500;
     border: 1px solid #02838c;
     color: #02838c;
-}
 
-.btn-login-custom:hover {
-    top: -.2rem;
-    box-shadow: -3px 1px 3px $theamColor;
-    background: none;
-    border: 1px solid #02838c;
-    color: #02838c;
+    &:hover {
+        background: #02838c;
+        border: 1px solid #fff;
+        color: #fff;
+    }
 }
 
 .custom-tooltip-btn:hover .custom-tooltip {
@@ -211,8 +209,6 @@ i {
 }
 
 .input-group {
-    // border: 1px solid red;
-
     span {
         display: none;
     }
@@ -222,7 +218,7 @@ i {
         font-size: 2rem;
         width: 100%;
         padding: 1rem 2rem;
-        border-radius: 1.5rem !important;
+        border-radius: 1.5rem;
         background: $theamColorTrans;
         backdrop-filter: blur(5px);
         box-shadow: 1px 1px 3px $theamText,
@@ -246,7 +242,7 @@ i {
         box-shadow: 0rem .5rem 0rem $theamText;
     }
 
-    i{
+    i {
         position: absolute;
         top: 3rem;
         right: 3rem;
@@ -301,4 +297,152 @@ i {
 
 .pass-eye-color {
     color: rgba(255, 255, 255, .8)
+}
+
+.modal-title {
+    user-select: none;
+}
+
+// profile modal custom css starts here
+.profileTagText {
+    font-size: 1.5rem;
+    padding: 0.1rem 1rem;
+    background-color: #02838c;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: .5rem;
+    cursor: default;
+    user-select: none;
+}
+
+.profileModal-closer {
+    @include center-center();
+
+    .profile-naviation-btn {
+        @include center-center();
+        flex-wrap: wrap;
+
+        .btnGroup {
+            @include center-center();
+            border: 1px solid #02838c;
+            color: #02838c;
+            border-radius: .5rem;
+            margin: 1rem;
+            width: fit-content;
+            font-size: 1.3rem;
+            font-weight: 650;
+            cursor: pointer;
+            user-select: none;
+
+            .actual-numbers {
+                @include center-center();
+                min-width: 1.8em;
+                padding: 0rem 1rem;
+                height: 1rem;
+                border-right: 1px solid #02838c;
+            }
+
+            .btn-name {
+                padding: .5rem 1rem;
+            }
+        }
+    }
+}
+
+// home page css starts here
+.homeLeft {
+    @include center-center();
+    user-select: none;
+
+    .left-closer {
+        .homeHeader {
+            span {
+                font-family: 'Nunito', sans-serif;
+                letter-spacing: 1px;
+                font-size: 4rem;
+                font-weight: 800;
+                line-height: 4rem;
+            }
+
+            p {
+                font-family: 'Dosis', sans-serif;
+                font-size: 2rem;
+                letter-spacing: 1px;
+                line-height: 2rem;
+            }
+        }
+
+        .btn-group {
+            form {
+                .input-group {
+                    label {
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: 10px;
+                            top: 0;
+                            bottom: 0;
+                            width: 20px;
+                            background: url(../storyset/keyboard.svg) center / contain no-repeat;
+                            z-index: 1;
+                            margin-left: 1.5rem;
+                        }
+                    }
+
+                    input {
+                        &:focus {
+                            border-color: #fff;
+                        }
+
+                        border: 1px solid $theamText;
+                        padding-left: 4rem !important;
+                        border-radius: 2px !important;
+                        font-size: 1.3rem !important;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.homeRight {
+    min-height: calc(100vh - 10rem);
+    user-select: none;
+    width: 60%;
+
+    .right-closer {
+
+        .quize-animate-show {
+            background: url('../storyset//quiz-show-animate.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: calc(100vh - 10rem);
+        }
+    }
+}
+
+
+.btn-2m {
+    font-size: 2rem;
+}
+
+.join-btn-home {
+    button {
+        border: none;
+        background: none;
+        font-size: 1.5rem;
+        color: $theamText;
+        font-weight: 500;
+        letter-spacing: .5px;
+    }
+}
+
+.homeLoginDescription {
+    font-size: 1.6rem;
+
+    .description-link {
+        text-decoration: none;
+    }
 }
