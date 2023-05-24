@@ -8,7 +8,7 @@ function Jumbotron(props) {
     }
 
     return (
-        <div className="header mb-4">
+        <div className="header mb-5">
             <span className='header-faded-text'>{props.text}</span>
             <span className="header-text">{props.text}</span>
             <p style={customStyleObject}></p>

@@ -4,18 +4,17 @@
 .header {
     user-select: none;
     @include center-center();
-    padding-top: 2rem;
     position: relative;
     width: calc(100% - 1rem);
     flex-direction: column;
-    min-height: 15rem;
+    min-height: 10rem;
 
     span:nth-child(1) {
         position: relative;
         z-index: -5;
         font-size: 6rem;
         font-weight: 800;
-        line-height: 5rem;
+        line-height: 1;
         background-image: linear-gradient(to bottom, #02838c, #046970, #055155, #04393c, #032325);
         font-family: 'Poppins', sans-serif;
         -webkit-text-fill-color: transparent;
