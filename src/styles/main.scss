@@ -446,3 +446,12 @@ i {
         text-decoration: none;
     }
 }
+
+.custom-register-btn{
+    transition: filter .2s ease-in;
+}
+
+.custom-disable-btn{
+    filter: contrast(0.3);
+    transition: filter .2s ease-in;
+}

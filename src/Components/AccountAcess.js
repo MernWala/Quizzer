@@ -40,7 +40,7 @@ const AccountAcess = () => {
                                 <div className='suggestion-text'>
                                     <p className='mb-0'>If you looking for conduct test you need a Instructor profile</p>
                                     <p className='mb-0'>Student profile helps you in attempt test</p>
-                                    <p className="mb-0">Don't have accout register <Link to="/app/signup">here</Link></p>
+                                    <p className="mb-0">Don't have accout register <Link to="/app/new-user">here</Link></p>
                                 </div>
                             </div>
                         </div>

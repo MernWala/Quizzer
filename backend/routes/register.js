@@ -45,9 +45,8 @@ router.post('/inst', [
         }
 
         const authTocken = jwt.sign(data, process.env.JWT_SIGN_KEY);
-
         // send response that this user is created
-        res.json({ authTocken });
+        res.status(201).json({ authTocken });
 
     } catch (err) {
         // catching unknown erros
@@ -98,7 +97,7 @@ router.post('/stu', [
         const authTocken = jwt.sign(data, process.env.JWT_SIGN_KEY);
 
         // send response that this user is created
-        res.json({ authTocken });
+        res.status(201).json({ authTocken });
 
     } catch (err) {
         // catching unknown erros

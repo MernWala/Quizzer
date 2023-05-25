@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-	  "con": "concurrently \"react-scripts start\" \"nodemon ./backend/index.js\" ",
+    "con": "concurrently \"react-scripts start\" \"nodemon ./backend/index.js\" ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

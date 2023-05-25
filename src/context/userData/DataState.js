@@ -6,8 +6,10 @@ const DataState = (props) => {
 
     const utilContext = useContext(UtilityContext);
     const { setLogin } = utilContext;
-    
+
     const [userData, setUserData] = useState();
+
+    const defaultImg = "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg";
 
     const loadData_inst = async (token) => {
         try {
@@ -75,7 +77,7 @@ const DataState = (props) => {
     }, [])
 
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg }}>
             {props.children}
         </DataContext.Provider>
     )

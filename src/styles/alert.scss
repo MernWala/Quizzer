@@ -26,7 +26,7 @@
 
 .alerMainContainer {
     @include center-center();
-    position: absolute;
+    position: fixed;
     width: fit-content;
     border: 1px solid #fff;
     padding: .5rem 1rem;
