@@ -38,7 +38,7 @@ const ProfileModal = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="exampleModalLabel" style={{cursor: 'default'}}>~ Welcome <em>{!userData ? '' : (userData.fName + " " + userData.lName)}</em></h1>
-                            <p className="mb-0 text-white profileTagText">{accessType ? 'Student' : 'Instructor'}</p>
+                            <p className="mb-0 text-white profileTagText">{userData && userData.accessType === 'Student' ? 'Student' : 'Instructor'}</p>
                         </div>
 
                         <div className="modal-body">

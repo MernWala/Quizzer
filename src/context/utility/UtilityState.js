@@ -22,8 +22,13 @@ const UtilityState = (props) => {
         }, 7000);
     }
 
+    const genrateCode = () => {
+        let date = new Date(Date.now());
+        return date.getFullYear() + date.getUTCMilliseconds() + '2023';
+    }
+
     return (
-        <UtilitContext.Provider value={{ accessType, setAccess, isLogin, setLogin, alert, sendMess }}>
+        <UtilitContext.Provider value={{ accessType, setAccess, isLogin, setLogin, alert, sendMess, genrateCode }}>
             {props.children}
         </UtilitContext.Provider>
     )

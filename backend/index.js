@@ -14,7 +14,8 @@ app.use('/', require('./routes/default'));
 app.use('/auth-register', require('./routes/register'));
 app.use('/auth-login', require('./routes/login'));
 app.use('/api/getDetails', require('./routes/getUserDetails'));
-app.use('/api/report-bug', require('./routes/reportbug'))
+app.use('/api/report-bug', require('./routes/reportbug'));
+app.use('/testing', require('./routes/genrateQuestion'));
 
 app.listen(port, () => {
     console.log(`Quizer is listening at ${port}`);
