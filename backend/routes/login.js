@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-// ROUT 1 - Login Instructor
+// ROUT 1 - Login Instructor endpoint
 router.post('/inst', [
     body('email', "Invalied email address").isEmail(),
     body('password', "First enter your password").exists(),
@@ -46,6 +46,7 @@ router.post('/inst', [
     }
 });
 
+// ROUTE 2 - Login Student endpoint
 router.post('/stu', [
     body('email', "Invalied email address").isEmail(),
     body('password', "First enter your password").exists(),

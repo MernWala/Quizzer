@@ -4,6 +4,7 @@ const fetchuser = require('../middleware/fetchuser');
 const Instructor = require('../model/Instructor');
 const Student = require('../model/Student');
 
+// ROUTE 1 - Get details of instructor endpoint
 router.post('/inst', fetchuser, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -14,6 +15,7 @@ router.post('/inst', fetchuser, async (req, res) => {
     }
 });
 
+// ROUTE 1 - Get details of student endpoint
 router.post('/stu', fetchuser, async (req, res) => {
     try {
         const userId = req.user.id;

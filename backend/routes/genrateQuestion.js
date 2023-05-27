@@ -4,6 +4,31 @@ const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const Question = require('../model/Question')
 
+// method to remove perticular question
+const removeQuestion = (arr, _id) => {
+    const index = arr.findIndex((ele) => {
+        return ele._id.toString() === _id
+    });
+
+    arr[index] = null
+    let newArr = [];
+
+    arr.map((ele) => {
+        if (ele !== null) {
+            newArr.push(ele)
+        }
+    });
+
+    return (index === -1) ? -1 : newArr;
+}
+
+// method to get index of perticular question
+const getIndex = (arr, _id) => {
+    return arr.findIndex((ele) => {
+        return ele._id.toString() === _id
+    });
+}
+
 // ROUTE 1 - Genrate question endpoint
 router.post('/', [
 
@@ -49,7 +74,7 @@ router.post('/', [
     }
 });
 
-// ROUTE 2 - add question
+// ROUTE 2 - Add new question endpoint
 router.put('/add-question/', [
 
     body('quizeCode', "examCode not found").exists(),
@@ -73,10 +98,10 @@ router.put('/add-question/', [
         }
 
         let ques = await Question.findOne({ quizeCode: req.body.quizeCode });
-        if(!ques){
-            res.status(400).json({error: `Data with ${req.body.quizeCode} exam code not found`})
+        if (!ques) {
+            res.status(400).json({ error: `Data with ${req.body.quizeCode} exam code not found` })
             return;
-        }else{
+        } else {
             ques.questions.push(qSet)
         }
 
@@ -89,8 +114,61 @@ router.put('/add-question/', [
     }
 });
 
-// ROUTE 3 - Update question
+// ROUTE 3 - Delete question endpoint
+router.delete('/delete-question/:mainId/:questionId', async (req, res) => {
+    try {
+        let ques = await Question.findById(req.params.mainId);
+        if (!ques) {
+            res.status(400).json({ error: `Data with ${req.params.mainId} exam code not found` })
+            return;
+        }
 
-// ROUTE 4 - Delete question
+        const newArr = removeQuestion(ques.questions, req.params.questionId);
+        if (newArr < 0) {
+            res.status(400).json({ error: "Not found" });
+            return;
+        }
+        ques.questions = newArr;
+
+        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: false })
+        res.status(200).json({ updated: newArr })
+
+    } catch (error) {
+        res.status(500).json({ error })
+        return;
+    }
+})
+
+// ROUTE 4 - Update question endpoint
+router.put('/update-question/:mainId/:questionId', async (req, res) => {
+    try {
+        let ques = await Question.findById(req.params.mainId);
+        if (!ques) {
+            res.status(400).json({ error: `Data with ${req.params.mainId} exam code not found` })
+            return;
+        }
+
+        const index = getIndex(ques.questions, req.params.questionId);
+        const oldData = ques.questions[index];
+
+        const { question, picture, option, answer, _id } = oldData
+        const { u_question, u_picture, u_option, u_answer } = req.body;
+
+        const newData = {
+            "question": u_question ? u_question : question,
+            "picture": u_picture ? u_picture : picture,
+            "option": u_option ? u_option : option,
+            "answer": u_answer ? u_answer : answer,
+            "_id": _id
+        }
+
+        ques.questions[index] = newData;
+        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: false })
+        res.status(200).json({ update: newData })
+
+    } catch (error) {
+        res.status(500).json({ error })
+    }
+})
 
 module.exports = router;

@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Route 1 - Create Instructor account
+// Route 1 - Register Instructor endpoint
 router.post('/inst', [
     body("fName", "First name is too short").isLength({ min: 3 }),
     body("lName", "First name is too short").isLength({ min: 3 }),
@@ -55,7 +55,7 @@ router.post('/inst', [
     }
 });
 
-// Route 2 - Create Student account
+// Route 2 - Register Student endpoint
 router.post('/stu', [
     body("fName", "First name is too short").isLength({ min: 3 }),
     body("lName", "First name is too short").isLength({ min: 3 }),

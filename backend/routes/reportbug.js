@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 
+// ROUTE 1 - default report bug endpoint
 router.post('/default', [
     body('fName', "First name not found").exists(),
     body('lName', "Last name not found").exists(),
