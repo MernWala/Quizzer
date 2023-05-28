@@ -60,7 +60,7 @@ const Navbar = () => {
     return (
         <>
             {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-theam mb-2">
+            <nav className="navbar navbar-expand-lg navbar-theam">
                 <div className="container-fluid px-5">
                     <Link className="navbar-brand d-flex justify-content-center align-items-center" to="/">
                         <img src={require('./logo.png')} alt="" height="60px" />

@@ -9,6 +9,8 @@ import DataState from './context/userData/DataState';
 import Alert from './Components/Alert';
 import UtilityContext from './context/utility/UtilityContext';
 import Register from './Components/Register';
+import EngineHome from './Engine/IE_Home';
+import EngineState from './Engine/context/EngineState';
 
 function App() {
 
@@ -18,17 +20,20 @@ function App() {
   return (
     <>
       <DataState>
-        <BrowserRouter>
-          <Navbar />
-          <Alert head={alert.head} body={alert.body} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/app/access-account" element={<AccountAcess />} />
-            <Route path="/reportbug" element={<Reportbug />} />
-            <Route path="/app/acess-account/auth" element={<Auth />} />
-            <Route path='/app/new-user' element={<Register />}/>
-          </Routes>
-        </BrowserRouter>
+        <EngineState>
+          <BrowserRouter>
+            <Navbar />
+            <Alert head={alert.head} body={alert.body} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/app/access-account" element={<AccountAcess />} />
+              <Route path="/reportbug" element={<Reportbug />} />
+              <Route path="/app/acess-account/auth" element={<Auth />} />
+              <Route path='/app/new-user' element={<Register />} />
+              <Route path="/app/engin/instructor" element={<EngineHome />} />
+            </Routes>
+          </BrowserRouter>
+        </EngineState>
       </DataState>
     </>
   );
