@@ -76,8 +76,18 @@ const DataState = (props) => {
         }
     }, [])
 
+    const generateCode = (id) => {
+        if (id) {
+            let temp = String(Math.floor(Math.random() * 10 + 1) * 12345)
+            let code = temp.slice(0, 4) + id.slice(0, 4);
+            return code;
+        } else {
+            return -1;
+        }
+    }
+
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode }}>
             {props.children}
         </DataContext.Provider>
     )

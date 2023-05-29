@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
 const Question = require('../model/Question')
 
 // method to remove perticular question
@@ -30,12 +29,7 @@ const getIndex = (arr, _id) => {
 }
 
 // ROUTE 1 - Genrate question endpoint
-router.post('/', [
-
-    body('user', "Login user's id not found").exists(),
-    body('totalStudentAllowed', "Allowed student must be atleast 10").exists(),
-
-], async (req, res) => {
+router.post('/generate/:id', async (req, res) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
         res.status(400).json({ error: error.array() });
@@ -54,7 +48,7 @@ router.post('/', [
         }
 
         quize = await Question.create({
-            user: req.body.user,
+            user: req.params.id,
             quizeCode: req.body.quizeCode,
             totalStudentAllowed: req.body.totalStudentAllowed,
             questions: []
@@ -66,8 +60,7 @@ router.post('/', [
             }
         }
 
-        const token = jwt.sign(data, process.env.JWT_SIGN_KEY)
-        res.status(201).json({ token })
+        res.status(201).json({ status: 'success' })
 
     } catch (error) {
         res.status(500).json({ error })

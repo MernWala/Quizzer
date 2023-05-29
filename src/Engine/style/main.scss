@@ -1,12 +1,11 @@
 @import "../../styles/variables.scss";
 @import "../../styles/fonts.scss";
 
-li{
-    span{
-        transition: all .1s ease-in-out;
-
-        &:hover{
-            margin-left: 1rem!important;
+li {
+    &:hover {
+        span {
+            transition: all .1s ease-in-out;
+            margin-left: 1rem !important;
             transition: all .1s ease-in-out;
         }
     }
@@ -63,6 +62,7 @@ li{
                     flex-direction: column;
                     padding: 0;
                     margin: 2rem 0rem;
+                    width: 100%;
 
                     .listWrap {
                         width: 100%;
@@ -72,6 +72,12 @@ li{
                             color: #fff;
                             margin-bottom: 1px;
                             transition: all .2s ease;
+
+                            &:hover {
+                                i {
+                                    color: rgba(255, 255, 255, .7) !important;
+                                }
+                            }
 
                             i {
                                 font-size: 2rem;
@@ -116,7 +122,7 @@ li{
 .listNoPadding {
     @include center-center();
     padding: 1.2rem;
-    width: 100%!important;
+    width: 100% !important;
     transition: all .2s ease;
 }
 
@@ -124,6 +130,12 @@ li{
     li {
         color: #fff;
         list-style: none;
+
+        &:hover {
+            i {
+                color: rgba(255, 255, 255, .7) !important;
+            }
+        }
 
         i {
             font-size: 2rem;
@@ -137,4 +149,98 @@ li{
             font-weight: 700;
         }
     }
+}
+
+// IEBody styles starts here
+.bg-custom {
+    background: #032325 !important;
+    box-shadow: 0px 5px 10px #23d2dd, 0px 5px 10px #23d2dd;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: all .3s ease-in;
+}
+
+// NewQuize - component
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    animation: linear fade-in .5s;
+}
+
+.animation-delay-5 {
+    animation-delay: .5s;
+}
+
+#someInstruction {
+    user-select: none;
+    @include center-center();
+    border-bottom: 1px solid $theamColorTrans;
+    margin: 0rem 3rem 2rem 3rem;
+
+    div {
+        @include center-center();
+        flex-direction: column;
+        margin: 1rem 0rem;
+
+        p {
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 4rem;
+            margin: 0px;
+            line-height: 1;
+        }
+
+        span {
+            @include center-center();
+            width: fit-content;
+            font-family: 'Nunito', sans-serif;
+            font-size: 4rem;
+            flex-direction: column;
+            line-height: 1;
+
+            &::after {
+                content: "";
+                background: #fff;
+                height: .3rem;
+                width: 3rem;
+                border-radius: 1rem;
+                margin-top: .5rem;
+            }
+        }
+    }
+
+    .instruction {
+        ul {
+            li {
+                list-style: none;
+                font-family: 'Dosis', sans-serif;
+                letter-spacing: 1px;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+#createQuizeMain{
+    border: 1px solid #fff;
+    height: 100%!important;
+    width: 100%!important;
 }

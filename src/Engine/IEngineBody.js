@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import EngineContext from './context/EngineContext'
-import SubComOverview from './SubComOverview';
+import Overview from './Overview';
 import Draft from "./Draft"
 import NewQuize from "./NewQuize";
 import ConductedQuize from "./ConductedQuize";
@@ -15,7 +15,7 @@ const IEngineBody = () => {
     const callingFunction = () => {
         switch (choice) {
             case 1:
-                return <SubComOverview />
+                return <Overview />
 
             case 2:
                 return <Draft />
@@ -38,18 +38,21 @@ const IEngineBody = () => {
     }
 
     return (
-        <div className='container text-white'>
-            <div className="d-flex align-items-center justify-content-center">
-                <div className="text-white">
-                    <div className="text-white">
+        <>
+            <div id="backgroundAnimation">
+                {/* introduce at end of project */}
+            </div>
+
+            <div className='container text-white bg-custom py-4'>
+                <div className="d-flex align-items-center justify-content-center" style={{ height: '100%', width: '100%' }}>
+                    <div className="text-white d-flex align-items-center justify-content-center height-100 width-100">
                         {
                             callingFunction()
                         }
                     </div>
                 </div>
-
             </div>
-        </div>
+        </>
     )
 }
 

@@ -3,7 +3,7 @@ import EngineContext from "./EngineContext";
 
 const EngineState = (props) => {
 
-    const [choice, setChoice] = useState(1)
+    const [choice, setChoice] = useState(3)
     const handleChoice = (e) => {
         setChoice(e)
     }

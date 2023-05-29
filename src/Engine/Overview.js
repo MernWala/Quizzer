@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SubComOverview = () => {
+const Overview = () => {
   return (
     <div>
       this is overview component
@@ -8,4 +8,4 @@ const SubComOverview = () => {
   )
 }
 
-export default SubComOverview
+export default Overview
