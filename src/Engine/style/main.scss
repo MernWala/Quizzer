@@ -239,8 +239,57 @@ li {
     }
 }
 
-#createQuizeMain{
-    border: 1px solid #fff;
-    height: 100%!important;
-    width: 100%!important;
+#createQuizeMain {
+    // border: 1px solid #fff;
+    height: 100% !important;
+    width: 100% !important;
+
+    .createQuizeMain-closer {
+
+        .row:nth-child(1) {
+            @include center-center();
+            justify-content: flex-end;
+            padding: 0rem 1rem;
+            justify-content: space-between;
+
+            .quizeCode {
+                user-select: none;
+                border: 1px solid $theamText;
+                background-color: $theamColorTrans;
+                width: fit-content;
+                padding: .3rem 2rem;
+                border-radius: .5rem;
+                cursor: pointer;
+
+                span {
+                    font-size: 1.5rem;
+                    font-family: 'Nunito', sans-serif;
+                    font-style: italic;
+                    letter-spacing: 1px;
+
+                    i {
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.header-2 {
+
+    p {
+        user-select: none;
+        font-size: 3rem;
+        font-family: 'Dosis';
+        width: fit-content;
+        border-bottom: 3px solid $theamColorTrans;
+        padding-right: 2rem;
+    }
+}
+
+.theamText {
+    color: $theamText;
+    font-size: 3.5rem !important;
+    font-weight: bolder;
 }

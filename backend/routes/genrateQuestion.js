@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const Question = require('../model/Question')
+const Question = require('../model/Question');
+const fetchuser = require('../middleware/fetchuser')
 
 // method to remove perticular question
 const removeQuestion = (arr, _id) => {
@@ -51,7 +52,8 @@ router.post('/generate/:id', async (req, res) => {
             user: req.params.id,
             quizeCode: req.body.quizeCode,
             totalStudentAllowed: req.body.totalStudentAllowed,
-            questions: []
+            questions: [],
+            isPublish: req.body.isPublish,
         });
 
         const data = {
@@ -163,5 +165,31 @@ router.put('/update-question/:mainId/:questionId', async (req, res) => {
         res.status(500).json({ error })
     }
 })
+
+// Route 5 - get all question
+router.get(`/get-all-question/`, fetchuser, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const question = await Question.find({ user: userId });
+        res.status(200).json({ data: question })
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+});
+
+// Route 6 - Publishing question set ready to use { $set: { isPublish: true }}
+router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
+    try {
+        let user = req.user.id;
+        let quizeCode = req.params.quizeCode;
+
+        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true } })
+        res.status(200).json({ response });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error })
+    }
+});
 
 module.exports = router;

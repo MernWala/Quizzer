@@ -1,16 +1,17 @@
 import React, { useState, useContext } from 'react'
 import DataContext from '../context/userData/DataContext'
 import UtilityContext from '../context/utility/UtilityContext'
+import QuestionForm from './QuestionForm'
 
 const NewQuize = () => {
 
-  const [create, setCreate] = useState(false)
+  const [create, setCreate] = useState(true)
 
   const dataContext = useContext(DataContext);
   const { generateCode, userData } = dataContext;
 
   const utilContext = useContext(UtilityContext);
-  const {sendMess} = utilContext;
+  const { sendMess } = utilContext;
 
   const handleCreateBtn = async () => {
     document.getElementById('createPreRequest').style.animation = 'linear fade-out .5s';
@@ -20,6 +21,7 @@ const NewQuize = () => {
 
     // Now it time to apiCall
     let code = userData && generateCode(userData._id);
+    localStorage.setItem('quizer-quize-code', code)
     let user = userData && userData._id.toString();
     try {
       await fetch(`http://localhost:5001/genrate-question/generate/${user}`, {
@@ -30,12 +32,13 @@ const NewQuize = () => {
         body: JSON.stringify({
           "quizeCode": code,
           "totalStudentAllowed": "15",
-          "questions": []
+          "questions": [],
+          "isPublish": false
         })
       }).then((e) => {
-        if(e.status === 201){
+        if (e.status === 201) {
           sendMess('info', 'Question set created');
-        }else{
+        } else {
           sendMess('danger', 'Somthing went wrong with server. Try again later!');
         }
       })
@@ -92,14 +95,36 @@ const NewQuize = () => {
       {create &&
         <div className='fade-in .animation-delay-5' id="createQuizeMain">
           <div className="createQuizeMain-closer">
-            <div className="row mx-2">
-              <div className="quizeCode">
-                <span>
-                  {
 
-                  }
+            <div className="row mx-1">
+
+              <div className="col col-8 header-2">
+                <p>
+                  <span className="theamText">Y</span>ou may <span className="theamText">A</span>dd question <span className="theamText">H</span>ere
+                </p>
+              </div>
+
+              <div className="quizeCode col col-4">
+                <span className='d-flex align-items-center'>
+                  Quize Code
+                  <i class="fa-solid fa-arrow-right-long mx-3"></i>
+                  <b>
+                    {
+                      localStorage.getItem('quizer-quize-code')
+                    }
+                  </b>
                 </span>
               </div>
+
+
+            </div>
+
+            <div className="row mx-1 px-3 py-4 justify-content-center">
+              <QuestionForm />
+            </div>
+
+            <div className="row mx-1 px-3">
+               
             </div>
           </div>
         </div>

@@ -30,6 +30,10 @@ const QuestionSchema = new Schema({
             }
         }
     ],
+    isPublish: {
+        type: Boolean,
+        require: true,
+    },
     date: {
         type: Date,
         default: Date.now

@@ -25,6 +25,7 @@
 }
 
 .alerMainContainer {
+    z-index: 9;
     @include center-center();
     position: fixed;
     width: fit-content;
