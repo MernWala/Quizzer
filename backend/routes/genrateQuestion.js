@@ -76,8 +76,11 @@ router.put('/add-question/', [
     body('question', "Length of question must be at least 25 character long").isLength({ min: 25 }),
     body('option', "Options not found").exists(),
     body('answer', "Answer not found").exists(),
+    body('marks', "Please value some marks for the question").exists(),
+    body('multiAns', "Multiple ans value not found").exists(),
 
 ], async (req, res) => {
+
     const error = validationResult(req);
     if (!error.isEmpty()) {
         res.status(400).json({ error: error.array() });
@@ -89,12 +92,14 @@ router.put('/add-question/', [
             question: req.body.question,
             option: req.body.option,
             answer: req.body.answer,
-            picture: req.body.picture ? req.body.picture : ''
+            picture: req.body.picture ? req.body.picture : '',
+            marks: req.body.marks,
+            multiAns: req.body.multiAns,
         }
 
         let ques = await Question.findOne({ quizeCode: req.body.quizeCode });
         if (!ques) {
-            res.status(400).json({ error: `Data with ${req.body.quizeCode} exam code not found` })
+            res.status(400).json({ error: `Data with ${req.body.quizeCode} exam code not found. Please regenrate quize code` })
             return;
         } else {
             ques.questions.push(qSet)
@@ -146,19 +151,20 @@ router.put('/update-question/:mainId/:questionId', async (req, res) => {
         const index = getIndex(ques.questions, req.params.questionId);
         const oldData = ques.questions[index];
 
-        const { question, picture, option, answer, _id } = oldData
-        const { u_question, u_picture, u_option, u_answer } = req.body;
+        const { question, picture, option, answer, _id, multiAns } = oldData
+        const { u_question, u_picture, u_option, u_answer, u_multiAns } = req.body;
 
         const newData = {
             "question": u_question ? u_question : question,
             "picture": u_picture ? u_picture : picture,
             "option": u_option ? u_option : option,
             "answer": u_answer ? u_answer : answer,
-            "_id": _id
+            "_id": _id,
+            "multiAns": u_multiAns ? u_multiAns : multiAns,
         }
 
         ques.questions[index] = newData;
-        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: false })
+        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true })
         res.status(200).json({ update: newData })
 
     } catch (error) {
@@ -166,16 +172,39 @@ router.put('/update-question/:mainId/:questionId', async (req, res) => {
     }
 })
 
-// Route 5 - get all question
-router.get(`/get-all-question/`, fetchuser, async (req, res) => {
+// Route 5 - get all question set -> question set card
+router.get(`/get-question-set/`, fetchuser, async (req, res) => {
+
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        res.status(400).json({ error: error.array() });
+        return;
+    }
+
     try {
         const userId = req.user.id;
         const question = await Question.find({ user: userId });
-        res.status(200).json({ data: question })
+        res.status(200).json({ "data": question })
+
     } catch (error) {
         res.status(500).json({ error: error })
     }
 });
+
+// ROUTE 6 - Get actual question array
+router.get('/get-question/:userId/:quizeCode/', async (req, res) => {
+    try {
+
+        let userId = req.params.userId;
+        let quizeCode = req.params.quizeCode;
+
+        const sets = await Question.findOne({ user: userId, quizeCode: quizeCode })
+        res.status(200).json({ sets })
+
+    } catch (error) {
+        res.status(500).json({ error })
+    }
+})
 
 // Route 6 - Publishing question set ready to use { $set: { isPublish: true }}
 router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {

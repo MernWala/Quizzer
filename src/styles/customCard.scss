@@ -96,7 +96,8 @@ textarea:focus {
     box-shadow: 0rem .4rem 0rem rgba(255, 255, 255, .5);
     transition: none!important;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
         background: $theamColorTrans;
         position: relative;        
         top: .3rem;

@@ -43,7 +43,7 @@ const IEngineBody = () => {
                 {/* introduce at end of project */}
             </div>
 
-            <div className='container text-white bg-custom py-4'>
+            <div className='container text-white bg-custom'>
                 <div className="d-flex align-items-center justify-content-center" style={{ height: '100%', width: '100%' }}>
                     <div className="text-white d-flex align-items-center justify-content-center height-100 width-100">
                         {

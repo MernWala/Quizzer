@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react'
 import DataContext from '../context/userData/DataContext'
 import UtilityContext from '../context/utility/UtilityContext'
 import QuestionForm from './QuestionForm'
+import EngineContext from './context/EngineContext'
 
 const NewQuize = () => {
 
-  const [create, setCreate] = useState(true)
+  const eContext = useContext(EngineContext);
+  const { create, handleCreteState } = eContext;
 
   const dataContext = useContext(DataContext);
   const { generateCode, userData } = dataContext;
@@ -16,7 +18,7 @@ const NewQuize = () => {
   const handleCreateBtn = async () => {
     document.getElementById('createPreRequest').style.animation = 'linear fade-out .5s';
     setTimeout(() => {
-      setCreate(true);
+      handleCreteState(true);
     }, 500);
 
     // Now it time to apiCall
@@ -46,6 +48,8 @@ const NewQuize = () => {
       console.error(error)
     }
   }
+
+  const code = localStorage.getItem('quizer-quize-code');
 
   return (
     <>
@@ -104,28 +108,23 @@ const NewQuize = () => {
                 </p>
               </div>
 
-              <div className="quizeCode col col-4">
+              <div className="quizeCode col col-4" onClick={() => { navigator.clipboard.writeText(code); sendMess('info', `Quiz code ( ${code} ) copied to clipboard`) }}>
                 <span className='d-flex align-items-center'>
                   Quize Code
-                  <i class="fa-solid fa-arrow-right-long mx-3"></i>
+                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
                   <b>
                     {
-                      localStorage.getItem('quizer-quize-code')
+                      code
                     }
                   </b>
                 </span>
               </div>
-
-
             </div>
 
             <div className="row mx-1 px-3 py-4 justify-content-center">
               <QuestionForm />
             </div>
 
-            <div className="row mx-1 px-3">
-               
-            </div>
           </div>
         </div>
       }

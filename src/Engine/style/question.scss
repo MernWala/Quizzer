@@ -1,0 +1,132 @@
+@import "../../styles//variables.scss";
+
+.mainContaier {
+    @include center-center();
+    padding-top: 3rem;
+    width: 100%;
+
+    .mainContaier-closer {
+        width: 80%;
+
+        .container {
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-radius: .5rem;
+            background-color: $theamUltraThin;
+            box-shadow: 0px 0px 5px 1px $theamUltraThin;
+            border: 1px solid $theamColorTrans;
+        }
+    }
+}
+
+.fit-content {
+    height: fit-content;
+    width: fit-content;
+}
+
+.sno-text {
+    font-size: 1.7rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.question-text {
+    font-size: 1.7rem;
+    font-weight: lighter;
+    font-family: 'Nunito' sans-serif, ;
+    letter-spacing: 1px;
+    text-align: justify;
+}
+
+.mark-text {
+    background: $theamTextHovered;
+    padding: .2rem 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.no-wrap {
+    flex-wrap: nowrap !important;
+}
+
+.option-set {
+    font-size: 1.6rem;
+
+    .option-group {
+        @include center-center();
+        justify-content: flex-start;
+    }
+
+    input[type=checkbox] {
+        position: relative;
+        cursor: pointer;
+        height: 1.8rem;
+        width: 1.8rem;
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            // top: 0;
+            // left: 0;
+            border: 1px solid $theamText;
+            border-radius: 3px;
+            background-color: white;
+        }
+
+        &:checked::after {
+            content: "";
+            position: relative;
+            display: block;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
+            background-color: $theamText;
+            border-radius: 1px;
+            top: 5px;
+            left: 5px;
+        }
+    }
+
+    input[type=radio] {
+        appearance: none;
+        background-color: #fff;
+        margin: 0;
+        font: inherit;
+        color: $theamColor;
+        width: 2rem;
+        height: 2rem;
+        border: 2px solid $theamText;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
+
+        &::before {
+            content: "";
+            width: 1.1rem;
+            height: 1.1rem;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em $theamText;
+        }
+
+        &:checked::before {
+            transform: scale(1);
+        }
+    }
+
+}
+
+.question-form-control {
+    // border: 1px solid red;
+
+    .question-form-control-closer {
+        button {
+            font-size: 1.5rem;
+        }
+    }
+}

@@ -11,6 +11,7 @@ import UtilityContext from './context/utility/UtilityContext';
 import Register from './Components/Register';
 import EngineHome from './Engine/IE_Home';
 import EngineState from './Engine/context/EngineState';
+import PreviewQuestion from './Engine/PreviewQuestion';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
               <Route path="/app/acess-account/auth" element={<Auth />} />
               <Route path='/app/new-user' element={<Register />} />
               <Route path="/app/engin/instructor" element={<EngineHome />} />
+              <Route path="/question-set/preview" element={<PreviewQuestion />} />
             </Routes>
           </BrowserRouter>
         </EngineState>

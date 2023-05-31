@@ -26,7 +26,13 @@ const QuestionSchema = new Schema({
                 type: Array
             },
             answer: {
-                type: String
+                type: Array
+            },
+            marks: {
+                type: Number
+            },
+            multiAns: {
+                type: Boolean
             }
         }
     ],

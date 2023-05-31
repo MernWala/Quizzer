@@ -109,7 +109,7 @@ li {
 }
 
 .listBtn {
-    padding: 1.2rem 3rem;
+    padding: 1.2rem 2rem;
     width: 100%;
     background: $theamTextHovered;
     cursor: pointer;
@@ -292,4 +292,39 @@ li {
     color: $theamText;
     font-size: 3.5rem !important;
     font-weight: bolder;
+}
+
+#modal2 {
+    font-size: 162%;
+    user-select: none;
+
+    .modal-title {
+        font-size: 130% !important;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .modal-body {
+        font-family: 'Dosis';
+        font-weight: bold;
+    }
+
+    .modal-footer {
+        button {
+            font-size: 100% !important;
+        }
+    }
+}
+
+.greeting-font {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Dancing Script', sans-serif;
+}
+
+.disable-btn {
+    opacity: .5;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
 }
