@@ -4,7 +4,7 @@ import UtilityContext from '../../context/utility/UtilityContext';
 
 const EngineState = (props) => {
 
-    const [choice, setChoice] = useState(3)
+    const [choice, setChoice] = useState(2)
     const handleChoice = (e) => {
         setChoice(e)
     }
@@ -55,7 +55,7 @@ const EngineState = (props) => {
     const fetchAllQuestionData = async () => {
         try {
             const authToken = localStorage.getItem('quizer-auth-token');
-            await fetch('http://localhost:5001/genrate-question/get-all-question/', {
+            await fetch('http://localhost:5001/genrate-question/get-question-set/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,6 @@ const EngineState = (props) => {
 
     const addQuestionApiCall = async (e) => {
         e.preventDefault()
-        console.log(e);
         const quizeCode = await localStorage.getItem('quizer-quize-code');
         try {
             await fetch(`http://localhost:5001/genrate-question/add-question/`, {
@@ -91,11 +90,12 @@ const EngineState = (props) => {
                 })
             }).then(async (data) => {
                 const json = await data.json();
-                console.log(json);
                 if (json.sent) {
                     sendMess('success', 'Question added successfully');
                     setTimeout(() => {
                         document.getElementById('questionForm').reset();
+                        setmultiSelect(false);
+                        setQuestionData({})
                     }, 1500);
                 } else {
                     if (json.error && Array.isArray(json.error)) {
@@ -130,7 +130,6 @@ const EngineState = (props) => {
                 }
             }).then(async (e) => {
                 const response = await e.json();
-                console.log(response);
                 setSelectedQuestionSet(response.sets);
             })
         } catch (error) {
@@ -154,7 +153,7 @@ const EngineState = (props) => {
                 }
             }).then(async (e) => {
                 const response = await e.json();
-                if(response.response){
+                if (response.response) {
                     sendMess('success', 'Publish success, now this quize is ready to use.')
                 }
                 setTimeout(() => {
@@ -166,11 +165,32 @@ const EngineState = (props) => {
         }
     }
 
+    const handleDelete = async (_id) => {
+        let confirmation = window.confirm("Are you sure to delete question set");
+
+        if (confirmation) {
+            await fetch(`http://localhost:5001/genrate-question/delete-qSet/${_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': await localStorage.getItem('quizer-auth-token')
+                }
+            }).then((response) => {
+                if (!response.error) {
+                    sendMess('danger', `Question set with quize code - ${response.quizeCode} deleted.`)
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }
+            })
+        }
+    }
+
     return (
         <EngineContext.Provider value={{
             choice, handleChoice, handleOnChange, addQuestionApiCall, fetchAllQuestionData, userAllQuestionSet,
             handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet, create, handleCreteState,
-            handlePublishQuize
+            handlePublishQuize, handleDelete
         }}>
             {props.children}
         </EngineContext.Provider>

@@ -11,6 +11,18 @@ li {
     }
 }
 
+.width-100p {
+    width: 100% !important;
+    transition: width 30ms ease-in-out;
+    background: red;
+}
+
+.width-6-5rem {
+    width: 6rem!important;
+    transition: width 30ms ease-in-out;
+    background: red;
+}
+
 .sideNavContainer {
     @include center-center();
     user-select: none;
@@ -110,7 +122,6 @@ li {
 
 .listBtn {
     padding: 1.2rem 2rem;
-    width: 100%;
     background: $theamTextHovered;
     cursor: pointer;
 }
@@ -327,4 +338,35 @@ li {
 
 .cursor-pointer {
     cursor: pointer !important;
+}
+
+
+// draft.js style starts here
+.font-size-150p {
+    font-size: 150% !important;
+}
+
+.font-size-17px {
+    font-size: 1.7rem !important;
+}
+
+.q-card-tag-text {
+    font-size: 1.45rem !important;
+}
+
+.q-card-subtitle-text {
+    font-size: 1.3rem;
+}
+
+.q-card-main-container {
+    background: $theamUltraThin !important;
+    height: fit-content;
+    width: fit-content;
+    box-shadow: 0px 0px 3px 1px $theamColorTrans;
+    border-radius: 3px;
+}
+
+.background-transparent {
+    background-color: transparent !important;
+    border: none;
 }

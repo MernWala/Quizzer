@@ -8,16 +8,16 @@ const QuestionDesine = (props) => {
             <div className="mainContaier text-white">
                 <div className="mainContaier-closer">
                     {/* question main body starts here */}
-                    {props.data.map((sample, index) => {
-                        return (
-                            <>
-                                <form id={`reset-btn-${index + 1}`}>
-                                    <div div className="container ">
+                    {
+                        props.data.map((sample, index) => {
+                            return (
+                                <form id={`reset-btn-${index + 1}`} key={`question${index + 1}`} >
+                                    <div className="container ">
                                         <div className="question-main-container d-flex justify-content-between">
                                             <div className="row col col-10 question-container ms-1">
                                                 <div className="question-text d-flex fit-content">
                                                     <div className="sno-text fit-content">
-                                                        <span>{index+1}.</span>
+                                                        <span>{index + 1}.</span>
                                                     </div>
                                                     <span className="mx-3">{sample.question}</span>
                                                 </div>
@@ -58,16 +58,15 @@ const QuestionDesine = (props) => {
 
                                             <div className="question-form-control mt-4">
                                                 <div className="question-form-control-closer">
-                                                    <button className="btn btn-secondary btn-sm py-0 px-4 me-3" id={`reset-btn-${index + 1}`} type='reset'> Reset </button>
+                                                    <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset'> Reset </button>
                                                     <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                            </>
-                        )
-                    })}
+                            )
+                        })}
                     {/* question main body end here */}
                 </div>
             </div>

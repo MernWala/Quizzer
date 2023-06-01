@@ -26,9 +26,9 @@ const SideNav = () => {
                             <div className="_btn ms-4" onClick={handleBarBtn}>
                                 {
                                     isOpen ?
-                                        <i className="fa-solid fa-bars-staggered text-white"></i>
-                                        :
                                         <i className="fa-solid fa-xmark text-white"></i>
+                                        :
+                                        <i className="fa-solid fa-bars-staggered text-white"></i>
                                 }
                             </div>
                         </div>
@@ -39,45 +39,46 @@ const SideNav = () => {
                         <div className="sideNav-mainContent-closer">
                             <ul>
                                 <div className="listWrap" onClick={() => { handleChoice(1) }}>
-                                    <li className={`listBtn`}>
+                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                                         <i className="fa-solid fa-house-chimney text-white"></i>
-                                        <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`}>
+                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`}>
                                             Overview
                                         </span>
                                     </li>
                                 </div>
 
                                 <div className="listWrap" onClick={() => { handleChoice(2) }}>
-                                    <li className={`listBtn`}>
+                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                                         <i className="fa-solid fa-file-signature text-white"></i>
-                                        <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`} >
-                                            Draft
+                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
+                                            Question Set
                                         </span>
                                     </li>
                                 </div>
 
                                 <div className="listWrap" onClick={() => { handleChoice(3) }}>
-                                    <li className={`listBtn`}>
+                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                                         <i className="fa-solid fa-folder-plus text-white"></i>
-                                        <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`} >
+                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
                                             New Quize
                                         </span>
                                     </li>
                                 </div>
 
-                                <div className="listWrap" onClick={() => { handleChoice(4) }}>
-                                    <li className={`listBtn`}>
+                                {/* comes in future release for realt time update */}
+                                {/* <div className="listWrap" onClick={() => { handleChoice(4) }}>
+                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                                         <i className="fa-solid fa-diagram-predecessor text-white"></i>
-                                        <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`} >
+                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
                                             Conducted Quize
                                         </span>
                                     </li>
-                                </div>
+                                </div> */}
 
                                 <div className="listWrap" onClick={() => { handleChoice(5) }}>
-                                    <li className={`listBtn`}>
+                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                                         <i className="fa-solid fa-square-poll-vertical text-white"></i>
-                                        <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`} >
+                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
                                             Recorded Result
                                         </span>
                                     </li>
@@ -87,9 +88,9 @@ const SideNav = () => {
                     </div>
 
                     <div className="listWrapOuter" onClick={() => { handleChoice(6) }}>
-                        <li className={`listBtn`}>
+                        <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
                             <i className="fa-solid fa-comments text-white"></i>
-                            <span className={`listText ${isOpen ? 'no-text fade-out' : 'fade-in'}`}>
+                            <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`}>
                                 FAQ
                             </span>
                         </li>

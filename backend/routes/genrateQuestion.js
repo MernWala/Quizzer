@@ -206,7 +206,7 @@ router.get('/get-question/:userId/:quizeCode/', async (req, res) => {
     }
 })
 
-// Route 6 - Publishing question set ready to use { $set: { isPublish: true }}
+// Route 7 - Publishing question set ready to use { $set: { isPublish: true }}
 router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
     try {
         let user = req.user.id;
@@ -220,5 +220,19 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
         res.status(500).json({ error: error })
     }
 });
+
+router.delete(`/delete-qSet/:qSetId/`, fetchuser, async (req, res) => {
+    try {
+
+        const qSetId = req.params.qSetId;
+        const user = req.user.id;
+
+        const response = await Question.findOneAndDelete({ user: user, _id: qSetId });
+        res.status(200).json({ response });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Server error please try again later' })
+    }
+})
 
 module.exports = router;
