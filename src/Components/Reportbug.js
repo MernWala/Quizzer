@@ -44,7 +44,7 @@ const Reportbug = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!isLogin){
+        if(isLogin){
             sendMess('warning', "It's seems like you have not login yet");
             return;
         }
@@ -61,7 +61,8 @@ const Reportbug = () => {
                 accountType: data.accountType,
                 report: data.report,
             })
-        }).then((e) => {
+        }).then(async (e) => {
+            const data = await e.json()
             if (e.status === 201) {
                 sendMess('success', 'Report sucessfully')
 
@@ -72,7 +73,7 @@ const Reportbug = () => {
                     }, 2000);
                 }, 4000);
             } else {
-                sendMess('danger', 'Somthing went wrong.')
+                sendMess('danger', data.error[0].msg)
             }
         })
     }

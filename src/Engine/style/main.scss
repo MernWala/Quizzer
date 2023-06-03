@@ -26,7 +26,8 @@ li {
 .sideNavContainer {
     @include center-center();
     user-select: none;
-    position: relative;
+    position: sticky;
+    top: 6.6rem;
     z-index: 9;
     width: fit-content;
     height: calc(100vh - 6.6rem);
@@ -373,4 +374,8 @@ li {
 
 .border-1px {
     border: 1px solid $theamColorTrans;
+}
+
+.border-radius-5rem {
+    border-radius: 5rem;
 }

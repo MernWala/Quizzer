@@ -112,6 +112,65 @@ const EngineState = (props) => {
         }
     }
 
+    const modifyQuestionApiCall = async (qSet_Id, qId) => {
+        try {
+            await fetch(`http://localhost:5001/genrate-question/update-question/${qSet_Id}/${qId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': await localStorage.getItem('quizer-auth-token')
+                },
+                body: JSON.stringify({
+                    "u_question": questionData.question,
+                    "u_picture": questionData.image,
+                    "u_option": genrateOptionArray(questionData),
+                    "u_answer": genrateAnswerArray(questionData),
+                    "u_multiAns": multiSelect,
+                    "u_marks": questionData.carriedMark,
+                })
+            }).then(async (data) => {
+                const res = await data.json()
+                console.log(res);
+                if (res.update) {
+                    sendMess('success', 'Question updated sucessfull');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            sendMess('warning', 'Somthing went wrong with servers');
+        }
+    }
+
+    const handleDeleteQuestion = async (qSetId, qId) => {
+        let conf = window.confirm("Are you sure to delete question ?");
+        if (conf) {
+            const token = localStorage.getItem('quizer-auth-token')
+            try {
+                await fetch(`http://localhost:5001/genrate-question/delete-question/${qSetId}/${qId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'auth-token': token
+                    }
+                }).then(async (response) => {
+                    if (response.statusText === "OK") {
+                        sendMess('warning', "Question deleted");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        sendMess('info', "Somthing went wrong with servers. Please try after some time.")
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     const [multiSelect, setmultiSelect] = useState(false);
     const handleMultiSelect = (e) => {
         setmultiSelect(e.target.checked);
@@ -137,12 +196,6 @@ const EngineState = (props) => {
         }
     }
 
-    // engine -> new quize state
-    const [create, setCreate] = useState(true)
-    const handleCreteState = (e) => {
-        setCreate(e)
-    }
-
     const handlePublishQuize = async (quizeCode, name) => {
         try {
             await fetch(`http://localhost:5001/genrate-question/publish-question-set/${quizeCode}`, {
@@ -157,7 +210,7 @@ const EngineState = (props) => {
             }).then(async (e) => {
                 const response = await e.json();
                 if (response.response) {
-                    sendMess('success', `Now Published with the name ${name}. Now it is ready to use`)
+                    sendMess('success', `Published with the name ${name}. Now it is ready to use`)
                 }
                 setTimeout(() => {
                     handleChoice(1);
@@ -178,22 +231,42 @@ const EngineState = (props) => {
                     'Content-Type': 'application/json',
                     'auth-token': await localStorage.getItem('quizer-auth-token')
                 }
-            }).then((response) => {
+            }).then(async (response) => {
                 if (!response.error) {
-                    sendMess('danger', `Question set with quize code - ${response.quizeCode} deleted.`)
+                    let code = await response.json()
+                    sendMess('danger', `Question set with quize code - ${code.response.quizeCode} deleted.`)
                     setTimeout(() => {
                         window.location.reload();
-                    }, 1500);
+                    }, 2000);
                 }
             })
         }
     }
 
+    const [currentQset, setCurrentQset] = useState()
+    const handleCurrentQset = (qSetId) => {
+        setCurrentQset(qSetId);
+    }
+
+    const handleClickedQuestionId = (id) => {
+        localStorage.setItem('quizer-modify-question-id', id);
+    }
+
+    const countMarks = (qSet) => {
+        let arr = qSet.questions;
+        let marks = 0;
+        arr.forEach(element => {
+            marks += element.marks
+        });
+        return marks
+    }
+
     return (
         <EngineContext.Provider value={{
             choice, handleChoice, handleOnChange, addQuestionApiCall, fetchAllQuestionData, userAllQuestionSet,
-            handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet, create, handleCreteState,
-            handlePublishQuize, handleDelete
+            handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet, handlePublishQuize,
+            handleDelete, handleDeleteQuestion, currentQset, handleCurrentQset, handleClickedQuestionId,
+            modifyQuestionApiCall, countMarks
         }}>
             {props.children}
         </EngineContext.Provider>

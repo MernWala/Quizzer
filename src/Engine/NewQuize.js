@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import DataContext from '../context/userData/DataContext'
 import UtilityContext from '../context/utility/UtilityContext'
-import QuestionForm from './QuestionForm'
 import EngineContext from './context/EngineContext'
 
 const NewQuize = () => {
 
   const eContext = useContext(EngineContext);
-  const { create, handleCreteState } = eContext;
+  const { handleChoice } = eContext;
 
   const dataContext = useContext(DataContext);
   const { generateCode, userData } = dataContext;
@@ -17,13 +16,10 @@ const NewQuize = () => {
 
   const handleCreateBtn = async () => {
     document.getElementById('createPreRequest').style.animation = 'linear fade-out .5s';
-    setTimeout(() => {
-      handleCreteState(true);
-    }, 500);
 
     // Now it time to apiCall
     let code = userData && generateCode(userData._id);
-    localStorage.setItem('quizer-quize-code', code)
+    localStorage.setItem('quizer-quize-code', code);
     let user = userData && userData._id.toString();
     try {
       await fetch(`http://localhost:5001/genrate-question/generate/${user}`, {
@@ -37,67 +33,64 @@ const NewQuize = () => {
           "questions": [],
           "isPublish": false
         })
-      }).then((e) => {
+      }).then(async (e) => {
+        const data = await e.json();
         if (e.status === 201) {
-          sendMess('info', 'Question set created');
+          sendMess('info', `Question set created with quize code - ${code}`);
+          setTimeout(() => {
+            handleChoice(2)
+          }, 1500);
         } else {
-          sendMess('danger', 'Somthing went wrong with server. Try again later!');
+          sendMess('danger', data.resolution);
         }
       })
     } catch (error) {
       console.error(error)
     }
   }
-  
 
   return (
     <>
-      {!create &&
-        <div className={`d-flex align-items-center justify-content-center flex-column mb-5 mt-3 ${!create && 'fade-in'}`} id="createPreRequest">
-          <div id="someInstruction" className="row">
-            <div>
-              <p>Please read Instructions</p>
-              <span>Carefully</span>
-            </div>
-            <div className="instruction">
-              <ul>
-                <li>
-                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
-                </li>
-                <li>
-                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
-                </li>
-                <li>
-                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
-                </li>
-                <li>
-                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
-                </li>
-                <li>
-                  <i className="fa-solid fa-arrow-right-long mx-3"></i>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
-                </li>
-              </ul>
-            </div>
+      <div className={`d-flex align-items-center justify-content-center flex-column mb-5 mt-3 'fade-in'`} id="createPreRequest">
+        <div id="someInstruction" className="row">
+          <div>
+            <p>Please read Instructions</p>
+            <span>Carefully</span>
           </div>
-
-          <div className="newQuizeContainer">
-            <div className="newQuizeContainer-closer">
-              <button className="btn btn-custom btn-shadow" onClick={handleCreateBtn}>
-                Create new Question set
-              </button>
-            </div>
+          <div className="instruction">
+            <ul>
+              <li>
+                <i className="fa-solid fa-arrow-right-long mx-3"></i>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
+              </li>
+              <li>
+                <i className="fa-solid fa-arrow-right-long mx-3"></i>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
+              </li>
+              <li>
+                <i className="fa-solid fa-arrow-right-long mx-3"></i>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
+              </li>
+              <li>
+                <i className="fa-solid fa-arrow-right-long mx-3"></i>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
+              </li>
+              <li>
+                <i className="fa-solid fa-arrow-right-long mx-3"></i>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet illo aperiam expedita perferendis
+              </li>
+            </ul>
           </div>
         </div>
-      }
 
-      {create &&
-        <QuestionForm />
-      }
+        <div className="newQuizeContainer">
+          <div className="newQuizeContainer-closer">
+            <button className="btn btn-custom btn-shadow" onClick={handleCreateBtn}>
+              Create new Question set
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

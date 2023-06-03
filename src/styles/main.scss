@@ -15,6 +15,10 @@ nav {
     backdrop-filter: blur(5px);
 }
 
+.bg-theam {
+    background-color: $theamColor;
+}
+
 .navbar-theam {
     background: $theamColorTrans;
     padding: 0rem 3rem;
@@ -80,7 +84,7 @@ i {
     background-color: $theamColor;
 }
 
-.custom-tooltip-copyText{
+.custom-tooltip-copyText {
     border: 1px solid;
     right: 40rem;
     top: 8.3rem;
@@ -455,11 +459,11 @@ i {
     }
 }
 
-.custom-register-btn{
+.custom-register-btn {
     transition: filter .2s ease-in;
 }
 
-.custom-disable-btn{
+.custom-disable-btn {
     filter: contrast(0.3);
     transition: filter .2s ease-in;
 }

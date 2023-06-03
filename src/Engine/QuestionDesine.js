@@ -1,7 +1,14 @@
-import React from 'react'
-import "./style/question.scss"
+import React, { useContext, useEffect } from 'react'
+import "./style/question.scss";
+import EngineContext from './context/EngineContext';
 
 const QuestionDesine = (props) => {
+    const enginContext = useContext(EngineContext);
+    const { handleDeleteQuestion, handleCurrentQset, currentQset, handleClickedQuestionId } = enginContext;
+
+    useEffect(() => {
+        handleCurrentQset(props.qSet_Id)
+    }, [currentQset]);
 
     return (
         <>
@@ -61,6 +68,20 @@ const QuestionDesine = (props) => {
                                                     <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset'> Reset </button>
                                                     <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="row mx-2 mt-4 flex-column fit-content ms-auto">
+                                            <div className="btn-group fit-content ms-auto">
+                                                <button type="button" className='btn btn-danger btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
+                                                    onClick={() => handleDeleteQuestion(props.qSet_Id, sample._id)}>
+                                                    Delete
+                                                </button>
+                                                <button type="button" className='btn btn-secondary btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
+                                                    data-bs-toggle="modal" data-bs-target="#ModifyQuestionModal"
+                                                    onClick={() => handleClickedQuestionId(sample._id)}>
+                                                    Modify
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

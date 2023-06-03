@@ -115,15 +115,19 @@ router.put('/add-question/', [
 });
 
 // ROUTE 3 - Delete question endpoint
-router.delete('/delete-question/:mainId/:questionId', async (req, res) => {
+router.delete('/delete-question/:mainId/:questionId', fetchuser, async (req, res) => {
     try {
-        let ques = await Question.findById(req.params.mainId);
+        const userId = req.user.id;
+        const qSetId = req.params.mainId;
+        const qId = req.params.questionId;
+
+        let ques = await Question.findOne({ _id: qSetId, user: userId });
         if (!ques) {
             res.status(400).json({ error: `Data with ${req.params.mainId} exam code not found` })
             return;
         }
 
-        const newArr = removeQuestion(ques.questions, req.params.questionId);
+        const newArr = removeQuestion(ques.questions, qId);
         if (newArr < 0) {
             res.status(400).json({ error: "Not found" });
             return;
@@ -140,33 +144,33 @@ router.delete('/delete-question/:mainId/:questionId', async (req, res) => {
 })
 
 // ROUTE 4 - Update question endpoint
-router.put('/update-question/:mainId/:questionId', async (req, res) => {
+router.put('/update-question/:mainId/:questionId', fetchuser, async (req, res) => {
     try {
-        let ques = await Question.findById(req.params.mainId);
+        let ques = await Question.findOne({ _id: req.params.mainId, user: req.user.id });
         if (!ques) {
-            res.status(400).json({ error: `Data with ${req.params.mainId} exam code not found` })
+            res.status(400).json({ error: `No data found` });
             return;
         }
 
         const index = getIndex(ques.questions, req.params.questionId);
         const oldData = ques.questions[index];
 
-        const { question, picture, option, answer, _id, multiAns } = oldData
-        const { u_question, u_picture, u_option, u_answer, u_multiAns } = req.body;
+        const { question, picture, option, answer, _id, multiAns, marks } = oldData;
+        const { u_question, u_picture, u_option, u_answer, u_multiAns, u_marks } = req.body;
 
         const newData = {
             "question": u_question ? u_question : question,
             "picture": u_picture ? u_picture : picture,
             "option": u_option ? u_option : option,
             "answer": u_answer ? u_answer : answer,
+            "multiAns": u_multiAns !== "" ? u_multiAns : multiAns,
+            "marks": u_marks ? u_marks : marks,
             "_id": _id,
-            "multiAns": u_multiAns ? u_multiAns : multiAns,
-        }
+        };
 
         ques.questions[index] = newData;
-        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true })
-        res.status(200).json({ update: newData })
-
+        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true });
+        res.status(200).json({ update: newData });
     } catch (error) {
         res.status(500).json({ error })
     }
@@ -213,7 +217,7 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
         let quizeCode = req.params.quizeCode;
         let qName = req.body.qName;
 
-        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true, qName: qName }})
+        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true, qName: qName } })
         res.status(200).json({ response });
 
     } catch (error) {
@@ -222,6 +226,7 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
     }
 });
 
+// ROUTE 8 - delete question set of particular user
 router.delete(`/delete-qSet/:qSetId/`, fetchuser, async (req, res) => {
     try {
 

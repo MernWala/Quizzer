@@ -78,7 +78,7 @@ const DataState = (props) => {
 
     const generateCode = (id) => {
         if (id) {
-            let temp = String(Math.floor(Math.random() * 10 + 1) * 12345)
+            let temp = String(Math.floor(10000 + Math.random() * 10000))
             let code = temp.slice(0, 4) + id.slice(0, 4);
             return code;
         } else {

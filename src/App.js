@@ -15,6 +15,7 @@ import PreviewQuestion from './Engine/PreviewQuestion';
 import QuestionForm from './Engine/QuestionForm';
 import PublishQuizeModal from './Engine/PublishQuizeModal';
 import ProfileModal from './Components/ProfileModal';
+import ModifyQuestionModal from './Engine/ModifyQuestionModal';
 
 function App() {
 
@@ -27,10 +28,11 @@ function App() {
         <EngineState>
           <BrowserRouter>
             <Navbar />
-
+            {/* Modals declaratioon start here */}
             <PublishQuizeModal />
             <ProfileModal />
-
+            <ModifyQuestionModal />
+            {/* Modals declaratioon end here */}
             <Alert head={alert.head} body={alert.body} />
             <Routes>
               <Route path="/" element={<Home />} />
@@ -38,7 +40,7 @@ function App() {
               <Route path="/reportbug" element={<Reportbug />} />
               <Route path="/app/acess-account/auth" element={<Auth />} />
               <Route path='/app/new-user' element={<Register />} />
-              <Route path="/app/engin/instructor" element={<EngineHome />} />
+              <Route path="/app/engin/instructor" element={<EngineHome />} />   {/* here is instructor engine */}
               <Route path="/question-set/preview" element={<PreviewQuestion />} />
               <Route path="/question/edit/add-question/" element={<QuestionForm />} />
             </Routes>

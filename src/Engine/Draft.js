@@ -4,7 +4,7 @@ import EngineContext from "./context/EngineContext"
 const Draft = () => {
 
   const eContext = useContext(EngineContext);
-  const { userAllQuestionSet, fetchAllQuestionData, handleDelete } = eContext;
+  const { userAllQuestionSet, fetchAllQuestionData, handleDelete, countMarks } = eContext;
 
   useEffect(() => {
     const asyncApiCall = async () => {
@@ -13,7 +13,7 @@ const Draft = () => {
     asyncApiCall();
   }, [])
 
-  const handleAddQuestion = (qCode) => {
+  const saveLocal = (qCode) => {
     localStorage.setItem('quizer-quize-code', qCode);
   }
 
@@ -25,11 +25,8 @@ const Draft = () => {
             <span className="theamText">H</span>ere<span className="theamText">'</span>s your <span className="theamText">A</span>ll question <span className="theamText">S</span>ets
           </p>
         </div>
-
         <hr className='theamText mb-1' />
-
         <div className="row mx-0 flex-wrap justify-content-evenly">
-
           {/* quize card starts here */}
           {
             userAllQuestionSet.map((data) => {
@@ -52,24 +49,26 @@ const Draft = () => {
                           }
                         </div>
                       </div>
-
                       <hr className='teamText' />
-
                       <span className="card-subtitle mb-2 text-white q-card-subtitle-text fst-italic">
                         Quize code - {data.quizeCode}
                       </span>
-
                       <p className="card-text">
                         No of question - {data.questions.length} <br />
-                        Total Marks - {`100`}
+                        Total Marks - {countMarks(data)}
                       </p>
                       <div className="d-flex justify-content-between">
+                        <button className="btn btn-danger btn-sm py-0 q-card-tag-text px-3" type="button" onClick={() => handleDelete(data._id)}>Delete</button>
+                        <a className="btn btn-secondary btn-sm py-0 q-card-tag-text px-3 mx-0"
+                          href='/question-set/preview/'
+                          type="button" target="_blank" rel="noopener noreferrer" onClick={() => saveLocal(data.quizeCode)}>
+                          Preview / Modify
+                        </a>
                         <a target="_blank" rel="noopener noreferrer" href="/question/edit/add-question/"
-                          className="btn btn-primary btn-sm me-3 py-0 q-card-tag-text px-3" type="button"
-                          onClick={() => handleAddQuestion(data.quizeCode)}>
+                          className="btn btn-primary btn-sm py-0 q-card-tag-text px-3 mx-0" type="button"
+                          onClick={() => saveLocal(data.quizeCode)}>
                           Add Question
                         </a>
-                        <button className="btn btn-danger btn-sm me-3 py-0 q-card-tag-text px-3" type="button" onClick={() => handleDelete(data._id)}>Delete</button>
                       </div>
                     </div>
                   </div>
@@ -78,7 +77,6 @@ const Draft = () => {
             })
           }
           {/* quize card ends here */}
-
         </div>
       </div>
     </>

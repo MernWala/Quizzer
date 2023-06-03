@@ -19,7 +19,7 @@ const PreviewQuestion = () => {
     return (
         <>
             {
-                selectedQuestionSet && <QuestionDesine data={selectedQuestionSet.questions} />
+                selectedQuestionSet && <QuestionDesine data={selectedQuestionSet.questions} qSet_Id={selectedQuestionSet._id} />
             }
         </>
     )

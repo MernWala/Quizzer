@@ -56,11 +56,11 @@ const Navbar = () => {
     const handleReportFunction = () => {
         sendMess('primary', 'Hey! Is there any correction feel free to tell us.');
     }
-    
+
     return (
         <>
             {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-theam">
+            <nav className="navbar navbar-expand-lg navbar-theam" style={{ position: 'sticky', top: '0px' }}>
                 <div className="container-fluid px-5">
                     <Link className="navbar-brand d-flex justify-content-center align-items-center" to="/">
                         <img src={require('./logo.png')} alt="" height="60px" />
