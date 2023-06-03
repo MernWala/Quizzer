@@ -18,7 +18,7 @@ li {
 }
 
 .width-6-5rem {
-    width: 6rem!important;
+    width: 6rem !important;
     transition: width 30ms ease-in-out;
     background: red;
 }
@@ -369,4 +369,8 @@ li {
 .background-transparent {
     background-color: transparent !important;
     border: none;
+}
+
+.border-1px {
+    border: 1px solid $theamColorTrans;
 }

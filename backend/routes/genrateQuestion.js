@@ -211,8 +211,9 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
     try {
         let user = req.user.id;
         let quizeCode = req.params.quizeCode;
+        let qName = req.body.qName;
 
-        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true } })
+        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true, qName: qName }})
         res.status(200).json({ response });
 
     } catch (error) {

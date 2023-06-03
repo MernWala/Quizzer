@@ -11,10 +11,12 @@ const Draft = () => {
       await fetchAllQuestionData();
     }
     asyncApiCall();
-
-
   }, [])
-  
+
+  const handleAddQuestion = (qCode) => {
+    localStorage.setItem('quizer-quize-code', qCode);
+  }
+
   return (
     <>
       <div className="container my-3 fade-in">
@@ -38,7 +40,7 @@ const Draft = () => {
                       <div className="d-flex border-bottom-1">
                         <h5 className="card-title col-8 font-size-17px">
                           {
-                            `Quize name`  /* for now rendring static question set name */
+                            data.qName ? data.qName : 'Draft'
                           }
                         </h5>
                         <div className="tags-group col-4 d-flex justify-content-end">
@@ -61,10 +63,13 @@ const Draft = () => {
                         No of question - {data.questions.length} <br />
                         Total Marks - {`100`}
                       </p>
-                      <div className="d-flex justify-content-evenly">
+                      <div className="d-flex justify-content-between">
+                        <a target="_blank" rel="noopener noreferrer" href="/question/edit/add-question/"
+                          className="btn btn-primary btn-sm me-3 py-0 q-card-tag-text px-3" type="button"
+                          onClick={() => handleAddQuestion(data.quizeCode)}>
+                          Add Question
+                        </a>
                         <button className="btn btn-danger btn-sm me-3 py-0 q-card-tag-text px-3" type="button" onClick={() => handleDelete(data._id)}>Delete</button>
-                        <span className="btn btn-primary btn-sm me-3 py-0 q-card-tag-text px-3" type="button">Add Question</span>
-                        <span className="btn btn-success btn-sm me-3 py-0 q-card-tag-text px-3" type="button">Edit</span>
                       </div>
                     </div>
                   </div>

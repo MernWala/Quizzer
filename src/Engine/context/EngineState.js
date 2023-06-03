@@ -143,18 +143,21 @@ const EngineState = (props) => {
         setCreate(e)
     }
 
-    const handlePublishQuize = async (quizeCode) => {
+    const handlePublishQuize = async (quizeCode, name) => {
         try {
             await fetch(`http://localhost:5001/genrate-question/publish-question-set/${quizeCode}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'auth-token': await localStorage.getItem('quizer-auth-token')
-                }
+                },
+                body: JSON.stringify({
+                    qName: name
+                })
             }).then(async (e) => {
                 const response = await e.json();
                 if (response.response) {
-                    sendMess('success', 'Publish success, now this quize is ready to use.')
+                    sendMess('success', `Now Published with the name ${name}. Now it is ready to use`)
                 }
                 setTimeout(() => {
                     handleChoice(1);

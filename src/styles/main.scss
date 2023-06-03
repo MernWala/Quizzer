@@ -80,6 +80,14 @@ i {
     background-color: $theamColor;
 }
 
+.custom-tooltip-copyText{
+    border: 1px solid;
+    right: 40rem;
+    top: 8.3rem;
+    box-shadow: inset 0px 0px 3px #abcd, inset 0px 0px 3px #abcd;
+    margin-right: 0;
+}
+
 .top-right-random-desine-custom {
     position: absolute;
     height: auto;

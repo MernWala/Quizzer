@@ -40,6 +40,10 @@ const QuestionSchema = new Schema({
         type: Boolean,
         require: true,
     },
+    qName: {
+        type: String,
+        require: true
+    },
     date: {
         type: Date,
         default: Date.now
