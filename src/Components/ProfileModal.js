@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileModal = () => {
 
     const utilContext = useContext(UtilityContext);
-    const { setLogin, sendMess, accessType } = utilContext
+    const { setLogin, sendMess } = utilContext
 
     const customStyleProfile = {
         alignItems: 'baseline',
@@ -15,6 +16,7 @@ const ProfileModal = () => {
         maxWidth: '45rem',
     }
 
+    const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem('quizer-auth-token');
         localStorage.removeItem('userProfileData');
@@ -22,7 +24,10 @@ const ProfileModal = () => {
         setTimeout(() => {
             sendMess('warning', 'Loging out !')
             setTimeout(() => {
-                window.location.reload();
+                navigate('/')
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
             }, 1000);
         }, 1000);
     }

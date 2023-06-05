@@ -114,7 +114,7 @@ const QuestionForm = (props) => {
                           'Caried Marks'
                         }
                       </label>
-                      {props.isModify ?
+                      {!props.isModify ?
                         <input onChange={handleOnChange} type="number" name="carriedMark" required />
                         :
                         <input onChange={handleOnChange} type="number" name="carriedMark" />

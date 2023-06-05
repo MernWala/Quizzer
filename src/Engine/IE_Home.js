@@ -14,7 +14,6 @@ const EngineHome = () => {
         <SideNav />
         <IEngineBody />
       </div>
-
       <PublishQuizeModal />
     </>
   )

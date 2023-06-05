@@ -88,6 +88,14 @@ const QuestionDesine = (props) => {
                                 </form>
                             )
                         })}
+                        {
+                            props.data.length === 0 ? 
+                            <span className='fs-1 fw-bold' style={{fontFamily: 'Nunito'}}>
+                                Question set is empty, try to add some
+                            </span>
+                            :
+                            ''
+                        }
                     {/* question main body end here */}
                 </div>
             </div>

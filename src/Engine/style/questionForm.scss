@@ -16,6 +16,7 @@
 
                 .question-form-input-group {
                     @include center-center();
+                    backdrop-filter: none!important;
 
                     textarea {
                         background: $theamColorTrans;

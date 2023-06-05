@@ -102,7 +102,7 @@ const Reportbug = () => {
 
                             <div className='report-form'>
                                 <form className='text-white' onSubmit={handleSubmit}>
-                                    <textarea name="report" id="reportTextBox" cols="30" rows="7" placeholder='Please Describe problem shortly' onChange={handleOnChange}></textarea>
+                                    <textarea name="report" id="reportTextBox" cols="30" rows="7" placeholder='Please Describe problem shortly' onChange={handleOnChange} spellCheck="true" />
                                     <button className='btn btn-custom m-2' type='submit'>Report</button>
                                 </form>
                             </div>

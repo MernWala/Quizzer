@@ -16,6 +16,8 @@ import QuestionForm from './Engine/QuestionForm';
 import PublishQuizeModal from './Engine/PublishQuizeModal';
 import ProfileModal from './Components/ProfileModal';
 import ModifyQuestionModal from './Engine/ModifyQuestionModal';
+import About from './Components/About';
+import "./styles/scrollbar.scss"
 
 function App() {
 
@@ -36,6 +38,7 @@ function App() {
             <Alert head={alert.head} body={alert.body} />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about-us" element={<About />} />
               <Route path="/app/access-account" element={<AccountAcess />} />
               <Route path="/reportbug" element={<Reportbug />} />
               <Route path="/app/acess-account/auth" element={<Auth />} />

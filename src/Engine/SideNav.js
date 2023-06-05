@@ -4,7 +4,7 @@ import EngineContext from './context/EngineContext';
 
 const SideNav = () => {
 
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const handleBarBtn = () => {
         if (isOpen) {
             setIsOpen(false);
@@ -23,7 +23,7 @@ const SideNav = () => {
                     <div className="sideNav-bar-container">
                         <hr className='m-0' />
                         <div className="sideNav-bar-closer">
-                            <div className="_btn ms-4" onClick={handleBarBtn}>
+                            <div className={`_btn ${isOpen ? 'ms-3' : 'mx-auto'}`} onClick={handleBarBtn}>
                                 {
                                     isOpen ?
                                         <i className="fa-solid fa-xmark text-white"></i>
@@ -64,16 +64,6 @@ const SideNav = () => {
                                         </span>
                                     </li>
                                 </div>
-
-                                {/* comes in future release for realt time update */}
-                                {/* <div className="listWrap" onClick={() => { handleChoice(4) }}>
-                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                                        <i className="fa-solid fa-diagram-predecessor text-white"></i>
-                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
-                                            Conducted Quize
-                                        </span>
-                                    </li>
-                                </div> */}
 
                                 <div className="listWrap" onClick={() => { handleChoice(5) }}>
                                     <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>

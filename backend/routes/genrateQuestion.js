@@ -159,20 +159,22 @@ router.put('/update-question/:mainId/:questionId', fetchuser, async (req, res) =
         const { u_question, u_picture, u_option, u_answer, u_multiAns, u_marks } = req.body;
 
         const newData = {
-            "question": u_question ? u_question : question,
+            "question": u_question.trim() !== "" ? u_question : question,
             "picture": u_picture ? u_picture : picture,
-            "option": u_option ? u_option : option,
-            "answer": u_answer ? u_answer : answer,
+            "option": u_option.length > 0 ? u_option : option,
+            "answer": u_answer.length > 0 ? u_answer : answer,
             "multiAns": u_multiAns !== "" ? u_multiAns : multiAns,
             "marks": u_marks ? u_marks : marks,
             "_id": _id,
         };
 
+        console.log(newData);
+
         ques.questions[index] = newData;
         await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true });
         res.status(200).json({ update: newData });
     } catch (error) {
-        res.status(500).json({ error })
+        res.status(500).json({ error: error })
     }
 })
 

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
+import EngineContext from '../Engine/context/EngineContext';
 
 const Auth = () => {
     let navigate = useNavigate();
@@ -31,7 +32,8 @@ const Auth = () => {
             localStorage.setItem('quizer-auth-token', json.authTocken);
             await loadData_inst(json.authTocken);
             sendMess('success', 'Login Successfully')
-            navigate("/");
+            navigate("/app/engin/instructor");
+            window.location.reload();
         } else {
             sendMess('warning', 'Invalid Email or Password')
             localStorage.removeItem('quizer-auth-token');
@@ -138,10 +140,6 @@ const Auth = () => {
                                         <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="studentPassword" id="studentPassword" onChange={onChange2} required autoComplete='off' />
                                         <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
-                                    {/* <div className="input-group mx-3">
-                                        <label className='input-group-label'>Exam code</label>
-                                        <input type="text" name="" id="" />
-                                    </div> */}
                                     <div className="input-group mx-3">
                                         <input type="Submit" value="Login" readOnly />
                                     </div>

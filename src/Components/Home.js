@@ -1,13 +1,10 @@
 import React, { useState, useContext } from 'react'
 import ProfileModal from './ProfileModal'
 import { useNavigate } from 'react-router-dom';
-import DataContext from '../context/userData/DataContext';
 import UtilityContext from '../context/utility/UtilityContext';
+import EngineContext from '../Engine/context/EngineContext';
 
 const Home = () => {
-
-  const dataContext = useContext(DataContext)
-  const { isLogin } = dataContext;
 
   const utilContext = useContext(UtilityContext);
   const { setAccess } = utilContext
@@ -17,11 +14,16 @@ const Home = () => {
     setJoiningCode({ ...joiningCode, [e.target.name]: e.target.value });
   }
 
+  const eContext = useContext(EngineContext);
+  const { handleChoice } = eContext;
+
   const navigate = useNavigate();
 
-  const handleLinkClick = () => {
-    if (isLogin) {
-      navigate("/app/engine-v1/instructor");
+  const handleLinkClick = async () => {
+    let token = await localStorage.getItem('quizer-auth-token');
+    if (token) {
+      handleChoice(3);
+      navigate("/app/engin/instructor");
     } else {
       setAccess(true);
       navigate('/app/acess-account/auth');
@@ -29,9 +31,9 @@ const Home = () => {
   }
 
   const handleJoin = () => {
-    if(joiningCode.testCodeLink.length > 10){
+    if (joiningCode.testCodeLink.length > 10) {
       navigate(joiningCode);
-    }else{
+    } else {
       navigate(`/joining-code-${joiningCode.testCodeLink}`)
     }
   }
@@ -46,14 +48,18 @@ const Home = () => {
               <span>Premium quizzing app <br />Now free for everyone.</span>
               <p className='my-4'>There is no cramming for a test of character.<br />It always comes as a pop quiz</p>
             </div>
-
+            
             <div className='d-flex align-items-center'>
               <div className='btn-group'>
-                <button className="custom-btn no-text-decor px-3 btn-2m" onClick={handleLinkClick}>New Quize</button>
+                <button className="custom-btn no-text-decor px-3 btn-2m" onClick={handleLinkClick}>
+                <i class="fas fa-question me-2 text-white"></i>
+                  New Quize
+                </button>
                 <form className='d-flex'>
                   <div className="input-group">
                     <label htmlFor="testCodeLink"></label>
-                    <input type="text" name='testCodeLink' id='testCodeLink' className='home-link-input mx-4' placeholder='Enter a code or link' onChange={handleOnChange} />
+                    <input type="text" name='testCodeLink' id='testCodeLink' className='home-link-input mx-4'
+                      placeholder='Enter a code or link' onChange={handleOnChange} />
                   </div>
                 </form>
               </div>
@@ -66,10 +72,10 @@ const Home = () => {
               }
             </div>
 
-            <hr className='my-5'/>
+            <hr className='my-5' />
 
             <div className="homeLoginDescription">
-              <a href="/" className='description-link' target='_blank' rel="noopener noreferrer">Learn More</a> <span>about Quizzer</span>
+              <a href="/about-us" className='description-link' target='_blank' rel="noopener noreferrer">Learn More</a> <span>about Quizzer</span>
             </div>
 
           </div>

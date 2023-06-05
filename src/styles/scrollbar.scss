@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+::-webkit-scrollbar {
+    width: .6rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $theamUltraThin;
+    box-shadow: inset 0px 0px 3px #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $theamText;
+    border-radius: 1px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: $theamTextHovered; 
+}

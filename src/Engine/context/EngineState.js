@@ -9,7 +9,14 @@ const EngineState = (props) => {
         setChoice(e)
     }
 
-    const [questionData, setQuestionData] = useState({});
+    const [questionData, setQuestionData] = useState({
+        "u_question": "",
+        "u_picture": "",
+        "u_option": [],
+        "u_answer": [],
+        "u_multiAns": false,
+        "u_marks": 0
+    });
     const handleOnChange = (e) => {
         setQuestionData({ ...questionData, [e.target.name]: e.target.value })
     }
@@ -121,11 +128,11 @@ const EngineState = (props) => {
                     'auth-token': await localStorage.getItem('quizer-auth-token')
                 },
                 body: JSON.stringify({
-                    "u_question": questionData.question,
-                    "u_picture": questionData.image,
-                    "u_option": genrateOptionArray(questionData),
-                    "u_answer": genrateAnswerArray(questionData),
-                    "u_multiAns": multiSelect,
+                    "u_question": questionData.question ? questionData.question : "",
+                    "u_picture": questionData.image ? questionData.image : "",
+                    "u_option": genrateOptionArray(questionData) ? genrateOptionArray(questionData) : [],
+                    "u_answer": genrateAnswerArray(questionData) ? genrateAnswerArray(questionData) : [],
+                    "u_multiAns": multiSelect === true ? true : false,
                     "u_marks": questionData.carriedMark,
                 })
             }).then(async (data) => {
