@@ -1,0 +1,90 @@
+@import "../../styles/variables.scss";
+
+.form-main-container {
+    @include center-center();
+    padding: 1rem;
+    flex-direction: column;
+
+    .main-form {
+        padding: 2rem;
+        border-radius: 5px !important;
+        box-shadow: 0px 0px 5px $theamColorTrans;
+        min-width: 40%;
+    }
+}
+
+.input-group {
+
+    input[type='email'],
+    textarea {
+        border-radius: 3px !important;
+        margin: .5rem 0rem;
+        background-color: $theamColorTrans;
+        box-shadow: none;
+        border: 1px solid $theamText;
+        transition: all 50ms ease-in !important;
+        font-size: 1.4rem;
+        padding: 1rem;
+
+        &::placeholder {
+            color: #ccc;
+        }
+
+        &:focus {
+            transition: all 50ms ease-in !important;
+            box-shadow: 0px 0px 5px $theamTextHovered;
+        }
+    }
+
+    input[type="checkbox"] {
+        width: fit-content;
+        box-shadow: none;
+        margin-right: .5rem;
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    .answerToMailText {
+        font-size: 1.5rem;
+        color: $theamText;
+    }
+}
+
+
+.accordian-main-container {
+
+    .accordion {
+        margin: 2rem 0rem 4rem 0rem;
+
+        .accordion-item {
+            background-color: $theamColorTrans;
+            border-color: $theamText;
+
+            .accordion-header {
+                font-family: 'dosis';
+                font-family: 'poppins';
+
+                .accordion-button {
+                    font-size: 2rem;
+                    background-color: $theamUltraThin;
+                    color: #fff;
+                    padding: 1rem 3rem 1rem 2rem;
+
+                    &:focus {
+                        box-shadow: 0px 0px 3px $theamTextHovered;
+                    }
+
+                    &::after{
+                        filter: invert(1);
+                    }
+                }
+            }
+
+            .accordion-body {
+                font-size: 1.5rem;
+                color: $theamText;
+                letter-spacing: 1px;
+            }
+        }
+    }
+}

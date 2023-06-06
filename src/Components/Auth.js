@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
-import EngineContext from '../Engine/context/EngineContext';
 
 const Auth = () => {
     let navigate = useNavigate();

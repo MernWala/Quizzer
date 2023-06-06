@@ -4,7 +4,7 @@ import UtilityContext from '../../context/utility/UtilityContext';
 
 const EngineState = (props) => {
 
-    const [choice, setChoice] = useState(2)
+    const [choice, setChoice] = useState(6)
     const handleChoice = (e) => {
         setChoice(e)
     }
