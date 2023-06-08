@@ -1,10 +1,14 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import ProfileModal from './ProfileModal'
 import { useNavigate } from 'react-router-dom';
 import UtilityContext from '../context/utility/UtilityContext';
 import EngineContext from '../Engine/context/EngineContext';
 
 const Home = () => {
+
+  useEffect(() => {
+    document.title = "Quizzer || Home";
+  }, [])
 
   const utilContext = useContext(UtilityContext);
   const { setAccess } = utilContext
@@ -48,11 +52,11 @@ const Home = () => {
               <span>Premium quizzing app <br />Now free for everyone.</span>
               <p className='my-4'>There is no cramming for a test of character.<br />It always comes as a pop quiz</p>
             </div>
-            
+
             <div className='d-flex align-items-center'>
               <div className='btn-group'>
                 <button className="custom-btn no-text-decor px-3 btn-2m" onClick={handleLinkClick}>
-                <i class="fas fa-question me-2 text-white"></i>
+                  <i class="fas fa-question me-2 text-white"></i>
                   New Quize
                 </button>
                 <form className='d-flex'>

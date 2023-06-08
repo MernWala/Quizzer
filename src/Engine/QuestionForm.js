@@ -48,7 +48,7 @@ const QuestionForm = (props) => {
 
           <div className="row question-form-main my-4">
             <div className="question-form-closer p-0">
-              <form id='questionForm' onSubmit={!props.isModify ? addQuestionApiCall : handleModify}>
+              <form id='ques-form-main' onSubmit={!props.isModify ? addQuestionApiCall : handleModify}>
                 <div className="row mx-2 p-0">
                   <div className="question-form-input-group p-0">
                     {!props.isModify ?

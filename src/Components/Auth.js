@@ -1,11 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
 
 const Auth = () => {
+
+    useEffect(() => {
+        document.title = "Authentication"
+    }, [])
+
+
     let navigate = useNavigate();
-    
+
     const utilContext = useContext(UtilityContext);
     const { accessType, setAccess, sendMess } = utilContext;
 

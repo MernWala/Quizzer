@@ -100,7 +100,8 @@ const EngineState = (props) => {
                 if (json.sent) {
                     sendMess('success', 'Question added successfully');
                     setTimeout(() => {
-                        document.getElementById('questionForm').reset();
+                        e.target.reset()
+                        console.log(e);
                         setmultiSelect(false);
                         setQuestionData({})
                     }, 1500);
@@ -111,7 +112,6 @@ const EngineState = (props) => {
                         sendMess('danger', json.error)
                     }
                 }
-
             })
         } catch (error) {
             console.log(error);
