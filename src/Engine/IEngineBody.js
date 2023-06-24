@@ -6,6 +6,7 @@ import NewQuize from "./NewQuize";
 import ConductedQuize from "./ConductedQuize";
 import Faq from "./Faq";
 import Result from "./Result";
+import "./style/main.scss"
 
 const IEngineBody = () => {
 

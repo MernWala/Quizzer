@@ -15,8 +15,8 @@ nav {
     backdrop-filter: blur(5px);
 }
 
-textarea{
-    backdrop-filter: none!important;
+textarea {
+    backdrop-filter: none !important;
 }
 
 .bg-theam {
@@ -489,4 +489,20 @@ i {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
+}
+
+.custom-input-2 {
+    border: 1px solid rgba(1, 70, 75, 0.4901960784) !important;
+    box-shadow: none;
+    width: 100%;
+    padding: 0.3rem 1rem;
+    font-size: 1.6rem;
+    border-radius: 3px;
+    background-color: $theamColorTrans;
+    color: #fff;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0px 0px 3px 2px #ffffff1a !important;
+    }
 }

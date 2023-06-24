@@ -18,9 +18,11 @@ const PreviewQuestion = () => {
 
     return (
         <>
-            {
-                selectedQuestionSet && <QuestionDesine data={selectedQuestionSet.questions} qSet_Id={selectedQuestionSet._id} />
-            }
+            <div className='container px-5'>
+                {
+                    selectedQuestionSet && <QuestionDesine data={selectedQuestionSet.questions} qSet_Id={selectedQuestionSet._id} edit={true} />
+                }
+            </div>
         </>
     )
 }

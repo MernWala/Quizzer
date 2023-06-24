@@ -1,16 +1,6 @@
 @import "../../styles/variables.scss";
 @import "../../styles/fonts.scss";
 
-li {
-    &:hover {
-        span {
-            transition: all .1s ease-in-out;
-            margin-left: 1rem !important;
-            transition: all .1s ease-in-out;
-        }
-    }
-}
-
 .width-100p {
     width: 100% !important;
     transition: width 30ms ease-in-out;
@@ -23,93 +13,6 @@ li {
     background: red;
 }
 
-.sideNavContainer {
-    @include center-center();
-    user-select: none;
-    position: sticky;
-    top: 6.6rem;
-    z-index: 9;
-    width: fit-content;
-    height: calc(100vh - 6.6rem);
-    left: 0px;
-    background-color: $theamColorTrans;
-    border-right: 1px solid $theamText;
-    backdrop-filter: blur(5px);
-
-    .sideNavCloser {
-        height: 100%;
-        width: 100%;
-
-        .sideNav-bar-container {
-            position: relative;
-
-            .sideNav-bar-closer {
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-
-                ._btn {
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .sideNav-mainContent-container {
-            @include center-center();
-            position: relative;
-            height: calc(100% - 4.4rem - 4.7rem);
-            align-items: baseline;
-
-            .sideNav-mainContent-closer {
-                @include center-center();
-                align-items: baseline;
-                position: relative;
-                height: fit-content;
-                width: 100%;
-
-                ul {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-                    padding: 0;
-                    margin: 2rem 0rem;
-                    width: 100%;
-
-                    .listWrap {
-                        width: 100%;
-
-                        li {
-                            list-style: none;
-                            color: #fff;
-                            margin-bottom: 1px;
-                            transition: all .2s ease;
-
-                            &:hover {
-                                i {
-                                    color: rgba(255, 255, 255, .7) !important;
-                                }
-                            }
-
-                            i {
-                                font-size: 2rem;
-                            }
-
-                            span {
-                                margin-left: .5rem;
-                                font-family: 'Nunito', sans-serif;
-                                font-size: 1.5rem;
-                                letter-spacing: 1px;
-                                font-weight: 700;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 ._btn {
     width: fit-content;

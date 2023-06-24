@@ -11,7 +11,7 @@ const Home = () => {
   }, [])
 
   const utilContext = useContext(UtilityContext);
-  const { setAccess } = utilContext
+  const { setAccess, sendMess } = utilContext
 
   const [joiningCode, setJoiningCode] = useState("");
   const handleOnChange = (e) => {
@@ -25,20 +25,37 @@ const Home = () => {
 
   const handleLinkClick = async () => {
     let token = await localStorage.getItem('quizer-auth-token');
-    if (token) {
-      handleChoice(3);
-      navigate("/app/engin/instructor");
-    } else {
-      setAccess(true);
-      navigate('/app/acess-account/auth');
+
+    try {
+      await fetch(`http://localhost:5001/api/getDetails/inst`, {
+        method: 'POST',
+        headers: {
+          'auth-token': token,
+        }
+      }).then(async (res) => {
+        const data = await res.json();
+        if (data !== null) {
+          if (token) {
+            handleChoice(3);
+            navigate("/app/engin/instructor");
+          } else {
+            setAccess(true);
+            navigate('/app/acess-account/auth');
+          }
+        }else{
+          sendMess('warning', `You should have instructor profile for conducting quiz`);
+        }
+      })
+    } catch (error) {
+      console.warn(`Can't get authentication token!`);
     }
   }
 
   const handleJoin = () => {
-    if (joiningCode.testCodeLink.length > 10) {
-      navigate(joiningCode);
+    if (joiningCode.testCodeLink.length === 8) {
+      navigate(`/joining-code/${joiningCode.testCodeLink}`)
     } else {
-      navigate(`/joining-code-${joiningCode.testCodeLink}`)
+      sendMess('warning', "Not a valid quize code !")
     }
   }
 
@@ -56,10 +73,10 @@ const Home = () => {
             <div className='d-flex align-items-center'>
               <div className='btn-group'>
                 <button className="custom-btn no-text-decor px-3 btn-2m" onClick={handleLinkClick}>
-                  <i class="fas fa-question me-2 text-white"></i>
+                  <i className="fas fa-question me-2 text-white"></i>
                   New Quize
                 </button>
-                <form className='d-flex'>
+                <form className='d-flex' onSubmit={() => handleJoin()}>
                   <div className="input-group">
                     <label htmlFor="testCodeLink"></label>
                     <input type="text" name='testCodeLink' id='testCodeLink' className='home-link-input mx-4'

@@ -18,6 +18,8 @@ app.use('/api/report-bug', require('./routes/reportbug'));
 app.use('/genrate-question', require('./routes/genrateQuestion'));
 app.use('/ask/', require("./routes/ask"));
 
+app.use('/quiz/', require('./routes/joinQuize'))
+
 app.listen(port, () => {
     console.log(`Quizer is listening at ${port}`);
 })

@@ -1,0 +1,58 @@
+@import "../../styles/variables.scss";
+
+.sideNavContainer {
+    height: calc(100vh - 6.6rem);
+    position: sticky !important;
+    top: 6.6rem;
+    transition: all .3s ease-in-out;
+
+    .sideNavCloser {
+        height: 100%;
+        box-shadow: 0rem 0rem .5rem $theamText !important;
+    }
+}
+
+.sideNav-list-item {
+    background-color: $theamText;
+    font-family: 'Nunito';
+    letter-spacing: 1px;
+    @include center-center();
+    margin-bottom: 1px;
+    color: #fff;
+    max-height: 5.2rem;
+    justify-content: flex-start;
+
+    i {
+        cursor: pointer !important;
+        color: #fff;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.sideNav-list-item-open {
+    display: block;
+    cursor: pointer;
+    width: 15rem;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    animation: linear fade-in .5s;
+    height: 2.25rem;
+}
+
+.sideNav-list-item-close {
+    display: block;
+    background-color: $theamText;
+    width: 0px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    height: 2.25rem;
+}

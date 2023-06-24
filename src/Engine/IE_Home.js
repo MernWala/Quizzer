@@ -1,8 +1,8 @@
 import React from 'react'
-import SideNav from './SideNav'
 import ProfileModal from '../Components/ProfileModal'
 import IEngineBody from "./IEngineBody";
 import PublishQuizeModal from './PublishQuizeModal';
+import SideNav from './SideNav';
 
 
 const EngineHome = () => {

@@ -2,11 +2,10 @@
 
 .mainContaier {
     @include center-center();
-    padding-top: 3rem;
     width: 100%;
 
     .mainContaier-closer {
-        width: 80%;
+        width: 100%;
 
         .container {
             padding: 2rem 1rem;

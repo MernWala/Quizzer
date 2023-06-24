@@ -63,39 +63,45 @@ const QuestionDesine = (props) => {
                                                 }
                                             </div>
 
-                                            <div className="question-form-control mt-4">
-                                                <div className="question-form-control-closer">
-                                                    <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset'> Reset </button>
-                                                    <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
+                                            {!props.edit &&
+                                                <div className="question-form-control mt-4">
+                                                    <div className="question-form-control-closer">
+                                                        <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset'> Reset </button>
+                                                        <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
+
                                         </div>
 
-                                        <div className="row mx-2 mt-4 flex-column fit-content ms-auto">
-                                            <div className="btn-group fit-content ms-auto">
-                                                <button type="button" className='btn btn-danger btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
-                                                    onClick={() => handleDeleteQuestion(props.qSet_Id, sample._id)}>
-                                                    Delete
-                                                </button>
-                                                <button type="button" className='btn btn-secondary btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
-                                                    data-bs-toggle="modal" data-bs-target="#ModifyQuestionModal"
-                                                    onClick={() => handleClickedQuestionId(sample._id)}>
-                                                    Modify
-                                                </button>
+                                        {props.edit &&
+                                            <div className="row mx-2 mt-4 flex-column fit-content ms-auto">
+                                                <div className="btn-group fit-content ms-auto">
+                                                    <button type="button" className='btn btn-danger btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
+                                                        onClick={() => handleDeleteQuestion(props.qSet_Id, sample._id)}>
+                                                        Delete
+                                                    </button>
+                                                    <button type="button" className='btn btn-secondary btn-sm py-0 q-card-tag-text px-3 border-radius-5rem'
+                                                        data-bs-toggle="modal" data-bs-target="#ModifyQuestionModal"
+                                                        onClick={() => handleClickedQuestionId(sample._id)}>
+                                                        Modify
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+
                                     </div>
                                 </form>
                             )
                         })}
-                        {
-                            props.data.length === 0 ? 
-                            <span className='fs-1 fw-bold' style={{fontFamily: 'Nunito'}}>
+                    {
+                        props.data.length === 0 ?
+                            <span className='fs-1 fw-bold' style={{ fontFamily: 'Nunito' }}>
                                 Question set is empty, try to add some
                             </span>
                             :
                             ''
-                        }
+                    }
                     {/* question main body end here */}
                 </div>
             </div>

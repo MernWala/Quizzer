@@ -18,6 +18,7 @@ import ProfileModal from './Components/ProfileModal';
 import ModifyQuestionModal from './Engine/ModifyQuestionModal';
 import About from './Components/About';
 import "./styles/scrollbar.scss"
+import Test from './Components/Test';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
               <Route path="/app/engin/instructor" element={<EngineHome />} />   {/* here is instructor engine */}
               <Route path="/question-set/preview" element={<PreviewQuestion />} />
               <Route path="/question/edit/add-question/" element={<QuestionForm />} />
+              <Route path="/joining-code/:qCode" element={<Test />} />
             </Routes>
           </BrowserRouter>
         </EngineState>

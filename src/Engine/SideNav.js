@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react';
-import "./style/main.scss"
+import React, { useContext, useState } from 'react'
 import EngineContext from './context/EngineContext';
+import "./style/sideNav.scss"
 
-const SideNav = () => {
+const SideNav2 = () => {
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isClose, setisClose] = useState(true)
     const handleBarBtn = () => {
-        if (isOpen) {
-            setIsOpen(false);
+        if (isClose) {
+            setisClose(false);
         } else {
-            setIsOpen(true);
+            setisClose(true);
         }
     }
 
@@ -20,70 +20,65 @@ const SideNav = () => {
         <>
             <div className={`sideNavContainer`}>
                 <div className="sideNavCloser">
-                    <div className="sideNav-bar-container">
-                        <hr className='m-0' />
-                        <div className="sideNav-bar-closer">
-                            <div className={`_btn ${isOpen ? 'ms-3' : 'mx-auto'}`} onClick={handleBarBtn}>
+                    <div className='d-flex flex-column height-100'>
+                        <div className='mb-3'>
+                            <hr className='m-0' />
+                            <div className={`p-4 cursor-pointer`} onClick={handleBarBtn}>
                                 {
-                                    isOpen ?
-                                        <i className="fa-solid fa-xmark text-white"></i>
+                                    isClose ?
+                                        <i className="fa-2x fa-solid fa-xmark text-white"></i>
                                         :
-                                        <i className="fa-solid fa-bars-staggered text-white"></i>
+                                        <i className="fa-2x fa-solid fa-bars-staggered text-white"></i>
                                 }
                             </div>
+                            <hr className='m-0 theamText' />
                         </div>
-                        <hr className='m-0' />
-                    </div>
 
-                    <div className="sideNav-mainContent-container">
-                        <div className="sideNav-mainContent-closer">
-                            <ul>
-                                <div className="listWrap" onClick={() => { handleChoice(1) }}>
-                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                                        <i className="fa-solid fa-house-chimney text-white"></i>
-                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`}>
+                        <div className='d-flex text-white flex-column align-items-center justify-content-between height-100'>
+                            <div>
+                                <ul className='p-0 py-4'>
+
+                                    <li className={`list-unstyled sideNav-list-item p-4`} onClick={() => handleChoice(1)}>
+                                        <i className="fa-2x fa-solid fa-house-chimney"></i>
+                                        <span className={`fs-4 ${!isClose ? 'sideNav-list-item-close' : 'sideNav-list-item-open ms-2'}`}>
                                             Overview
                                         </span>
                                     </li>
-                                </div>
 
-                                <div className="listWrap" onClick={() => { handleChoice(2) }}>
-                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                                        <i className="fa-solid fa-file-signature text-white"></i>
-                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
+                                    <li className={`list-unstyled sideNav-list-item p-4`} onClick={() => handleChoice(2)}>
+                                        <i className="fa-2x fa-solid fa-file-signature"></i>
+                                        <span className={`fs-4 ${!isClose ? 'sideNav-list-item-close' : 'sideNav-list-item-open ms-2'}`}>
                                             Question Set
                                         </span>
                                     </li>
-                                </div>
 
-                                <div className="listWrap" onClick={() => { handleChoice(3) }}>
-                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                                        <i className="fa-solid fa-folder-plus text-white"></i>
-                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
+                                    <li className={`list-unstyled sideNav-list-item p-4`} onClick={() => handleChoice(3)}>
+                                        <i className="fa-2x fa-solid fa-folder-plus"></i>
+                                        <span className={`fs-4 ${!isClose ? 'sideNav-list-item-close' : 'sideNav-list-item-open ms-2'}`}>
                                             New Quize
                                         </span>
                                     </li>
-                                </div>
 
-                                <div className="listWrap" onClick={() => { handleChoice(5) }}>
-                                    <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                                        <i className="fa-solid fa-square-poll-vertical text-white"></i>
-                                        <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`} >
+                                    <li className={`list-unstyled sideNav-list-item p-4`} onClick={() => handleChoice(5)}>
+                                        <i className="fa-2x fa-solid fa-square-poll-vertical"></i>
+                                        <span className={`fs-4 ${!isClose ? 'sideNav-list-item-close' : 'sideNav-list-item-open ms-2'}`}>
                                             Recorded Result
                                         </span>
                                     </li>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
+                                </ul>
+                            </div>
 
-                    <div className="listWrapOuter" onClick={() => { handleChoice(6) }}>
-                        <li className={`listBtn ${isOpen ? 'width-100p' : 'width-6-5rem'}`}>
-                            <i className="fa-solid fa-comments text-white"></i>
-                            <span className={`listText fade-in ${!isOpen && 'd-none fade-out'}`}>
-                                FAQ
-                            </span>
-                        </li>
+                            <div className='width-100'>
+                                <ul className='p-0 mb-0'>
+                                    <li className={`list-unstyled sideNav-list-item p-4 mb-0`} onClick={() => handleChoice(6)}>
+                                        <i className="fa-2x fa-solid fa-comments"></i>
+                                        <span className={`fs-4 ${!isClose ? 'sideNav-list-item-close' : 'sideNav-list-item-open ms-2'}`}>
+                                            FAQ
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,4 +86,4 @@ const SideNav = () => {
     )
 }
 
-export default SideNav
+export default SideNav2

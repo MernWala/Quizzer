@@ -51,7 +51,7 @@ const Draft = () => {
                       </div>
                       <hr className='teamText' />
                       <span className="card-subtitle mb-2 text-white q-card-subtitle-text fst-italic">
-                        Quize code - {data.quizeCode}
+                        Quize code - {data.quizeCode}   {/* TODO add copy code ico-btn */}
                       </span>
                       <p className="card-text">
                         No of question - {data.questions.length} <br />
