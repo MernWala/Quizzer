@@ -4,7 +4,7 @@ const StudentModal = require("../model/Student");
 const Question = require('../model/Question');
 const fetchuser = require('../middleware/fetchuser')
 
-
+// Route 1 -> this route will send question set without answer, and also send user data
 router.get('/join/:quizeCode', fetchuser, async (req, res) => {
     try {
         const UserData = await StudentModal.findById({ _id: req.user.id }).select('-password');
