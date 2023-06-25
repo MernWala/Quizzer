@@ -76,6 +76,27 @@ const DataState = (props) => {
         }
     }, [])
 
+    const [qSetData, setQSetData] = useState()
+    const fetchTestApi = async (code) => {
+        try {
+            const token = await localStorage.getItem('quizer-auth-token')
+
+            let response = await fetch(`http://localhost:5001/quiz/join/${code}`, {
+                method: 'GET',
+                headers: {
+                    'auth-token': token,
+                }
+            })
+
+            let data = await response.json();
+            setQSetData(data);
+            console.log(data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const generateCode = (id) => {
         if (id) {
             let temp = String(Math.floor(10000 + Math.random() * 10000))
@@ -87,7 +108,7 @@ const DataState = (props) => {
     }
 
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData }}>
             {props.children}
         </DataContext.Provider>
     )

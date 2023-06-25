@@ -3,6 +3,7 @@ import ProfileModal from './ProfileModal'
 import { useNavigate } from 'react-router-dom';
 import UtilityContext from '../context/utility/UtilityContext';
 import EngineContext from '../Engine/context/EngineContext';
+import DataContext from '../context/userData/DataContext';
 
 const Home = () => {
 
@@ -42,7 +43,7 @@ const Home = () => {
             setAccess(true);
             navigate('/app/acess-account/auth');
           }
-        }else{
+        } else {
           sendMess('warning', `You should have instructor profile for conducting quiz`);
         }
       })
@@ -51,9 +52,19 @@ const Home = () => {
     }
   }
 
-  const handleJoin = () => {
+  const dContext = useContext(DataContext);
+  const { fetchTestApi, qSetData } = dContext;
+
+  const handleJoin = (e) => {
+    e.preventDefault();
+    fetchTestApi(joiningCode.testCodeLink);
+
     if (joiningCode.testCodeLink.length === 8) {
-      navigate(`/joining-code/${joiningCode.testCodeLink}`)
+      if (qSetData && qSetData.error) {
+        sendMess('warning', `No quiz found with quize code ${joiningCode.testCodeLink}`);
+      } else {
+        navigate(`/joining-code/${joiningCode.testCodeLink}`)
+      }
     } else {
       sendMess('warning', "Not a valid quize code !")
     }
@@ -88,7 +99,7 @@ const Home = () => {
               {
                 joiningCode.testCodeLink &&
                 <div className="join-btn-home">
-                  <button onClick={handleJoin}>Join</button>
+                  <button type='submit' onClick={handleJoin}>Join</button>
                 </div>
               }
             </div>

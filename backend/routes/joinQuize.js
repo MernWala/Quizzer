@@ -13,7 +13,7 @@ router.get('/join/:quizeCode', fetchuser, async (req, res) => {
         }
 
         const qCode = req.params.quizeCode
-        const qSet = await Question.findOne({ quizeCode: qCode }).select('_id').select('user').select("quizeCode").select('isPublish').select('qname').select('questions.question').select('questions.picture').select('questions.option').select('questions.marks').select('questions.multiAns').select('questions._id');
+        const qSet = await Question.findOne({ quizeCode: qCode }).select('_id').select('user').select("quizeCode").select('isPublish').select('qname').select('questions.question').select('questions.picture').select('questions.option').select('questions.marks').select('questions.multiAns').select('questions._id').select('qName');
         if (!qSet)
             return res.status(404).json({ error: `There is no quiz with id: ${qCode}` });
         else
