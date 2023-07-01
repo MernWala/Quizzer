@@ -7,7 +7,7 @@ const TestRecordSchema = new Schema({
         default: Date.now
     },
     qSetid: {
-        type: mongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true
     },
     qCode: {
@@ -15,14 +15,15 @@ const TestRecordSchema = new Schema({
         require: true
     },
     stuId: {
-        type: mongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true
     },
     record: [
         {
             questionId: {
-                type: mongoose.Schema.type.ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 require: true,
+                unique: true
             },
             answer: {
                 type: Array,

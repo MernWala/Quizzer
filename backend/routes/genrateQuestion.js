@@ -13,7 +13,7 @@ const removeQuestion = (arr, _id) => {
     arr[index] = null
     let newArr = [];
 
-    arr.map((ele) => {
+    arr.forEach((ele) => {
         if (ele !== null) {
             newArr.push(ele)
         }

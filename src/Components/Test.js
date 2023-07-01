@@ -60,8 +60,8 @@ const Test = () => {
                     </div>
 
                     <div className="row mx-0 mb-5">
-                        <p className='text-white fs-4 ff-nunito mb-2'>I hearby declarare that i response all question with my full knowledge and not attempting any vulnarable activity. If i founded any permeable activity test organizer can take action on me and he can also punish me as he want.</p>
-                        <p className="text-white fs-4 ff-nunito mb-4">Remember! after submit you wont be able to change your answer.</p>
+                        <p className='text-white fs-4 ff-nunito mb-2 fw-lighter'>I hearby declarare that i response all question with my full knowledge and not attempting any vulnarable activity. If i founded any permeable activity test organizer can take action on me and he can also punish me as he want.</p>
+                        <p className="text-white fs-4 ff-nunito mb-4">Remember! After submit you won't be able to change your answer.</p>
                         <form>
                             <div className="d-flex align-items-center gap-4">
                                 <div className="col-3">

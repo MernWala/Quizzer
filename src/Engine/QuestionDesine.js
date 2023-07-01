@@ -10,6 +10,8 @@ const QuestionDesine = (props) => {
         handleCurrentQset(props.qSet_Id)
     }, [currentQset]);
 
+    console.log(props.qSet_Id);
+
     return (
         <>
             <div className="mainContaier text-white">
@@ -66,7 +68,7 @@ const QuestionDesine = (props) => {
                                             {!props.edit &&
                                                 <div className="question-form-control mt-4">
                                                     <div className="question-form-control-closer">
-                                                        <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset'> Reset </button>
+                                                        <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset' onClick={() => console.log(sample)}> Reset </button>
                                                         <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
                                                     </div>
                                                 </div>
