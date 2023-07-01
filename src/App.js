@@ -19,6 +19,7 @@ import ModifyQuestionModal from './Engine/ModifyQuestionModal';
 import About from './Components/About';
 import "./styles/scrollbar.scss"
 import Test from './Components/Test';
+import StudentState from './Engine/context/StudentState';
 
 function App() {
 
@@ -29,27 +30,29 @@ function App() {
     <>
       <DataState>
         <EngineState>
-          <BrowserRouter>
-            <Navbar />
-            {/* Modals declaratioon start here */}
-            <PublishQuizeModal />
-            <ProfileModal />
-            <ModifyQuestionModal />
-            {/* Modals declaratioon end here */}
-            <Alert head={alert.head} body={alert.body} />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about-us" element={<About />} />
-              <Route path="/app/access-account" element={<AccountAcess />} />
-              <Route path="/reportbug" element={<Reportbug />} />
-              <Route path="/app/acess-account/auth" element={<Auth />} />
-              <Route path='/app/new-user' element={<Register />} />
-              <Route path="/app/engin/instructor" element={<EngineHome />} />   {/* here is instructor engine */}
-              <Route path="/question-set/preview" element={<PreviewQuestion />} />
-              <Route path="/question/edit/add-question/" element={<QuestionForm />} />
-              <Route path="/joining-code/:qCode" element={<Test />} />
-            </Routes>
-          </BrowserRouter>
+          <StudentState>
+            <BrowserRouter>
+              <Navbar />
+              {/* Modals declaratioon start here */}
+              <PublishQuizeModal />
+              <ProfileModal />
+              <ModifyQuestionModal />
+              {/* Modals declaratioon end here */}
+              <Alert head={alert.head} body={alert.body} />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about-us" element={<About />} />
+                <Route path="/app/access-account" element={<AccountAcess />} />
+                <Route path="/reportbug" element={<Reportbug />} />
+                <Route path="/app/acess-account/auth" element={<Auth />} />
+                <Route path='/app/new-user' element={<Register />} />
+                <Route path="/app/engin/instructor" element={<EngineHome />} />   {/* here is instructor engine */}
+                <Route path="/question-set/preview" element={<PreviewQuestion />} />
+                <Route path="/question/edit/add-question/" element={<QuestionForm />} />
+                <Route path="/joining-code/:qCode" element={<Test />} />
+              </Routes>
+            </BrowserRouter>
+          </StudentState>
         </EngineState>
       </DataState>
     </>

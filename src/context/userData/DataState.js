@@ -90,7 +90,7 @@ const DataState = (props) => {
 
             let data = await response.json();
             setQSetData(data);
-            console.log(data);
+            return data
 
         } catch (error) {
             console.log(error);

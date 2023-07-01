@@ -5,25 +5,35 @@ const Question = require('../model/Question');
 const fetchuser = require('../middleware/fetchuser')
 const { body, validationResult } = require('express-validator');
 const TestRecord = require('../model/TestRecord');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 // Route 1 -> this route will send question set without answer, and also send user data
 router.get('/join/:quizeCode', fetchuser, async (req, res) => {
-    try {
-        const UserData = await StudentModal.findById({ _id: req.user.id }).select('-password');
-        if (UserData === null) {
-            return res.status(400).json({ error: "Can't find student profile" })
+
+    const details = await TestRecord.findOne({ qCode: req.params.quizeCode, stuId: req.user.id });
+    if (details && details.isSubmited === true) {
+
+        return res.status(400).json({ status: `Can't attempt after submit`, id: req.user.id });
+
+    } else {
+
+        try {
+            const UserData = await StudentModal.findById({ _id: req.user.id }).select('-password');
+            if (UserData === null) {
+                return res.status(400).json({ error: "Can't find student profile" })
+            }
+
+            const qCode = req.params.quizeCode
+            const qSet = await Question.findOne({ quizeCode: qCode }).select('_id').select('user').select("quizeCode").select('isPublish').select('qname').select('questions.question').select('questions.picture').select('questions.option').select('questions.marks').select('questions.multiAns').select('questions._id').select('qName');
+            if (!qSet)
+                return res.status(404).json({ error: `There is no quiz with id: ${qCode}` });
+            else
+                return res.status(200).json({ quizeSet: qSet, userData: UserData });
+
+        } catch (error) {
+            res.status(500).json({ error })
         }
 
-        const qCode = req.params.quizeCode
-        const qSet = await Question.findOne({ quizeCode: qCode }).select('_id').select('user').select("quizeCode").select('isPublish').select('qname').select('questions.question').select('questions.picture').select('questions.option').select('questions.marks').select('questions.multiAns').select('questions._id').select('qName');
-        if (!qSet)
-            return res.status(404).json({ error: `There is no quiz with id: ${qCode}` });
-        else
-            return res.status(200).json({ quizeSet: qSet, userData: UserData });
-
-    } catch (error) {
-        res.status(500).json({ error })
     }
 });
 
@@ -87,11 +97,10 @@ const removeAnswerData = (arr, questionId) => {
 }
 
 // Route 2 -> This route will add answer and update answer
-router.post('/join/response/save', [
+router.post('/join/response/save', fetchuser, [
     // basic details
     body('qSetid', "Quiz id not found").exists(),
     body('qCode', "Quiz code noot found").exists(),
-    body('stuId', "Student id not found").exists(),
 
     // question detail
     body('questionId', "Question id not found").exists(),
@@ -105,20 +114,20 @@ router.post('/join/response/save', [
     }
 
     try {
-        const { questionId, answer, qSetid, qCode, stuId } = req.body;
+        let { questionId, answer, qSetid, qCode } = req.body;
 
         let answerTemp = {
             questionId: questionId,
             answer: answer
         }
 
-        const details = await TestRecord.findOne({ qSetid: qSetid, qCode: qCode, stuId: stuId });
+        const details = await TestRecord.findOne({ qSetid: qSetid, qCode: qCode, stuId: req.user.id });
         // insert first data
         if (details === null) {
             data = await TestRecord.create({
                 "qSetid": qSetid,
                 "qCode": qCode,
-                "stuId": stuId,
+                "stuId": req.user.id,
                 "record": answerTemp,
                 "isSubmited": false
             });
@@ -130,7 +139,7 @@ router.post('/join/response/save', [
             if (flag) {
                 // user will update the question
                 let newRecord = udateAnswerData(details.record, answer, questionId);
-                await TestRecord.findOneAndUpdate({ qSetid: qSetid, qCode: qCode, stuId: stuId }, { $set: { record: newRecord } }).then(() => {
+                await TestRecord.findOneAndUpdate({ qSetid: qSetid, qCode: qCode, stuId: req.user.id }, { $set: { record: newRecord } }).then(() => {
                     return res.status(200).json({ status: 'Answer update success' })
                 });
 
@@ -140,7 +149,7 @@ router.post('/join/response/save', [
                 await TestRecord.findOneAndUpdate({
                     qSetid: qSetid,
                     qCode: qCode,
-                    stuId: stuId
+                    stuId: req.user.id
                 }, {
                     $set: { record: update }
                 }).then(() => {
@@ -157,11 +166,10 @@ router.post('/join/response/save', [
 });
 
 // ROUTE 3 -> This route will remove answer
-router.post('/join/response/delete', [
+router.post('/join/response/delete', fetchuser, [
 
     body('qSetid', "Quiz id not found").exists(),
     body('qCode', "Quiz code noot found").exists(),
-    body('stuId', "Student id not found").exists(),
     body('questionId', "Question id not found").exists(),
 
 ], async (req, res) => {
@@ -171,27 +179,47 @@ router.post('/join/response/delete', [
         return res.status(400).json({ errors: data.array() });
     }
 
-    let { qSetid, qCode, stuId, questionId } = req.body;
+    let { qSetid, qCode, questionId } = req.body;
 
     try {
 
-        let details = await TestRecord.findOne({ qSetid: qSetid, qCode: qCode, stuId: stuId });
+        let details = await TestRecord.findOne({ qSetid: qSetid, qCode: qCode, stuId: req.user.id });
         let newRecord = removeAnswerData(details.record, questionId);
 
         await TestRecord.findOneAndUpdate({
             qSetid: qSetid,
             qCode: qCode,
-            stuId: stuId
+            stuId: req.user.id
         }, {
             $set: { record: newRecord }
         }).then((e) => {
             return res.status(200).json({ status: "Answer reset success" })
         })
-        
+
     } catch (error) {
         return res.status(500).json({ error });
     }
 
+})
+
+// ROUTE 4 -> This route will submit answer
+router.post(`/join/response/submit`, fetchuser, [
+
+    body('qSetid', "Quiz id not found").exists(),
+    body('qCode', "Quiz code noot found").exists()
+
+], async (req, res) => {
+    let data = validationResult(req);
+    if (!data.isEmpty()) {
+        return res.status(500).json({ errors: data.array() });
+    }
+
+    try {
+        await TestRecord.findOneAndUpdate({ qSetid: req.body.qSetid, qCode: req.body.qCode, stuId: req.user.id }, { $set: { isSubmited: true } });
+        return res.status(200).json({ status: `Thank you for using quizzer, Your response is recorded` });
+    } catch (error) {
+        return res.status(500)
+    }
 })
 
 module.exports = router

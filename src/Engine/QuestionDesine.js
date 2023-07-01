@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./style/question.scss";
 import EngineContext from './context/EngineContext';
+import StudentContext from './context/StudentContext';
 
 const QuestionDesine = (props) => {
     const enginContext = useContext(EngineContext);
@@ -10,7 +11,38 @@ const QuestionDesine = (props) => {
         handleCurrentQset(props.qSet_Id)
     }, [currentQset]);
 
-    console.log(props.qSet_Id);
+    let stuContext = useContext(StudentContext);
+    let { handleSaveRecord, handleResetRecord } = stuContext;
+
+    const [answer, setAnswer] = useState({})
+    const recordAnswerOnChange = (e) => {
+        setAnswer({ ...answer, [e.target.name]: e.target.value });
+    }
+
+    let handleSave = async (e, qId) => {
+        e.preventDefault();
+
+        let qSetId = props.qSet_Id;
+        let qCode = props.qCode;
+        let token = await localStorage.getItem('quizer-auth-token');
+        let questionId = qId;
+        let ans = Object.values(answer)
+
+        await handleSaveRecord(qSetId, qCode, token, questionId, ans).then(() => {
+            setAnswer({});
+        })
+    }
+
+    let handleReset = async (e, qId) => {
+        let qSetId = props.qSet_Id;
+        let qCode = props.qCode;
+        let token = await localStorage.getItem('quizer-auth-token');
+        let questionId = qId;
+
+        await handleResetRecord(qSetId, qCode, token, questionId).then(() => {
+            setAnswer({});
+        })
+    }
 
     return (
         <>
@@ -20,7 +52,7 @@ const QuestionDesine = (props) => {
                     {
                         props.data.map((sample, index) => {
                             return (
-                                <form id={`reset-btn-${index + 1}`} key={`question${index + 1}`} >
+                                <form id={`reset-btn-${index + 1}`} key={`question${index + 1}`} onSubmit={(e) => handleSave(e, sample._id)}>
                                     <div className="container ">
                                         <div className="question-main-container d-flex justify-content-between">
                                             <div className="row col col-10 question-container ms-1">
@@ -45,7 +77,7 @@ const QuestionDesine = (props) => {
                                                         {sample.option.map((op, index) => {
                                                             return (
                                                                 <div className="option-group fit-content" key={op + "@0(^l/" + index} >
-                                                                    <input type="checkbox" name={`option${index + 1}`} />
+                                                                    <input type="checkbox" name={`option${index + 1}`} onChange={(e) => recordAnswerOnChange(e)} value={op} />
                                                                     <label htmlFor={`option${index + 1}`} className="ms-3" >{op}</label>
                                                                 </div>
                                                             );
@@ -56,7 +88,7 @@ const QuestionDesine = (props) => {
                                                         {sample.option.map((op, index) => {
                                                             return (
                                                                 <div className="option-group fit-content" key={op + "@0(^l/" + index} >
-                                                                    <input type="radio" name={`option`} />
+                                                                    <input type="radio" name={`option`} onChange={(e) => recordAnswerOnChange(e)} value={op} />
                                                                     <label htmlFor={`option${index + 1}`} className="ms-3" >{op}</label>
                                                                 </div>
                                                             );
@@ -68,7 +100,7 @@ const QuestionDesine = (props) => {
                                             {!props.edit &&
                                                 <div className="question-form-control mt-4">
                                                     <div className="question-form-control-closer">
-                                                        <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset' onClick={() => console.log(sample)}> Reset </button>
+                                                        <button className="btn btn-secondary btn-sm py-0 px-4 me-3" type='reset' onClick={(e) => handleReset(1, sample._id)}> Reset </button>
                                                         <button className="btn btn-primary btn-sm py-0 px-4 me-3" type='submit'> save </button>
                                                     </div>
                                                 </div>

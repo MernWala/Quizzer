@@ -55,18 +55,33 @@ const Home = () => {
   const dContext = useContext(DataContext);
   const { fetchTestApi, qSetData } = dContext;
 
-  const handleJoin = (e) => {
+  const handleJoin = async (e) => {
     e.preventDefault();
-    fetchTestApi(joiningCode.testCodeLink);
+    let data = await fetchTestApi(joiningCode.testCodeLink);
 
-    if (joiningCode.testCodeLink.length === 8) {
-      if (qSetData && qSetData.error) {
-        sendMess('warning', `No quiz found with quize code ${joiningCode.testCodeLink}`);
+    if (data.status !== "Can't attempt after submit") {
+      if (joiningCode.testCodeLink.length === 8) {
+        if (qSetData && qSetData.error) {
+          sendMess('warning', `No quiz found with quize code ${joiningCode.testCodeLink}`);
+        } else {
+          navigate(`/joining-code/${joiningCode.testCodeLink}`)
+        }
       } else {
-        navigate(`/joining-code/${joiningCode.testCodeLink}`)
+        sendMess('warning', "Not a valid quize code !")
       }
     } else {
-      sendMess('warning', "Not a valid quize code !")
+      sendMess('danger', `It seems like you have submited your response`);
+
+      setTimeout(() => {
+        sendMess('warning', `You may contact to your guide.`);
+        setTimeout(() => {
+          sendMess('info', `We have just provided you a ID in your clipboard. Your ID is: ${data.id}`);
+          navigator.clipboard.writeText(data.id);
+          setTimeout(() => {
+            document.getElementById('joining-form').reset()
+          }, 3000);
+        }, 3000);
+      }, 3000);
     }
   }
 
@@ -87,21 +102,20 @@ const Home = () => {
                   <i className="fas fa-question me-2 text-white"></i>
                   New Quize
                 </button>
-                <form className='d-flex' onSubmit={() => handleJoin()}>
+                <form className='d-flex align-items-center' onSubmit={() => handleJoin()} id='joining-form'>
                   <div className="input-group">
                     <label htmlFor="testCodeLink"></label>
                     <input type="text" name='testCodeLink' id='testCodeLink' className='home-link-input mx-4'
                       placeholder='Enter a code or link' onChange={handleOnChange} />
                   </div>
+                  {
+                    joiningCode.testCodeLink &&
+                    <div className="join-btn-home">
+                      <button type='submit' onClick={handleJoin}>Join</button>
+                    </div>
+                  }
                 </form>
               </div>
-
-              {
-                joiningCode.testCodeLink &&
-                <div className="join-btn-home">
-                  <button type='submit' onClick={handleJoin}>Join</button>
-                </div>
-              }
             </div>
 
             <hr className='my-5' />

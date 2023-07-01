@@ -22,8 +22,7 @@ const TestRecordSchema = new Schema({
         {
             questionId: {
                 type: mongoose.Schema.Types.ObjectId,
-                require: true,
-                unique: true
+                require: true
             },
             answer: {
                 type: Array,
