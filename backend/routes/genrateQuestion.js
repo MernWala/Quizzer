@@ -168,8 +168,6 @@ router.put('/update-question/:mainId/:questionId', fetchuser, async (req, res) =
             "_id": _id,
         };
 
-        console.log(newData);
-
         ques.questions[index] = newData;
         await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true });
         res.status(200).json({ update: newData });

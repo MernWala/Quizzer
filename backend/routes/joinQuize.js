@@ -5,7 +5,6 @@ const Question = require('../model/Question');
 const fetchuser = require('../middleware/fetchuser')
 const { body, validationResult } = require('express-validator');
 const TestRecord = require('../model/TestRecord');
-const mongoose = require('mongoose')
 
 // Route 1 -> this route will send question set without answer, and also send user data
 router.get('/join/:quizeCode', fetchuser, async (req, res) => {

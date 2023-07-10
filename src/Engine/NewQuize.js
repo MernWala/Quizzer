@@ -51,7 +51,7 @@ const NewQuize = () => {
 
   return (
     <>
-      <div className={`d-flex align-items-center justify-content-center flex-column mb-5 mt-3 'fade-in'`} id="createPreRequest">
+      <div className={`d-flex align-items-center justify-content-center flex-column mb-5 mt-3 fade-in`} id="createPreRequest">
         <div id="someInstruction" className="row">
           <div>
             <p>Please read Instructions</p>

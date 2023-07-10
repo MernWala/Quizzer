@@ -18,7 +18,7 @@ const PreviewQuestion = () => {
 
     return (
         <>
-            <div className='container px-5'>
+            <div className='container px-5 my-5'>
                 {
                     selectedQuestionSet && <QuestionDesine data={selectedQuestionSet.questions} qSet_Id={selectedQuestionSet._id} edit={true} />
                 }

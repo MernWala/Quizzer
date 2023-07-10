@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const About = () => {
 
     useEffect(() => {
-        document.title = "Quizzer || About"
+        document.title = "Quizzer - About"
     }, [])
 
 

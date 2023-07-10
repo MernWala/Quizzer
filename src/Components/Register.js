@@ -54,13 +54,17 @@ function Register() {
                             password: userData.pass1,
                             accountType: userData.accountType,
                         })
-                    }).then((e) => {
+                    }).then(async (e) => {
+                        let data = await e.json()
                         if (e.status === 201) {
                             sendMess('success', 'Your Acccount successfully created. You may login here.');
                             setAccess(true);
                             navigate("/app/acess-account/auth");
                         } else {
-                            sendMess('danger', 'This email is already registered');
+                            if (data.errors) {
+                                console.log( data.errors );
+                                sendMess('danger', data.errors[0].msg);
+                            }
                         }
                     })
                 } else {
@@ -139,12 +143,12 @@ function Register() {
                                 <label htmlFor="">Account Type</label>
                                 <div className="radio-group">
                                     <div className="radio-wrap">
-                                        <input type="radio" name="accountType" value="Instructor" onChange={onChange} />
-                                        <label htmlFor="accountType">Instructor</label>
+                                        <input type="radio" name="accountType" id="accountType1" value="Instructor" onChange={onChange} />
+                                        <label htmlFor="accountType1">Instructor</label>
                                     </div>
                                     <div className="radio-wrap">
-                                        <input type="radio" name="accountType" value="Student" onChange={onChange} />
-                                        <label htmlFor="accountType">Student</label>
+                                        <input type="radio" name="accountType" id="accountType2" value="Student" onChange={onChange} />
+                                        <label htmlFor="accountType2">Student</label>
                                     </div>
                                 </div>
                             </div>

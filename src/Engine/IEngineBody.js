@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import EngineContext from './context/EngineContext'
 import Overview from './Overview';
-import Draft from "./Draft"
+import QuestionSet from "./QuestionSet"
 import NewQuize from "./NewQuize";
 import ConductedQuize from "./ConductedQuize";
 import Faq from "./Faq";
@@ -19,7 +19,7 @@ const IEngineBody = () => {
                 return <Overview />
 
             case 2:
-                return <Draft />
+                return <QuestionSet />
 
             case 3:
                 return <NewQuize />

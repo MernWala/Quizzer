@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 // Route 1 - Register Instructor endpoint
 router.post('/inst', [
     body("fName", "First name is too short").isLength({ min: 3 }),
-    body("lName", "First name is too short").isLength({ min: 3 }),
+    body("lName", "Last name is too short").isLength({ min: 3 }),
     body('email', "Invalied email address").isEmail(),
     body('password', "Length of password is short").isLength({ min: 6 }),
 ], async (req, res) => {
@@ -58,7 +58,7 @@ router.post('/inst', [
 // Route 2 - Register Student endpoint
 router.post('/stu', [
     body("fName", "First name is too short").isLength({ min: 3 }),
-    body("lName", "First name is too short").isLength({ min: 3 }),
+    body("lName", "Last name is too short").isLength({ min: 3 }),
     body('email', "Invalied email address").isEmail(),
     body('password', "Length of password is short").isLength({ min: 6 }),
 

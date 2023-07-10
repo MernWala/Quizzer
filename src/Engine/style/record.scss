@@ -1,0 +1,103 @@
+@import "../../styles/variables.scss";
+@import "../../styles/fonts.scss";
+
+.theam-box-modal {
+    border: 1px solid $theamColorTrans;
+    backdrop-filter: blur(5px);
+    background-color: $theamUltraThin;
+}
+
+.status-btn {
+    padding: .5rem 1rem;
+    border-radius: 3px;
+    border: 1px solid $theamText;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 1px;
+    background-color: $theamUltraThin;
+    font-style: italic;
+    font-weight: lighter;
+    width: 100%;
+    font-size: 1.3rem;
+}
+
+.border-theam-1px {
+    border: 1px solid $theamText;
+}
+
+.border-theam-light-1px {
+    border: 1px solid $theamColorTrans;
+}
+
+.ico-btn,
+.ico-btn-round,
+.ico-btn-squar {
+    color: $theamTextHovered;
+    border: 1px solid $theamColorTrans;
+}
+
+.ico-btn-round,
+.ico-btn-squar {
+    @include center-center();
+    background-color: $theamColorTrans;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    border: 1px solid $theamText;
+    color: var(--bs-light);
+    cursor: pointer;
+
+    &::before {
+        margin-top: 3px;
+    }
+}
+
+.ico-btn-squar {
+    border-radius: 3px;
+}
+
+.width-fit {
+    width: fit-content;
+}
+
+.record-card-main {
+    user-select: none;
+
+    .record-card-closer {
+        .record-main-table {
+            table {
+
+                thead {
+                    background-color: $theamColorTrans;
+                    border: 1px solid $theamText;
+
+                    tr {
+                        th {
+                            font-size: 1.7rem;
+                            font-family: 'Poppins', sans-serif;
+                            font-weight: normal;
+                            letter-spacing: 1px;
+                            padding: .5rem 1rem;
+                        }
+                    }
+                }
+
+                tbody {
+                    border: 1px solid $theamText;
+
+                    tr {
+                        td {
+                            font-size: 1.5rem;
+                            padding: .5rem 1rem;
+
+                            a {
+                                text-decoration: none;
+                                color: var(--bs-light);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

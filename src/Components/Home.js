@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import ProfileModal from './ProfileModal'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UtilityContext from '../context/utility/UtilityContext';
 import EngineContext from '../Engine/context/EngineContext';
 import DataContext from '../context/userData/DataContext';
@@ -8,7 +8,7 @@ import DataContext from '../context/userData/DataContext';
 const Home = () => {
 
   useEffect(() => {
-    document.title = "Quizzer || Home";
+    document.title = "Quizzer - Home";
   }, [])
 
   const utilContext = useContext(UtilityContext);
@@ -53,35 +53,28 @@ const Home = () => {
   }
 
   const dContext = useContext(DataContext);
-  const { fetchTestApi, qSetData } = dContext;
+  const { fetchTestApi } = dContext;
 
   const handleJoin = async (e) => {
     e.preventDefault();
     let data = await fetchTestApi(joiningCode.testCodeLink);
 
-    if (data.status !== "Can't attempt after submit") {
-      if (joiningCode.testCodeLink.length === 8) {
-        if (qSetData && qSetData.error) {
-          sendMess('warning', `No quiz found with quize code ${joiningCode.testCodeLink}`);
-        } else {
-          navigate(`/joining-code/${joiningCode.testCodeLink}`)
-        }
-      } else {
-        sendMess('warning', "Not a valid quize code !")
-      }
+    if (joiningCode.testCodeLink.length !== 8) {
+      sendMess('info', 'Not a valid quiz code');
     } else {
-      sendMess('danger', `It seems like you have submited your response`);
-
-      setTimeout(() => {
-        sendMess('warning', `You may contact to your guide.`);
-        setTimeout(() => {
-          sendMess('info', `We have just provided you a ID in your clipboard. Your ID is: ${data.id}`);
-          navigator.clipboard.writeText(data.id);
-          setTimeout(() => {
-            document.getElementById('joining-form').reset()
-          }, 3000);
-        }, 3000);
-      }, 3000);
+      if (data.error) {
+        sendMess('warning', data.error);
+      } else {
+        if (data.status === `Can't attempt after submit`) {
+          sendMess('warning', `${data.status}, ID: ${data.id}. Contact your guide if needed`)
+        } else {
+          if (data.quizeSet.isPublish === false) {
+            sendMess('info', `It seems like your guide is not activate quize yet`)
+          } else {
+            navigate(`/joining-code/${joiningCode.testCodeLink}`)
+          }
+        }
+      }
     }
   }
 
@@ -98,7 +91,7 @@ const Home = () => {
 
             <div className='d-flex align-items-center'>
               <div className='btn-group'>
-                <button className="custom-btn no-text-decor px-3 btn-2m" onClick={handleLinkClick}>
+                <button className="custom-btn no-text-decor px-3 btn-2m my-2" onClick={handleLinkClick}>
                   <i className="fas fa-question me-2 text-white"></i>
                   New Quize
                 </button>
@@ -121,7 +114,7 @@ const Home = () => {
             <hr className='my-5' />
 
             <div className="homeLoginDescription">
-              <a href="/about-us" className='description-link' target='_blank' rel="noopener noreferrer">Learn More</a> <span>about Quizzer</span>
+              <Link to="/about-us" className='description-link'>Learn More</Link> <span>about Quizzer</span>
             </div>
 
           </div>

@@ -4,16 +4,18 @@ import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
 
 const Auth = () => {
-
-    useEffect(() => {
-        document.title = "Authentication"
-    }, [])
-
-
     let navigate = useNavigate();
 
     const utilContext = useContext(UtilityContext);
     const { accessType, setAccess, sendMess } = utilContext;
+
+    useEffect(() => {
+        if (accessType === true) {
+            document.title = "Quizer - Instructor login"
+        } else {
+            document.title = "Quizer - Student login"
+        }
+    }, [accessType])
 
     const dataContext = useContext(DataContext);
     const { loadData_inst, loadData_stu } = dataContext;

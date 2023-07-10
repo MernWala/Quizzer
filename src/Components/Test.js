@@ -12,6 +12,7 @@ const Test = () => {
     const { fetchTestApi, qSetData } = dContext
 
     useEffect(() => {
+        document.title = `Quizer || Code - ${param.qCode}`
         fetchTestApi(param.qCode);
     }, [])
 

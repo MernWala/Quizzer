@@ -20,6 +20,8 @@ const ProfileModal = () => {
     const handleLogout = () => {
         localStorage.removeItem('quizer-auth-token');
         localStorage.removeItem('userProfileData');
+        localStorage.removeItem('quizer-quize-code');
+        localStorage.removeItem('quizer-modify-question-id');
         setLogin(false);
         setTimeout(() => {
             sendMess('warning', 'Loging out !')

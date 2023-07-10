@@ -20,7 +20,7 @@ const Faq = () => {
     e.preventDefault();
     const { emailId, question, answerToMail } = askData
     try {
-      await fetch('http://localhost:5001/ask/question', {
+      await fetch(`http://localhost:5001/ask/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ const Faq = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container fade-in">
         <div className="row my-4">
           <div className="col col-8 header-2 text-white">
             <p>

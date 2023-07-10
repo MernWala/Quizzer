@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import '../styles/customCard.scss'
 import reportSvg from '../storyset/report.gif'
 import ProfileModal from './ProfileModal'
@@ -23,6 +23,11 @@ const Reportbug = () => {
         report: '',
     });
 
+    useEffect(() => {
+        document.title = "Quizer - Feedback"
+    }, [])
+
+
     const setAuxilaryData = (e) => {
         let userData = localStorage.getItem('userProfileData');
         let token = localStorage.getItem('quizer-auth-token')
@@ -44,7 +49,7 @@ const Reportbug = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(isLogin){
+        if (isLogin) {
             sendMess('warning', "It's seems like you have not login yet");
             return;
         }

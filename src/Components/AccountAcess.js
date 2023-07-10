@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import randomStory from '../storyset/random.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import UtilityContext from '../context/utility/UtilityContext';
@@ -6,12 +6,16 @@ import UtilityContext from '../context/utility/UtilityContext';
 const AccountAcess = () => {
 
     const navigate = useNavigate();
-    
+
     const utilContext = useContext(UtilityContext);
     const handleClick = (e) => {
         utilContext.setAccess(e);
         navigate("/app/acess-account/auth");
     }
+
+    useEffect(() => {
+        document.title = "Quizer - Account access"
+    }, [])
 
     return (
         <>
