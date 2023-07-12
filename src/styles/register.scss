@@ -31,15 +31,14 @@
                     border-radius: 5px;
                     font-size: 1.4rem;
                     margin: 1rem 0rem;
-                    max-width: 75%;
                     margin-left: auto !important;
                     letter-spacing: 1px;
                 }
 
                 .radio-group {
                     width: 75%;
-                    margin-left: auto!important;
                     display: flex;
+
                     .radio-wrap {
                         margin-right: 2rem;
 
@@ -49,11 +48,11 @@
                         }
 
                         input[type=checkbox] {
-                            width: fit-content!important;
+                            width: fit-content !important;
                             box-shadow: none;
                         }
 
-                        label{
+                        label {
                             margin: 0rem .5rem;
                             color: #fff;
                         }
@@ -86,13 +85,13 @@
     width: 100% !important;
 }
 
-.declaration-label{
+.declaration-label {
     font-size: 1.4rem;
     color: $theamText;
 }
 
-.submit-btn{
-    button{
+.submit-btn {
+    button {
         border: 1px solid $theamText;
         background-color: $theamColorTrans;
         color: #fff;

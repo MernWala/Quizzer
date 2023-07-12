@@ -17,8 +17,10 @@ app.use('/api/getDetails', require('./routes/getUserDetails'));     // getDetail
 app.use('/api/report-bug', require('./routes/reportbug'));          // reportBug -------> Report bug (login require)
 app.use('/genrate-question', require('./routes/genrateQuestion'));  // genrateQuestion -> genrate question set, CRUD -> for questions, get all question array, delete question set, publish qSet, 
 app.use('/ask/', require("./routes/ask"));                          // AskQuestion -----> in about.js ask a question
-app.use('/quiz/', require('./routes/joinQuize'))                    // joinTest --------> send question set without answer and user (Student) information also
-app.use('/record/get-result', require('./routes/recordedResult'))
+app.use('/quiz/', require('./routes/joinQuize'));                   // joinTest --------> send question set without answer and user (Student) information also
+app.use('/record/get-result', require('./routes/recordedResult'));
+app.use('/verify/mail', require('./routes/verifyOtp'));
+
 
 app.listen(port, () => {
     console.log(`Quizer is listening at ${port}`);

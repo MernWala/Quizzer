@@ -13,11 +13,11 @@ function Register() {
         fName: '',
         lName: '',
         email: '',
+        OTP: '',
         pass1: '',
         pass2: '',
         accountType: '',
     })
-
 
     const onChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value })
@@ -31,8 +31,24 @@ function Register() {
             setDeclaration(true);
     }
 
-    const navigate = useNavigate();
+    const sendOTP = async () => {
+        sendMess('info', 'We are sending an otp to your mail id')
+        await fetch(`http://localhost:5001/verify/mail/genrate/otp`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: userData.email
+            })
+        }).then(async (e) => {
+            let data = await e.json();
+            console.log(data);
+            sendMess('success', data.msg);
+        })
+    }
 
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (userData.pass1 === userData.pass2) {
@@ -51,6 +67,7 @@ function Register() {
                             fName: userData.fName,
                             lName: userData.lName,
                             email: userData.email,
+                            OTP: userData.OTP,
                             password: userData.pass1,
                             accountType: userData.accountType,
                         })
@@ -62,10 +79,20 @@ function Register() {
                             navigate("/app/acess-account/auth");
                         } else {
                             if (data.errors) {
-                                console.log( data.errors );
+                                console.log(data.errors);
                                 sendMess('danger', data.errors[0].msg);
                             }
                         }
+                    }).then(async () => {
+                        await fetch(`http://localhost:5001/verify/mail/delete/otp`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                email: userData.email,
+                            })
+                        })
                     })
                 } else {
                     await fetch(`http://localhost:5001/auth-register/stu`, {
@@ -77,6 +104,7 @@ function Register() {
                             fName: userData.fName,
                             lName: userData.lName,
                             email: userData.email,
+                            OTP: userData.OTP,
                             password: userData.pass1,
                             accountType: userData.accountType,
                             picture: '',
@@ -89,6 +117,16 @@ function Register() {
                         } else {
                             sendMess('danger', 'This email is already registered');
                         }
+                    }).then(async () => {
+                        await fetch(`http://localhost:5001/verify/mail/delete/otp`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                email: userData.email,
+                            })
+                        })
                     })
                 }
             }
@@ -107,60 +145,101 @@ function Register() {
                     <form className='text-white' onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="input-group">
-                                <label htmlFor="fName">First Name</label>
-                                <input type="text" name="fName" id="fName" onChange={onChange} />
+                                <div className="col col-3">
+                                    <label htmlFor="fName">First Name*</label>
+                                </div>
+                                <div className="col col-9">
+                                    <input type="text" name="fName" id="fName" onChange={onChange} placeholder='Enter first name' />
+                                </div>
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="input-group">
-                                <label htmlFor="lName">Last Name</label>
-                                <input type="text" name="lName" id="lName" onChange={onChange} />
+                                <div className="col col-3">
+                                    <label htmlFor="lName">Last Name*</label>
+                                </div>
+                                <div className="col col-9">
+                                    <input type="text" name="lName" id="lName" onChange={onChange} placeholder='Enter your title' />
+                                </div>
                             </div>
                         </div>
 
                         <div className="row">
                             <div className="input-group width-100">
-                                <label htmlFor="email">Email Id</label>
-                                <input type="email" name="email" id="email" onChange={onChange} />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="input-group">
-                                <label htmlFor="pass1">Create Password</label>
-                                <input type="password" name="pass1" autoComplete='on' onChange={onChange} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="input-group">
-                                <label htmlFor="pass2">Re-Enter Password </label>
-                                <input type="password" name="pass2" autoComplete='on' onChange={onChange} />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="input-group">
-                                <label htmlFor="">Account Type</label>
-                                <div className="radio-group">
-                                    <div className="radio-wrap">
-                                        <input type="radio" name="accountType" id="accountType1" value="Instructor" onChange={onChange} />
-                                        <label htmlFor="accountType1">Instructor</label>
-                                    </div>
-                                    <div className="radio-wrap">
-                                        <input type="radio" name="accountType" id="accountType2" value="Student" onChange={onChange} />
-                                        <label htmlFor="accountType2">Student</label>
+                                <div className="col col-3">
+                                    <label htmlFor="email">Email Id*</label>
+                                </div>
+                                <div className="col col-9 d-flex align-items-center gap-3">
+                                    <input type="email" name="email" id="email" onChange={onChange} placeholder='samplemail@domain.com' />
+                                    <div className="submit-btn">
+                                        <button type="button" className='custom-register-btn py-3' style={{ width: '10rem' }} onClick={sendOTP}>Sent OTP</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="px-4 my-5">
-                            <input type="checkbox" name="declaration" id="declaration" className='mx-2' onClick={handleDclaration} />
+                        <div className="row">
+                            <div className="input-group width-100">
+                                <div className="col col-3">
+                                    <label htmlFor="OTP">verification OTP*</label>
+                                </div>
+                                <div className="col col-9">
+                                    <input type="number" name="OTP" onChange={onChange} placeholder='OTP - XXXX' disabled={!userData.email} className={!userData.email ? `opacity-50 no-spinner` : `no-spinner`} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="input-group">
+                                <div className="col col-3">
+                                    <label htmlFor="pass1">Create Password*</label>
+                                </div>
+                                <div className="col col-9">
+                                    <input type="password" name="pass1" autoComplete='on' onChange={onChange} disabled={!userData.OTP} className={!userData.OTP ? `opacity-50` : ''} placeholder='Enter Password' />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="input-group">
+                                <div className="col col-3">
+                                    <label htmlFor="pass2">Re-Enter Password *</label>
+                                </div>
+                                <div className="col col-9">
+                                    <input type="password" name="pass2" autoComplete='on' onChange={onChange} disabled={!userData.OTP} className={!userData.OTP ? `opacity-50` : ''} placeholder='Re - enter Password' />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="input-group">
+                                <div className="col-3 col">
+                                    <label htmlFor="">Account Type*</label>
+                                </div>
+
+                                <div className="col col-9">
+                                    <div className="radio-group">
+                                        <div className="radio-wrap">
+                                            <input type="radio" name="accountType" id="accountType1" value="Instructor" onChange={onChange} disabled={!userData.OTP} className={!userData.OTP ? `opacity-50` : ''} />
+                                            <label htmlFor="accountType1">Instructor</label>
+                                        </div>
+                                        <div className="radio-wrap">
+                                            <input type="radio" name="accountType" id="accountType2" value="Student" onChange={onChange} disabled={!userData.OTP} className={!userData.OTP ? `opacity-50` : ''} />
+                                            <label htmlFor="accountType2">Student</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="px-4 my-5 d-flex gap-2">
+                            <input type="checkbox" name="declaration" id="declaration" onClick={handleDclaration} disabled={!userData.OTP} className={!userData.OTP ? `opacity-50` : ''} />
                             <label htmlFor="declaration" className='declaration-label'>I agree to share data with Quizzer</label>
                         </div>
 
                         <div className="row mx-3">
-                            <div className="input-group submit-btn">
+                            <div className="input-group submit-btn px-0">
                                 <button disabled={!declaration} className={`${declaration ? '' : 'custom-disable-btn'} custom-register-btn`}>Register</button>
                             </div>
                         </div>
