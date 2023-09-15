@@ -126,8 +126,13 @@ const Auth = () => {
                                         <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="password" id="password" onChange={onChange} required autoComplete='off' />
                                         <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
+                                    <div className='mx-3 w-100'>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" className='text-decoration-underline fw-lighter text-light fs-4 ms-auto d-block width-fit letter-spacing-1px border-0 bg-transparent'>
+                                            Forgot passowrd ?
+                                        </button>
+                                    </div>
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" readOnly />
+                                        <input type="Submit" value="Login" readOnly className='mt-3' />
                                     </div>
                                 </form>
                             </div>
@@ -147,15 +152,18 @@ const Auth = () => {
                                         <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="studentPassword" id="studentPassword" onChange={onChange2} required autoComplete='off' />
                                         <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
+                                    <div className='mx-3 w-100'>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" className='text-decoration-underline fw-lighter text-light fs-4 ms-auto d-block width-fit letter-spacing-1px border-0 bg-transparent'>
+                                            Forgot passowrd ?
+                                        </button>
+                                    </div>
                                     <div className="input-group mx-3">
-                                        <input type="Submit" value="Login" readOnly />
+                                        <input type="Submit" value="Login" readOnly className='mt-3' />
                                     </div>
                                 </form>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </>

@@ -70,7 +70,14 @@ const Navbar = () => {
                     <div className='navbar-right-portion d-flex align-items-center'>
                         <div className='mx-3 theam-text date d-flex justify-content-center align-items-center'>
                             <p className='mb-0'>
-                                {(new Date(Date.now()).getHours() - 12) < 0 ? new Date(Date.now()).getHours() : (new Date(Date.now()).getHours() - 12)}:{Math.abs(new Date(Date.now()).getMinutes())}&nbsp;{(new Date(Date.now()).getHours() - 12) < 0 ? "AM" : "PM"}
+                                {
+                                    (new Date(Date.now()).getHours() - 12) < 0 ?
+                                        new Date(Date.now()).getHours() : new Date(Date.now()).getHours() - 12
+                                }:{
+                                    Math.abs(new Date(Date.now()).getMinutes())
+                                }&nbsp;{
+                                    (new Date(Date.now()).getHours() - 12) < 0 ? "AM" : "PM"
+                                }
                             </p>
                             <i className="fa-solid fa-circle mx-2" style={{ fontSize: '.5rem', lineHeight: '1rem' }}></i>
                             <p className='theam-text mb-0'>

@@ -54,15 +54,22 @@ i {
     position: relative;
     padding: 0.2rem 1rem;
     font-size: 1.3rem;
-    color: $theamColor;
     font-weight: 500;
-    border: 1px solid #02838c;
-    color: #02838c;
+    color: $theamText;
+    border: 1px solid $theamText;
 
-    &:hover {
-        background: #02838c;
-        border: 1px solid #fff;
-        color: #fff;
+    &:hover,
+    &:active,
+    &:focus-visible {
+        background: $theamText !important;
+        border: 1px solid #fff !important;
+        color: #fff !important;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        color: $theamText;
+        border: 1px solid $theamText;
     }
 }
 
@@ -260,7 +267,7 @@ i {
 
     i {
         position: absolute;
-        top: 3rem;
+        top: 3.7rem;
         right: 3rem;
         font-size: 1.8rem;
     }
@@ -281,7 +288,7 @@ i {
     font-size: 1.5rem;
     color: #fff;
     position: relative;
-    top: 3rem;
+    top: 3.5rem;
     left: 2.5rem;
     height: 2rem;
     transition: all .1s ease-in;
@@ -290,7 +297,7 @@ i {
 .input-group {
     &:focus-within {
         .input-group-label {
-            top: 1.5rem;
+            top: 1.6rem;
             left: 1.5rem;
             font-size: 1.2rem;
             letter-spacing: 1px;
@@ -515,4 +522,8 @@ i {
 
 .width-fit {
     min-width: fit-content;
+}
+
+.letter-spacing-1px {
+    letter-spacing: 1px;
 }

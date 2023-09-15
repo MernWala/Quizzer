@@ -3,11 +3,15 @@ import Jumbotron from './Jumbotron';
 import "../styles/register.scss";
 import UtilityContext from '../context/utility/UtilityContext';
 import { useNavigate } from 'react-router-dom'
+import DataContext from '../context/userData/DataContext';
 
 function Register() {
 
     const utilContext = useContext(UtilityContext);
     const { sendMess, setAccess } = utilContext;
+
+    const DS = useContext(DataContext)
+    const { sendOTPAPI } = DS
 
     const [userData, setUserData] = useState({
         fName: '',
@@ -29,23 +33,6 @@ function Register() {
             setDeclaration(false);
         else
             setDeclaration(true);
-    }
-
-    const sendOTP = async () => {
-        sendMess('info', 'We are sending an otp to your mail id')
-        await fetch(`http://localhost:5001/verify/mail/genrate/otp`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: userData.email
-            })
-        }).then(async (e) => {
-            let data = await e.json();
-            console.log(data);
-            sendMess('success', data.msg);
-        })
     }
 
     const navigate = useNavigate();
@@ -173,7 +160,7 @@ function Register() {
                                 <div className="col col-9 d-flex align-items-center gap-3">
                                     <input type="email" name="email" id="email" onChange={onChange} placeholder='samplemail@domain.com' />
                                     <div className="submit-btn">
-                                        <button type="button" className='custom-register-btn py-3' style={{ width: '10rem' }} onClick={sendOTP}>Sent OTP</button>
+                                        <button type="button" className='custom-register-btn py-3' style={{ width: '10rem' }} onClick={() => sendOTPAPI(userData.email)}>Sent OTP</button>
                                     </div>
                                 </div>
                             </div>

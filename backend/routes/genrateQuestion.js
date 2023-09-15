@@ -217,9 +217,21 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
         let quizeCode = req.params.quizeCode;
         let qName = req.body.qName;
 
-        const response = await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: true, qName: qName } })
-        res.status(200).json({ response });
+        await Question.findOne(
+            { user: user, quizeCode: quizeCode }
+        ).then(async (result) => {
+            // calculate marks
+            let tempMark = 0;
+            result.questions.forEach((ele) => {
+                tempMark += ele.marks
+            })
 
+            await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { totalMarks: tempMark, isPublish: true, qName: qName } }).then((result) => {
+                return res.status(200).json("Question set published successfully")
+            })
+
+        })
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error })

@@ -14,7 +14,7 @@ import EngineState from './Engine/context/EngineState';
 import PreviewQuestion from './Engine/PreviewQuestion';
 import QuestionForm from './Engine/QuestionForm';
 import PublishQuizeModal from './Engine/PublishQuizeModal';
-import ProfileModal from './Components/ProfileModal';
+import ProfileModal, { ForgotPasswordModal } from './Components/ProfileModal';
 import ModifyQuestionModal from './Engine/ModifyQuestionModal';
 import About from './Components/About';
 import "./styles/scrollbar.scss"
@@ -37,6 +37,7 @@ function App() {
               <PublishQuizeModal />
               <ProfileModal />
               <ModifyQuestionModal />
+              <ForgotPasswordModal />
               {/* Modals declaratioon end here */}
               <Alert head={alert.head} body={alert.body} />
               <Routes>

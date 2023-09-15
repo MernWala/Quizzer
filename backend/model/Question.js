@@ -44,6 +44,10 @@ const QuestionSchema = new Schema({
         type: String,
         require: true
     },
+    totalMarks: {
+        type: Number,
+        default: 0
+    },
     date: {
         type: Date,
         default: Date.now

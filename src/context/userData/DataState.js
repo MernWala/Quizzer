@@ -5,7 +5,7 @@ import UtilityContext from '../utility/UtilityContext';
 const DataState = (props) => {
 
     const utilContext = useContext(UtilityContext);
-    const { setLogin } = utilContext;
+    const { setLogin, sendMess } = utilContext;
 
     const [userData, setUserData] = useState();
 
@@ -107,8 +107,24 @@ const DataState = (props) => {
         }
     }
 
+    const sendOTPAPI = async (emailId) => {
+        sendMess('info', 'We are sending an otp to your mail id')
+        await fetch(`http://localhost:5001/verify/mail/genrate/otp`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: emailId
+            })
+        }).then(async (e) => {
+            let data = await e.json();
+            sendMess('success', data.msg);
+        })
+    }
+
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI }}>
             {props.children}
         </DataContext.Provider>
     )

@@ -8,7 +8,7 @@ const StudentState = (props) => {
     let { sendMess } = utilCon
 
     // save & update answer record
-    let handleSaveRecord = async (qSetId, qCode, token, questionId, answer) => {
+    let handleSaveRecord = async (qSetId, qCode, token, questionId, answer, actualAnswer) => {
         try {
             await fetch(`http://localhost:5001/quiz/join/response/save`, {
                 method: 'POST',
@@ -20,7 +20,8 @@ const StudentState = (props) => {
                     "qSetid": qSetId,
                     "qCode": qCode,
                     "questionId": questionId,
-                    "answer": answer
+                    "answer": answer,
+                    "key": actualAnswer
                 })
             }).then(async (e) => {
                 const response = await e.json();

@@ -1,10 +1,14 @@
 import React, { useEffect, useContext } from 'react'
 import EngineContext from "./context/EngineContext"
+import UtilityContext from '../context/utility/UtilityContext';
 
 const Draft = () => {
 
   const eContext = useContext(EngineContext);
-  const { userAllQuestionSet, fetchAllQuestionData, handleDelete, countMarks } = eContext;
+  const { userAllQuestionSet, fetchAllQuestionData, handleDelete, countMarks, handleChoice } = eContext;
+
+  const UC = useContext(UtilityContext)
+  const { sendMess } = UC
 
   useEffect(() => {
     const asyncApiCall = async () => {
@@ -50,10 +54,14 @@ const Draft = () => {
                         </div>
                       </div>
                       <hr className='teamText' />
-                      <span className="card-subtitle mb-2 text-white q-card-subtitle-text fst-italic">
-                        Quize code - {data.quizeCode}   {/* TODO add copy code ico-btn */}
-                      </span>
-                      <p className="card-text">
+                      <p className="card-text d-flex flex-column">
+                        <span className="card-subtitle fs-4 text-white q-card-subtitle-text">
+                          Quize code - {data.quizeCode}
+                          <i class="ico-btn p-2 rounded ms-2 fa-solid fa-clone cursor-pointer" onClick={() => {
+                            window.navigator.clipboard.writeText(data.quizeCode)
+                            sendMess("info", "Copied to clipboard")
+                          }}></i>
+                        </span>
                         No of question - {data.questions.length} <br />
                         Total Marks - {countMarks(data)}
                       </p>
@@ -75,6 +83,16 @@ const Draft = () => {
                 </div>
               )
             })
+          }
+
+          {
+            userAllQuestionSet.length === 0 &&
+            <div className='py-5 my-5 d-flex align-items-center justify-content-center flex-column'>
+              <span className='fs-3 ff-nunito'>It's seems like there is no question created by you</span>
+              <div className="width-fit my-3">
+                <button className='btn btn-custom btn-shadow' onClick={() => { handleChoice(3) }}>Let's create question set</button>
+              </div>
+            </div>
           }
           {/* quize card ends here */}
         </div>

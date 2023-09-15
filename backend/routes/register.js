@@ -133,4 +133,60 @@ router.post('/stu', [
     }
 });
 
+// Route 3 - Reset password of instructor account with two factor verification
+router.put('/account/forget-password/', [
+
+    body('email', "Email id not found").exists(),
+    body('otp', "OTP not found").exists(),
+    body('account', "Can't get accout type").exists(),
+    body('password', "Pawword not found").exists()
+    
+], async (req, res) => {
+
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() });
+    }
+
+    let { email, otp, account, password } = req.body
+
+    try {
+
+        // verifying OTP
+        await OTP.findOne(
+            { email }
+        ).then(async (data) => {
+            if(data === null) return res.status(404).json("You can only change your password")
+            
+            if (data.otp === Number(otp)) {
+                let secPass = await bcrypt.hash(password, bcrypt.genSaltSync(10));
+
+                if (account === "instructor") {
+                    await Instructor.findOneAndUpdate({ email }, { $set: { password: secPass } }).then(() => {
+                        return;
+                    })
+                    return res.status(200).json("Password has been changed")
+                } else if (account === 'student') {
+                    await Student.findOneAndUpdate({ email }, { $set: { password: secPass } }).then(() => {
+                        return;
+                    })
+                    return res.status(200).json("Password has been changed");
+                }
+
+                return res.status(400).json("Invalid account type")
+
+            } else {
+
+                return res.status(400).json("OTP not matched")
+
+            }
+        })
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ error: error.message })
+    }
+
+})
+
 module.exports = router;

@@ -31,7 +31,7 @@ const PublishQuizeModal = () => {
                                     Remember, after publish this question set having quize code ' {localStorage.getItem('quizer-quize-code')} ' is ready for attempt test if you want to stop taking responses you've to STOP quzie in QUESTION SET option.
                                 </li>
                                 <li className="mb-3">
-                                    You have give a name to your question set before publishing it via below form.
+                                    You have to give a name to your question set before publishing it.
                                 </li>
                             </ul>
                             <p className='mb-0 greeting-font'>Thank you for using Quizzer</p>

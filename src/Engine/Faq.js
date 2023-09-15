@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react'
 import Jumbotron from "../Components/Jumbotron"
 import "./style/faq.scss"
 import UtilityContext from "../context/utility/UtilityContext"
+import DataContext from '../context/userData/DataContext'
 
 const Faq = () => {
 
   const { sendMess } = useContext(UtilityContext);
+  const {userData} = useContext(DataContext)
 
   const [askData, setAskData] = useState({})
   const handleOnChange = (e) => {
@@ -111,7 +113,7 @@ const Faq = () => {
 
               <div className="main-form">
                 <div className="input-group">
-                  <input type="email" name="emailId" placeholder='Your Email' onChange={handleOnChange} />
+                  <input type="email" name="emailId" placeholder='Your Email' onChange={handleOnChange} defaultValue={userData.email} />
                 </div>
                 <div className="input-group">
                   <textarea name="question" cols="100" rows="10" placeholder='How we may help you ?' onChange={handleOnChange} />

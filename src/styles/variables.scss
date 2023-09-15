@@ -4,16 +4,20 @@ $theamText: #02838c;
 $theamTextHovered: #006f77;
 $theamUltraThin: #006f7713;
 
-@mixin center-center{
+@mixin center-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.width-100{
+.width-100 {
     width: 100%;
 }
 
-.height-100{
+.height-100 {
     height: 100%;
+}
+
+.text-theam {
+    color: $theamText
 }

@@ -9,6 +9,7 @@ const QuestionDesine = (props) => {
 
     useEffect(() => {
         handleCurrentQset(props.qSet_Id)
+        console.log(props.data);
     }, [currentQset]);
 
     let stuContext = useContext(StudentContext);
@@ -19,7 +20,7 @@ const QuestionDesine = (props) => {
         setAnswer({ ...answer, [e.target.name]: e.target.value });
     }
 
-    let handleSave = async (e, qId) => {
+    let handleSave = async (e, qId, actualAnswer) => {
         e.preventDefault();
 
         let qSetId = props.qSet_Id;
@@ -28,7 +29,7 @@ const QuestionDesine = (props) => {
         let questionId = qId;
         let ans = Object.values(answer)
 
-        await handleSaveRecord(qSetId, qCode, token, questionId, ans).then(() => {
+        await handleSaveRecord(qSetId, qCode, token, questionId, ans, actualAnswer).then(() => {
             setAnswer({});
         })
     }
@@ -52,7 +53,7 @@ const QuestionDesine = (props) => {
                     {
                         props.data.map((sample, index) => {
                             return (
-                                <form id={`reset-btn-${index + 1}`} key={`question${index + 1}`} onSubmit={(e) => handleSave(e, sample._id)}>
+                                <form id={`reset-btn-${index + 1}`} key={`question${index + 1}`} onSubmit={(e) => handleSave(e, sample._id, sample.answer)}>
                                     <div className="container ">
                                         <div className="question-main-container d-flex justify-content-between">
                                             <div className="row col col-10 question-container ms-1">
@@ -77,7 +78,7 @@ const QuestionDesine = (props) => {
                                                         {sample.option.map((op, index) => {
                                                             return (
                                                                 <div className="option-group fit-content" key={op + "@0(^l/" + index} >
-                                                                    <input type="checkbox" name={`option${index + 1}`} onChange={(e) => recordAnswerOnChange(e)} value={op} />
+                                                                    <input type="checkbox" name={`option${index + 1}`} onChange={(e) => recordAnswerOnChange(e)} value={op} disabled={answer.length === 0} />
                                                                     <label htmlFor={`option${index + 1}`} className="ms-3" >{op}</label>
                                                                 </div>
                                                             );
