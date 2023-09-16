@@ -124,7 +124,7 @@ const DataState = (props) => {
     }
 
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI, setUserData }}>
             {props.children}
         </DataContext.Provider>
     )

@@ -6,6 +6,7 @@ const OTP = require('../model/OTP')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser')
 
 // Route 1 - Register Instructor endpoint
 router.post('/inst', [
@@ -140,7 +141,7 @@ router.put('/account/forget-password/', [
     body('otp', "OTP not found").exists(),
     body('account', "Can't get accout type").exists(),
     body('password', "Pawword not found").exists()
-    
+
 ], async (req, res) => {
 
     const error = validationResult(req);
@@ -156,8 +157,8 @@ router.put('/account/forget-password/', [
         await OTP.findOne(
             { email }
         ).then(async (data) => {
-            if(data === null) return res.status(404).json("You can only change your password")
-            
+            if (data === null) return res.status(404).json("You can only change your password")
+
             if (data.otp === Number(otp)) {
                 let secPass = await bcrypt.hash(password, bcrypt.genSaltSync(10));
 
@@ -187,6 +188,61 @@ router.put('/account/forget-password/', [
         return res.status(500).send({ error: error.message })
     }
 
+})
+
+// Route 4 - (Update Profile) --> Update fName, lName, picture
+router.put('/account/update-details', [
+
+    body('fName', "First name not valid").isLength({ min: 3 }),
+    body('lName', "Last name not valid").isLength({ min: 3 }),
+    body('email', "Email id not valid").isEmail(),
+    body('accountType', "Account type not found").exists()
+
+], fetchuser, async (req, res) => {
+    try {
+        let { fName, lName, email, picture, accountType } = req.body
+
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+            return res.status(400).json({ errors: error.array() });
+        }
+
+        let userId = req.user.id
+
+        if (accountType === 'Instructor') {
+            await Instructor.findOne(
+                { _id: userId, accountType }
+            ).then(async (userData) => {
+                if (userData === null) return res.status(404).json("User not found.")
+
+                if (userData.email === email) {
+                    await Instructor.findByIdAndUpdate({ _id: userId }, { $set: { fName, lName, picture } })
+                    return res.status(200).json("Account Updated")
+                } else {
+                    return res.status(400).json("You can only update your profile")
+                }
+            })
+        } else if (accountType === 'Student') {
+            await Student.findOne(
+                { _id: userId, accountType }
+            ).then(async (userData) => {
+                if (userData === null) return res.status(404).json("User not found.")
+
+                if (userData.email === email) {
+                    await Student.findByIdAndUpdate({ _id: userId }, { $set: { fName, lName, picture } })
+                    return res.status(200).json("Account Updated")
+                } else {
+                    return res.status(400).json("You can only update your profile")
+                }
+            })
+        }
+
+    } catch (error) {
+
+        console.log(error)
+        return res.json(error.message)
+
+    }
 })
 
 module.exports = router;

@@ -1,7 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react'
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+const CustomBtn = (props) => {
+    return (
+        <>
+            <Link to={props.link} className='text-decoration-none btnGroup'>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#profileModal" className='px-0 bg-transparent border-0 py-3 text-theam fw-bold'>
+                    <div className="actual-numbers">
+                        {props.number}
+                    </div>
+                </button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#profileModal" className='px-0 bg-transparent border-0 text-theam fw-bold'>
+                    <div className="btn-name">
+                        {props.text}
+                    </div>
+                </button>
+            </Link>
+        </>
+    )
+}
 
 const ProfileModal = () => {
 
@@ -40,59 +59,31 @@ const ProfileModal = () => {
     return (
         <>
             {/* Profile modal body */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="profileModal" tabIndex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" style={customStyleProfile}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel" style={{ cursor: 'default' }}>~ Welcome <em>{!userData ? '' : (userData.fName + " " + userData.lName)}</em></h1>
-                            <p className="mb-0 text-white profileTagText">{userData && userData.accessType === 'Student' ? 'Student' : 'Instructor'}</p>
+                            <h1 className="modal-title fs-5" id="profileModalLabel" style={{ cursor: 'default' }}>~ Welcome <em>{userData && (userData.fName + " " + userData.lName)}</em></h1>
+                            <p className="mb-0 text-white profileTagText">{userData && userData.accountType}</p>
                         </div>
 
                         <div className="modal-body">
                             <div className="profileModal-closer">
-                                <div className="studentUpdate-info">
-                                    {/* blank space should be there of any student update */}
-                                </div>
                                 <div className="profile-naviation-btn">
-                                    <div className="btnGroup">
-                                        <div className="actual-numbers">
-                                            {/* for now define no as static */}
-                                            4
-                                        </div>
-                                        <div className="btn-name">
-                                            Attempted Quize
-                                        </div>
-                                    </div>
-
-                                    <div className="btnGroup">
-                                        <div className="actual-numbers">
-                                            {/* for now define no as static */}
-                                            2
-                                        </div>
-                                        <div className="btn-name">
-                                            Accomplishment
-                                        </div>
-                                    </div>
-
-                                    <div className="btnGroup">
-                                        <div className="actual-numbers">
-                                            {/* for now define no as static */}
-                                            20
-                                        </div>
-                                        <div className="btn-name">
-                                            Saved Question
-                                        </div>
-                                    </div>
-
-                                    <div className="btnGroup">
-                                        <div className="actual-numbers">
-                                            {/* for now define no as static */}
-                                            10
-                                        </div>
-                                        <div className="btn-name">
-                                            Personal Vault
-                                        </div>
-                                    </div>
+                                    {userData && userData.accountType === "Instructor" ?
+                                        <>
+                                            <CustomBtn number={1} text={"Home"} link={"/"} />
+                                            <CustomBtn number={2} text={"Edit Profile"} link={"/profile/edit"} />
+                                            <CustomBtn number={3} text={"Dashboard"} link={"/app/engin/instructor"} />
+                                        </>
+                                        :
+                                        <>
+                                            <CustomBtn number={1} text={"Home"} link={"/"} />
+                                            <CustomBtn number={2} text={"Edit Profile"} link={"/profile/edit"} />
+                                            {/* <CustomBtn number={3} text={"My Test Record"} link={""} />
+                                            <CustomBtn number={4} text={"Help"} link={""} /> */}
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -110,8 +101,8 @@ const ProfileModal = () => {
 
 export const ForgotPasswordModal = () => {
 
-    const { accessType } = useContext(UtilityContext)
-    const { sendOTPAPI } = useContext(DataContext)
+    const { accessType, isLogin } = useContext(UtilityContext)
+    const { sendOTPAPI, userData } = useContext(DataContext)
 
     const [data, setData] = useState({ email: "", match: false, password: "", password2: "" });
     const handleOnChange = (e) => {
@@ -128,7 +119,12 @@ export const ForgotPasswordModal = () => {
 
     useEffect(() => {
         handlePaswordMatch()
-    }, [data.password, data.password2])
+
+        if (isLogin === true) {
+            userData && setData({ ...data, email: userData.email })
+        }
+
+    }, [data.password, data.password2, isLogin, userData])
 
     const handleResetPassword = async (e, form) => {
         e.preventDefault()
@@ -168,7 +164,7 @@ export const ForgotPasswordModal = () => {
                                     <div className='input-group'>
                                         <label htmlFor="email" className={`z-1 input-group-label ${data.email && 'no-text'}`} >Your Email ID*</label>
                                         {data.email ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type="email" id="email" name='email' onChange={handleOnChange} />
+                                        <input type="email" id="email" name='email' onChange={handleOnChange} value={data.email} />
                                     </div>
                                     <div className='mb-2'>
                                         <button type="button" className='btn btn-login-custom' onClick={() => sendOTPAPI(data.email)}>Send OTP</button>

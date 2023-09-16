@@ -20,6 +20,7 @@ import About from './Components/About';
 import "./styles/scrollbar.scss"
 import Test from './Components/Test';
 import StudentState from './Engine/context/StudentState';
+import EditProfile from './Components/EditProfile';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/question-set/preview" element={<PreviewQuestion />} />
                 <Route path="/question/edit/add-question/" element={<QuestionForm />} />
                 <Route path="/joining-code/:qCode" element={<Test />} />
+                <Route path="/profile/edit/" element={<EditProfile />} />
               </Routes>
             </BrowserRouter>
           </StudentState>

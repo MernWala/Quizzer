@@ -21,7 +21,7 @@ const QuestionForm = (props) => {
 
   return (
     <>
-      <div className='container fade-in .animation-delay-5' id="createQuizeMain">
+      <div className='container fade-in animation-delay-5' id="createQuizeMain">
         <div className="createQuizeMain-closer mx-4">
           {!props.isModify &&
             <div className="row mx-1">

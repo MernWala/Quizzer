@@ -1,15 +1,36 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import EngineContext from './context/EngineContext';
+import UtilityContext from '../context/utility/UtilityContext';
 
 const PublishQuizeModal = () => {
 
-    const eContext = useContext(EngineContext);
-    const { handlePublishQuize } = eContext;
-
-    const [name, setName] = useState("");
+    const [name, setName] = useState({ questionName: localStorage.getItem('quizer-quize-name') });
     const handleName = (e) => {
         setName({ ...name, [e.target.name]: e.target.value })
+    }
+
+    const { sendMess } = useContext(UtilityContext)
+    const handlePublishQuize = async () => {
+        try {
+            await fetch(`http://localhost:5001/genrate-question/publish-question-set/${localStorage.getItem('quizer-quize-code')}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': await localStorage.getItem('quizer-auth-token')
+                },
+                body: JSON.stringify({
+                    qName: name.questionName
+                })
+            }).then(async (e) => {
+                const response = await e.json();
+                if (response.response) {
+                    window.alert(`Published with the name ${name.questionName}. Now it is ready to use`)
+                    window.location.reload()
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -40,10 +61,10 @@ const PublishQuizeModal = () => {
                             <form className='d-flex'>
                                 <input type="text" name="questionName" className='form-control border-1px'
                                     style={{ fontSize: '1.5rem' }} onChange={handleName}
-                                    placeholder='Question set Name'
+                                    placeholder='Question set Name' defaultValue={name.questionName}
                                 />
                                 <button type="button" className="btn btn-sm btn-warning px-3 py-0 fw-bold mx-4"
-                                    data-bs-dismiss="modal" onClick={() => { handlePublishQuize(localStorage.getItem('quizer-quize-code'), name.questionName) }}
+                                    data-bs-dismiss="modal" onClick={handlePublishQuize}
                                     disabled={!name || name.questionName === ""} >
                                     Publish
                                 </button>

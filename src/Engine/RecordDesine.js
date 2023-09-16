@@ -38,7 +38,6 @@ const RecordDesine = (props) => {
                             </span>
 
                             <span className='fs-4'>
-                                {/* TODO from props.data -> calculate mark */}
                                 Total Marks
                                 <i className="fa-solid fa-arrow-right mx-3"></i>
                                 <strong>{props.tMark}</strong>
@@ -47,11 +46,11 @@ const RecordDesine = (props) => {
                             <span className='fs-4'>
                                 Response Collected
                                 <i className="fa-solid fa-arrow-right mx-3"></i>
-                                {2}
+                                {props.responseCollected}
                             </span>
                         </div>
                         <div className="quize-code-details_mark col-2 px-0 d-flex gap-3 flex-column">
-                            <button type="button" className='btn btn-danger py-0 fs-4' onClick={props.responseOfFun} disabled={!props.status}>
+                            <button type="button" className='btn btn-danger py-0 fs-4' onClick={() => {props.responseOfFun(props.qCode)}} disabled={!props.status}>
                                 Turn off Response
                             </button>
 
@@ -94,22 +93,16 @@ const RecordDesine = (props) => {
                                 </thead>
 
                                 <tbody>
-                                    {/* props.data -> array.map((ele) => {}) */}
-                                    <tr>
-                                        <td>{1}</td>
-                                        <td>
-                                            {/* TODO props.data -> array of record -> userName */}
-                                            Sample Name
-                                        </td>
-                                        <td>
-                                            {/* TODO props.data -> array of record -> userEmail */}
-                                            <a href={`mailto:${`sample@quizer.com`}`}>sample@quizer.com</a>
-                                        </td>
-                                        <td>
-                                            {/* TODO props.data -> array of record -> countMark() -> userScoredMark */}
-                                            100
-                                        </td>
-                                    </tr>
+                                    {props.data.map((ele, index) => {
+                                        return (
+                                            <tr key={ele.studentEmail}>
+                                                <td>{index + 1}</td>
+                                                <td>{ele.studentName}</td>
+                                                <td><a href={`mailto:${ele.studentEmail}`}>{ele.studentEmail}</a></td>
+                                                <td>{ele.scoredMarks}</td>
+                                            </tr>
+                                        )
+                                    })}
                                 </tbody>
                             </table>
                         </div>

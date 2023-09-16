@@ -231,12 +231,32 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
             })
 
         })
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error })
     }
 });
+
+router.put('/off-response-qSet/:quizeCode', fetchuser, async (req, res) => {
+    try {
+        let user = req.user.id;
+        let quizeCode = req.params.quizeCode;
+
+        await Question.findOne(
+            { user: user, quizeCode: quizeCode }
+        ).then(async () => {
+            await Question.findOneAndUpdate({ user: user, quizeCode: quizeCode }, { $set: { isPublish: false } }).then((result) => {
+                return res.status(200).json(`Response for ${quizeCode} is now off`)
+            })
+
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error })
+    }
+})
 
 // ROUTE 8 - delete question set of particular user
 router.delete(`/delete-qSet/:qSetId/`, fetchuser, async (req, res) => {

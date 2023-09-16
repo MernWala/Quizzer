@@ -49,7 +49,9 @@ const Draft = () => {
                             data.isPublish ?
                               <span className="btn btn-sm btn-warning text-white fw-bold q-card-tag-text py-0" style={{ cursor: 'default' }}>Published</span>
                               :
-                              <span className="btn btn-sm btn-info text-white fw-bold q-card-tag-text py-0" style={{ cursor: 'default' }}>Draft</span>
+                              <div className='d-flex gap-3'>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#modal2" className='btn btn-success fs-4 py-0' onClick={() => { data.qName && localStorage.setItem('quizer-quize-name', data.qName); saveLocal(data.quizeCode) }}>Publish</button>
+                              </div>
                           }
                         </div>
                       </div>
@@ -57,7 +59,7 @@ const Draft = () => {
                       <p className="card-text d-flex flex-column">
                         <span className="card-subtitle fs-4 text-white q-card-subtitle-text">
                           Quize code - {data.quizeCode}
-                          <i class="ico-btn p-2 rounded ms-2 fa-solid fa-clone cursor-pointer" onClick={() => {
+                          <i className="ico-btn p-2 rounded ms-2 fa-solid fa-clone cursor-pointer" onClick={() => {
                             window.navigator.clipboard.writeText(data.quizeCode)
                             sendMess("info", "Copied to clipboard")
                           }}></i>

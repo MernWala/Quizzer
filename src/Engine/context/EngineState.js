@@ -203,31 +203,6 @@ const EngineState = (props) => {
         }
     }
 
-    const handlePublishQuize = async (quizeCode, name) => {
-        try {
-            await fetch(`http://localhost:5001/genrate-question/publish-question-set/${quizeCode}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': await localStorage.getItem('quizer-auth-token')
-                },
-                body: JSON.stringify({
-                    qName: name
-                })
-            }).then(async (e) => {
-                const response = await e.json();
-                if (response.response) {
-                    sendMess('success', `Published with the name ${name}. Now it is ready to use`)
-                }
-                setTimeout(() => {
-                    handleChoice(1);
-                }, 1000);
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const handleDelete = async (_id) => {
         let confirmation = window.confirm("Are you sure to delete question set");
 
@@ -271,7 +246,7 @@ const EngineState = (props) => {
     return (
         <EngineContext.Provider value={{
             choice, handleChoice, handleOnChange, addQuestionApiCall, fetchAllQuestionData, userAllQuestionSet,
-            handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet, handlePublishQuize,
+            handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet,
             handleDelete, handleDeleteQuestion, currentQset, handleCurrentQset, handleClickedQuestionId,
             modifyQuestionApiCall, countMarks
         }}>

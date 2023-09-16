@@ -1,29 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import '../styles/profile.scss';
 import DataContext from '../context/userData/DataContext';
 
 const Profile = () => {
     const datacontext = useContext(DataContext)
-    const { userData, defaultImg } = datacontext;
-
-    const [pic, setPic] = useState()
-
-    useEffect(() => {    
-      return () => {
-        if(userData && userData.picture){
-            setPic(userData.picture);
-        }else{
-            setPic(defaultImg);
-        }
-      }
-    }, [])
-    
+    const { userData } = datacontext;    
 
     return (
         <>
-            <div className="__profileMain" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div className="__profileMain" data-bs-toggle="modal" data-bs-target="#profileModal">
                 <div className="profileCloser">
-                    <img src={pic} alt="" />
+                    <img src={userData && userData.picture} alt="" />
                 </div>
             </div>
         </>

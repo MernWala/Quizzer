@@ -73,6 +73,7 @@ const Auth = () => {
             await loadData_stu(json.authTocken);
             sendMess('success', 'Login Successfully')
             navigate("/");
+            window.location.reload()
         } else {
             localStorage.removeItem('quizer-auth-token');
             sendMess('warning', 'Invalid Email or Password')

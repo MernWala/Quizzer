@@ -23,7 +23,7 @@ router.get('/result', fetchUser, async (req, res) => {
                 totalMarks: 0,
                 responseCollected: 0
             },
-            table: [student]
+            table: []
         }
 
         // finding all question set

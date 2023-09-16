@@ -527,3 +527,23 @@ i {
 .letter-spacing-1px {
     letter-spacing: 1px;
 }
+
+.profile_modal {
+    .image-container {
+        height: 20rem;
+        width: 20rem;
+        border-radius: 0.5rem !important;
+        overflow: hidden;
+
+        img {
+            object-fit: contain;
+            position: inherit;
+            width: 100%;
+        }
+    }
+}
+
+.input-file-custom-style {
+    background: red;
+    width: 100%;
+}
