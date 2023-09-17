@@ -6,12 +6,13 @@ import UtilityContext from '../context/utility/UtilityContext'
 const Result = () => {
 
   const { sendMess } = useContext(UtilityContext)
+  const { backendHost } = useContext(DataContext)
 
   const handleResponseOff = async (quizeCode) => {
     let flag = window.confirm("Are you sure want to stop test. You can again start test by re-publish question set.")
 
     if (flag) {
-      await fetch(`http://localhost:5001/genrate-question/off-response-qSet/${quizeCode}`, {
+      await fetch(`${backendHost}/genrate-question/off-response-qSet/${quizeCode}`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +32,7 @@ const Result = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      await fetch('http://localhost:5001/record/get-result/result', {
+      await fetch(`${backendHost}/record/get-result/result`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const Result = () => {
     }
 
     fetchData()
-  }, [userData])
+  }, [userData, backendHost])
 
   return (
     <>
@@ -59,7 +60,7 @@ const Result = () => {
         {isLoading ?
           <>
             <div className="container text-center my-5 py-5">
-              <div class="spinner-border text-theam fs-4" role="status" style={{height: '4rem', width: '4rem'}} >
+              <div class="spinner-border text-theam fs-4" role="status" style={{ height: '4rem', width: '4rem' }} >
                 <span class="visually-hidden">Loading...</span>
               </div>
             </div>

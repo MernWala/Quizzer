@@ -438,7 +438,7 @@ i {
 
         .quize-animate-show {
             background: url('../storyset//quiz-show-animate.svg');
-            background-size: cover;
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             height: calc(100vh - 10rem);

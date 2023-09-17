@@ -9,7 +9,7 @@ const NewQuize = () => {
   const { handleChoice } = eContext;
 
   const dataContext = useContext(DataContext);
-  const { generateCode, userData } = dataContext;
+  const { generateCode, userData, backendHost } = dataContext;
 
   const utilContext = useContext(UtilityContext);
   const { sendMess } = utilContext;
@@ -22,7 +22,7 @@ const NewQuize = () => {
     localStorage.setItem('quizer-quize-code', code);
     let user = userData && userData._id.toString();
     try {
-      await fetch(`http://localhost:5001/genrate-question/generate/${user}`, {
+      await fetch(`${backendHost}/genrate-question/generate/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

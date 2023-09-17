@@ -27,6 +27,9 @@ const ProfileModal = () => {
     const utilContext = useContext(UtilityContext);
     const { setLogin, sendMess } = utilContext
 
+    const dataContext = useContext(DataContext);
+    const { userData } = dataContext
+
     const customStyleProfile = {
         alignItems: 'baseline',
         minHeight: 'fit-content',
@@ -52,9 +55,6 @@ const ProfileModal = () => {
             }, 1000);
         }, 1000);
     }
-
-    const dataContext = useContext(DataContext);
-    const { userData } = dataContext
 
     return (
         <>
@@ -102,23 +102,19 @@ const ProfileModal = () => {
 export const ForgotPasswordModal = () => {
 
     const { accessType, isLogin } = useContext(UtilityContext)
-    const { sendOTPAPI, userData } = useContext(DataContext)
+    const { sendOTPAPI, userData, backendHost } = useContext(DataContext)
 
     const [data, setData] = useState({ email: "", match: false, password: "", password2: "" });
     const handleOnChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
 
-    const handlePaswordMatch = () => {
+    useEffect(() => {
         if (data.password === data.password2 && data.password.length !== 0 && data.password2.length !== 0) {
             setData({ ...data, match: true })
         } else {
             setData({ ...data, match: false })
         }
-    }
-
-    useEffect(() => {
-        handlePaswordMatch()
 
         if (isLogin === true) {
             userData && setData({ ...data, email: userData.email })
@@ -129,7 +125,7 @@ export const ForgotPasswordModal = () => {
     const handleResetPassword = async (e, form) => {
         e.preventDefault()
 
-        await fetch(`http://localhost:5001/auth-register/account/forget-password/`, {
+        await fetch(`${backendHost}/auth-register/account/forget-password/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'Application/json'

@@ -13,7 +13,7 @@ const Reportbug = () => {
     const { sendMess } = utilContext;
 
     const dataContext = useContext(DataContext);
-    const { isLogin } = dataContext;
+    const { isLogin, backendHost } = dataContext;
 
     const [data, setData] = useState({
         fName: '',
@@ -54,7 +54,7 @@ const Reportbug = () => {
             return;
         }
 
-        await fetch(`http://localhost:5001/api/report-bug/default`, {
+        await fetch(`${backendHost}/api/report-bug/default`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import UtilityContext from '../context/utility/UtilityContext';
+import DataContext from '../context/userData/DataContext';
 
 const PublishQuizeModal = () => {
 
@@ -9,10 +9,11 @@ const PublishQuizeModal = () => {
         setName({ ...name, [e.target.name]: e.target.value })
     }
 
-    const { sendMess } = useContext(UtilityContext)
+    const { backendHost } = useContext(DataContext)
+    
     const handlePublishQuize = async () => {
         try {
-            await fetch(`http://localhost:5001/genrate-question/publish-question-set/${localStorage.getItem('quizer-quize-code')}`, {
+            await fetch(`${backendHost}/genrate-question/publish-question-set/${localStorage.getItem('quizer-quize-code')}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ import DataContext from '../context/userData/DataContext'
 const Faq = () => {
 
   const { sendMess } = useContext(UtilityContext);
-  const {userData} = useContext(DataContext)
+  const { userData, backendHost } = useContext(DataContext)
 
   const [askData, setAskData] = useState({})
   const handleOnChange = (e) => {
@@ -22,7 +22,7 @@ const Faq = () => {
     e.preventDefault();
     const { emailId, question, answerToMail } = askData
     try {
-      await fetch(`http://localhost:5001/ask/question`, {
+      await fetch(`${backendHost}/ask/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ const Faq = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="accordion-item">
               <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -87,7 +87,7 @@ const Faq = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="accordion-item">
               <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">

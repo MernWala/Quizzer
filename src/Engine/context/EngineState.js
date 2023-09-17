@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react'
 import EngineContext from "./EngineContext";
 import UtilityContext from '../../context/utility/UtilityContext';
+import DataContext from '../../context/userData/DataContext';
 
 const EngineState = (props) => {
+
+    const { backendHost } = useContext(DataContext)
 
     const [choice, setChoice] = useState(2)
     const handleChoice = (e) => {
@@ -62,7 +65,7 @@ const EngineState = (props) => {
     const fetchAllQuestionData = async () => {
         try {
             const authToken = localStorage.getItem('quizer-auth-token');
-            await fetch('http://localhost:5001/genrate-question/get-question-set/', {
+            await fetch(`${backendHost}/genrate-question/get-question-set/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +85,7 @@ const EngineState = (props) => {
         e.preventDefault()
         const quizeCode = await localStorage.getItem('quizer-quize-code');
         try {
-            await fetch(`http://localhost:5001/genrate-question/add-question/`, {
+            await fetch(`${backendHost}/genrate-question/add-question/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -121,7 +124,7 @@ const EngineState = (props) => {
 
     const modifyQuestionApiCall = async (qSet_Id, qId) => {
         try {
-            await fetch(`http://localhost:5001/genrate-question/update-question/${qSet_Id}/${qId}`, {
+            await fetch(`${backendHost}/genrate-question/update-question/${qSet_Id}/${qId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,7 +159,7 @@ const EngineState = (props) => {
         if (conf) {
             const token = localStorage.getItem('quizer-auth-token')
             try {
-                await fetch(`http://localhost:5001/genrate-question/delete-question/${qSetId}/${qId}/`, {
+                await fetch(`${backendHost}/genrate-question/delete-question/${qSetId}/${qId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -189,7 +192,7 @@ const EngineState = (props) => {
         userId = await JSON.parse(userId)._id;
 
         try {
-            await fetch(`http://localhost:5001/genrate-question/get-question/${userId}/${quizeCode}/`, {
+            await fetch(`${backendHost}/genrate-question/get-question/${userId}/${quizeCode}/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -207,7 +210,7 @@ const EngineState = (props) => {
         let confirmation = window.confirm("Are you sure to delete question set");
 
         if (confirmation) {
-            await fetch(`http://localhost:5001/genrate-question/delete-qSet/${_id}`, {
+            await fetch(`${backendHost}/genrate-question/delete-qSet/${_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

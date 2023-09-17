@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import ProfileModal from './ProfileModal'
 import { Link, useNavigate } from 'react-router-dom';
 import UtilityContext from '../context/utility/UtilityContext';
 import EngineContext from '../Engine/context/EngineContext';
@@ -13,6 +12,9 @@ const Home = () => {
 
   const utilContext = useContext(UtilityContext);
   const { setAccess, sendMess } = utilContext
+
+  const dContext = useContext(DataContext);
+  const { fetchTestApi, backendHost } = dContext;
 
   const [joiningCode, setJoiningCode] = useState("");
   const handleOnChange = (e) => {
@@ -28,7 +30,7 @@ const Home = () => {
     let token = await localStorage.getItem('quizer-auth-token');
 
     try {
-      await fetch(`http://localhost:5001/api/getDetails/inst`, {
+      await fetch(`${backendHost}/api/getDetails/inst`, {
         method: 'POST',
         headers: {
           'auth-token': token,
@@ -51,9 +53,6 @@ const Home = () => {
       console.warn(`Can't get authentication token!`);
     }
   }
-
-  const dContext = useContext(DataContext);
-  const { fetchTestApi } = dContext;
 
   const handleJoin = async (e) => {
     e.preventDefault();
@@ -80,7 +79,6 @@ const Home = () => {
 
   return (
     <>
-      <ProfileModal />
       <div className="text-white d-flex my-4 mx-5 justify-content-evenly">
         <div className="homeLeft">
           <div className="left-closer">

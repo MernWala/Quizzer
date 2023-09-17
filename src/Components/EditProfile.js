@@ -4,7 +4,7 @@ import UtilityContent from '../context/utility/UtilityContext'
 
 const EditProfile = () => {
 
-    const { userData, setUserData } = useContext(DataContext)
+    const { userData, setUserData, backendHost } = useContext(DataContext)
     const { sendMess } = useContext(UtilityContent)
 
     const [currData, setCurrData] = useState({})
@@ -31,7 +31,7 @@ const EditProfile = () => {
 
         try {
 
-            await fetch(`http://localhost:5001/auth-register/account/update-details`, {
+            await fetch(`${backendHost}/auth-register/account/update-details`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const EditProfile = () => {
             })
 
         } catch (error) {
-
+            console.error(error);
         }
     }
 

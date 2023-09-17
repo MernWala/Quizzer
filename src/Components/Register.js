@@ -11,7 +11,7 @@ function Register() {
     const { sendMess, setAccess } = utilContext;
 
     const DS = useContext(DataContext)
-    const { sendOTPAPI } = DS
+    const { sendOTPAPI, backendHost } = DS
 
     const [userData, setUserData] = useState({
         fName: '',
@@ -45,7 +45,7 @@ function Register() {
                 sendMess('info', 'Password criteria not matched')
             } else {
                 if (userData.accountType === "Instructor") {
-                    await fetch(`http://localhost:5001/auth-register/inst`, {
+                    await fetch(`${backendHost}/auth-register/inst`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ function Register() {
                             }
                         }
                     }).then(async () => {
-                        await fetch(`http://localhost:5001/verify/mail/delete/otp`, {
+                        await fetch(`${backendHost}/verify/mail/delete/otp`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ function Register() {
                         })
                     })
                 } else {
-                    await fetch(`http://localhost:5001/auth-register/stu`, {
+                    await fetch(`${backendHost}/auth-register/stu`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ function Register() {
                             sendMess('danger', 'This email is already registered');
                         }
                     }).then(async () => {
-                        await fetch(`http://localhost:5001/verify/mail/delete/otp`, {
+                        await fetch(`${backendHost}/verify/mail/delete/otp`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'

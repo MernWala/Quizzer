@@ -63,7 +63,7 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg navbar-theam" style={{ position: 'sticky', top: '0px' }}>
                 <div className="container-fluid px-5">
                     <Link className="navbar-brand d-flex justify-content-center align-items-center" to="/">
-                        <img src={require('./logo.png')} alt="" height="60px" />
+                        <img src={"logo.png"} alt="" height="60px" />
                         <span className='theam-text mx-1' style={{ fontWeight: 800, fontSize: '2.5rem' }}>Quizzer</span>
                     </Link>
 

@@ -1,16 +1,17 @@
 import React, { useContext } from 'react'
 import StudentContext from './StudentContext'
 import UtilityContext from '../../context/utility/UtilityContext';
+import DataContext from '../../context/userData/DataContext';
 
 const StudentState = (props) => {
 
-    let utilCon = useContext(UtilityContext);
-    let { sendMess } = utilCon
-
+    let { sendMess } = useContext(UtilityContext);
+    const {backendHost} = useContext(DataContext)
+    
     // save & update answer record
     let handleSaveRecord = async (qSetId, qCode, token, questionId, answer, actualAnswer) => {
         try {
-            await fetch(`http://localhost:5001/quiz/join/response/save`, {
+            await fetch(`${backendHost}/quiz/join/response/save`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ const StudentState = (props) => {
     // delete particular question
     let handleResetRecord = async (qSetId, qCode, token, questionId) => {
         try {
-            await fetch(`http://localhost:5001/quiz/join/response/delete`, {
+            await fetch(`${backendHost}/quiz/join/response/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ const StudentState = (props) => {
     // submit quize record
     let handleSubmitRecord = async (qSetId, qCode, token) => {
         try {
-            await fetch(`http://localhost:5001/quiz/join/response/submit`, {
+            await fetch(`${backendHost}/quiz/join/response/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

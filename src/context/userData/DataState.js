@@ -4,6 +4,8 @@ import UtilityContext from '../utility/UtilityContext';
 
 const DataState = (props) => {
 
+    const [backendHost, setBackendHost] = useState('http://localhost:5000/quizer')
+
     const utilContext = useContext(UtilityContext);
     const { setLogin, sendMess } = utilContext;
 
@@ -13,7 +15,7 @@ const DataState = (props) => {
 
     const loadData_inst = async (token) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/getDetails/inst`, {
+            const response = await fetch(`${backendHost}/api/getDetails/inst`, {
                 method: 'POST',
                 headers: {
                     'auth-token': token,
@@ -30,7 +32,7 @@ const DataState = (props) => {
 
     const loadData_stu = async (token) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/getDetails/stu`, {
+            const response = await fetch(`${backendHost}/api/getDetails/stu`, {
                 method: 'POST',
                 headers: {
                     'auth-token': token,
@@ -81,7 +83,7 @@ const DataState = (props) => {
         try {
             const token = await localStorage.getItem('quizer-auth-token')
 
-            let response = await fetch(`http://localhost:5001/quiz/join/${code}`, {
+            let response = await fetch(`${backendHost}/quiz/join/${code}`, {
                 method: 'GET',
                 headers: {
                     'auth-token': token,
@@ -109,7 +111,7 @@ const DataState = (props) => {
 
     const sendOTPAPI = async (emailId) => {
         sendMess('info', 'We are sending an otp to your mail id')
-        await fetch(`http://localhost:5001/verify/mail/genrate/otp`, {
+        await fetch(`${backendHost}/verify/mail/genrate/otp`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -124,7 +126,7 @@ const DataState = (props) => {
     }
 
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI, setUserData }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI, setUserData, backendHost }}>
             {props.children}
         </DataContext.Provider>
     )

@@ -18,12 +18,12 @@ const Auth = () => {
     }, [accessType])
 
     const dataContext = useContext(DataContext);
-    const { loadData_inst, loadData_stu } = dataContext;
+    const { loadData_inst, loadData_stu, backendHost } = dataContext;
 
     // Instructuctor handle submit function
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:5001/auth-login/inst`, {
+        const response = await fetch(`${backendHost}/auth-login/inst`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ const Auth = () => {
     // Student handel submit function
     const handleSubmit2 = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:5001/auth-login/stu`, {
+        const response = await fetch(`${backendHost}/auth-login/stu`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
