@@ -6,7 +6,8 @@ const OTP = require('../model/OTP')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fetchuser = require('../middleware/fetchuser')
+const fetchuser = require('../middleware/fetchuser');
+const multer = require('multer');
 
 // Route 1 - Register Instructor endpoint
 router.post('/inst', [
@@ -51,7 +52,7 @@ router.post('/inst', [
                 lName: req.body.lName,
                 email: req.body.email,
                 password: secPass,
-                picture: req.body.picture,
+                picture: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
                 verified: true
             });
 
@@ -113,7 +114,7 @@ router.post('/stu', [
                 email: req.body.email,
                 OTP: req.body.OTP,
                 password: secPass,
-                picture: req.body.picture,
+                picture: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
                 verified: true
             });
 
@@ -242,6 +243,105 @@ router.put('/account/update-details', [
         console.log(error)
         return res.json(error.message)
 
+    }
+})
+
+// Route 5 - (Upload profile pik limit to 512 KB)
+router.post('/account/update-profile/:accountType', fetchuser, async (req, res) => {
+    const uploadProfileLimit = 1024 * 200;
+
+    try {
+
+        const _id = req.user.id
+        const accountType = req.params.accountType
+        let fileExtention = ""
+
+        if (accountType === "Instructor") {
+            await Instructor.findById({ _id }).then(async (data) => {
+                multer({
+                    storage: multer.diskStorage({
+                        destination: (req, file, cb) => {
+                            cb(null, 'backend/uploads'); // Save uploaded files to the 'uploads' folder
+                        },
+                        filename: (req, file, cb) => {
+                            fileExtention = file.originalname.split('.')[1]
+                            cb(null, _id + "-Instructor." + fileExtention); // Rename files to avoid conflicts
+                        },
+                    }),
+                    limits: { fileSize: uploadProfileLimit }, // Limit file size to 1 MB (adjust as needed)
+                }).single('profile_image')(req, res, async (err) => {
+                    if (err) {
+                        if (err.code === 'LIMIT_FILE_SIZE') {
+                            return res.status(413).json({ error: `File size exceeds the limit (${Math.floor(uploadProfileLimit / 1000)} KB)` });
+                        }
+                        // Handle other multer errors here
+                        console.log(err);
+                        return res.status(500).json({ error: 'Something went wrong' });
+                    }
+
+                    await Instructor.findByIdAndUpdate({ _id }, { $set: { picture: _id + "." + fileExtention } })
+                    // If there are no errors, the file has been uploaded successfully
+                    return res.status(200).json({ message: 'Image uploaded successfully' });
+                });
+            })
+
+        } else if (accountType === "Student") {
+            await Student.findById({ _id }).then((data) => {
+                multer({
+                    storage: multer.diskStorage({
+                        destination: (req, file, cb) => {
+                            cb(null, 'backend/uploads'); // Save uploaded files to the 'uploads' folder
+                        },
+                        filename: (req, file, cb) => {
+                            cb(null, _id + "-Student." + file.originalname.split('.')[1]); // Rename files to avoid conflicts
+                        },
+                    }),
+                    limits: { fileSize: uploadProfileLimit }, // Limit file size to 1 MB (adjust as needed)
+                }).single('profile_image')(req, res, async (err) => {
+                    if (err) {
+                        if (err.code === 'LIMIT_FILE_SIZE') {
+                            return res.status(413).json({ error: `File size exceeds the limit (${Math.floor(uploadProfileLimit / 1000)} KB)` });
+                        }
+                        // Handle other multer errors here
+                        return res.status(500).json({ error: 'Something went wrong' });
+                    }
+
+                    await Student.findByIdAndUpdate({ _id }, { $set: { picture: _id + "." + fileExtention } })
+
+                    // If there are no errors, the file has been uploaded successfully
+                    return res.status(200).json({ message: 'Image uploaded successfully' });
+                });
+            })
+        }
+
+    } catch (error) {
+        return res.json(error.message)
+    }
+})
+
+// Route 6 - getProfilePhoto
+router.get('/account/get-profile/:accountType', fetchuser, async (req, res) => {
+    try {
+        let prePath = __dirname.split("routes")[0]
+
+        if (req.params.accountType === "Instructor") {
+            await Instructor.findById({ _id: req.user.id }).then(async (data) => {
+                let fileName = data.picture.split('.')[0]
+                let fileExtention = data.picture.split('.')[1]
+
+                return res.status(200).sendFile(`${prePath}/uploads/${fileName + "-Instructor." + fileExtention}`);
+            })
+        } else if (req.params.accountType === "Student") {
+            await Student.findById({ _id: req.user.id }).then(async (data) => {
+                let fileName = data.picture.split('.')[0]
+                let fileExtention = data.picture.split('.')[1]
+
+                return res.status(200).sendFile(`${prePath}/uploads/${fileName + "-Student." + fileExtention}`);
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        return res.json(error.message)
     }
 })
 

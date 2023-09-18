@@ -4,7 +4,7 @@ import UtilityContent from '../context/utility/UtilityContext'
 
 const EditProfile = () => {
 
-    const { userData, setUserData, backendHost } = useContext(DataContext)
+    const { userData, setUserData, backendHost, getProfile, mainImg, setMainImg } = useContext(DataContext)
     const { sendMess } = useContext(UtilityContent)
 
     const [currData, setCurrData] = useState({})
@@ -18,6 +18,10 @@ const EditProfile = () => {
                 accountType: userData.accountType,
                 isChanged: false
             })
+        }
+
+        if (userData && userData.picture.length < 40) {
+            getProfile();
         }
 
     }, [userData])
@@ -47,12 +51,47 @@ const EditProfile = () => {
                 let result = await data.json()
                 sendMess('info', result)
             }).then(() => {
-                setUserData({...userData, fName: currData.fName, lName: currData.lName})
+                setUserData({ ...userData, fName: currData.fName, lName: currData.lName })
             })
 
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const [selectedFile, setSelectedFile] = useState(null)
+    const handleFileSelect = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleSubmitProfile = async (e) => {
+        e.preventDefault()
+
+        if (!selectedFile) {
+            console.log('No file choosen');
+        }
+
+        const formData = new FormData();
+        formData.append('profile_image', selectedFile);
+
+        await fetch(`${backendHost}/auth-register/account/update-profile/${userData.accountType}`, {
+            method: 'POST',
+            headers: {
+                "auth-token": localStorage.getItem("quizer-auth-token")
+            },
+            body: formData
+        }).then(async (data) => {
+            let result = await data.json()
+
+            if (result.message === "Image uploaded successfully") {
+                sendMess('info', result.message)
+                getProfile()
+                setMainImg(null)
+            } else { 
+                sendMess('warning', result.error)
+                setMainImg(null)
+            }
+        })
     }
 
     return (
@@ -67,12 +106,16 @@ const EditProfile = () => {
 
                 <div className="profile_modal question-form-main d-flex justify-content-start align-items-start p-0 mx-5">
                     <div className='p-5 border-end border-color-theam'>
-                        <form>
+                        <form onSubmit={handleSubmitProfile}>
                             <div className="px-0 image-container">
-                                <img src={userData && userData.picture} alt="" className='p-0' />
+                                {mainImg ?
+                                    <img src={URL.createObjectURL(mainImg)} alt="" className='p-0' />
+                                    :
+                                    <img src={userData && userData.picture} alt="" className='p-0' />
+                                }
                             </div>
 
-                            {/* <div className="input-group-file">
+                            <div className="input-group-file">
                                 <div className='d-flex justify-content-between'>
                                     <div className="col-3">
                                         <label htmlFor="profileSelect" className='btn btn-custom btn-shadow mt-3' style={{ filter: 'hue-rotate(161deg) brightness(2) contrast(5)' }}>
@@ -80,13 +123,13 @@ const EditProfile = () => {
                                         </label>
                                     </div>
                                     <div className="col-8">
-                                        <button type="submit" className='btn btn-custom btn-shadow mt-3 letter-spacing-1px fw-bold' style={{ filter: 'hue-rotate(161deg) brightness(2) contrast(5)' }}>
+                                        <button type="submit" className='btn btn-custom btn-shadow mt-3 letter-spacing-1px fw-bold' style={{ filter: 'hue-rotate(161deg) brightness(2) contrast(5)' }} disabled={!selectedFile} >
                                             Update Profile
                                         </button>
                                     </div>
                                 </div>
-                                <input type="file" name="" id="profileSelect" className='d-none' accept='image/png, image/jpg, image/jpeg' />
-                            </div> */}
+                                <input type="file" name="" id="profileSelect" className='d-none' accept='image/*' onChange={handleFileSelect} />
+                            </div>
                         </form>
                     </div>
 
@@ -121,8 +164,8 @@ const EditProfile = () => {
             </div>
 
             <div className="container">
-                <p className="fs-3 text-white">
-                    <span className='border-bottom'>Note</span> <small>You can only update your name, profile & password</small>
+                <p className="fs-4 text-white">
+                    <em>Profile size must be within 204 KB</em>
                 </p>
             </div>
         </>

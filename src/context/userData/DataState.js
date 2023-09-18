@@ -4,7 +4,7 @@ import UtilityContext from '../utility/UtilityContext';
 
 const DataState = (props) => {
 
-    const [backendHost, setBackendHost] = useState('http://localhost:5000/quizer')
+    const [backendHost, setBackendHost] = useState('http://localhost:5001')
 
     const utilContext = useContext(UtilityContext);
     const { setLogin, sendMess } = utilContext;
@@ -125,8 +125,21 @@ const DataState = (props) => {
         })
     }
 
+    const [mainImg, setMainImg] = useState(null)
+    const getProfile = async () => {
+        await fetch(`${backendHost}/auth-register/account/get-profile/${userData.accountType}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem('quizer-auth-token')
+            }
+        }).then(async (data) => {
+            setMainImg(await data.blob())
+        })
+    }
+
     return (
-        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI, setUserData, backendHost }}>
+        <DataContext.Provider value={{ loadData_inst, loadData_stu, userData, defaultImg, generateCode, fetchTestApi, qSetData, sendOTPAPI, setUserData, backendHost, getProfile, mainImg, setMainImg }}>
             {props.children}
         </DataContext.Provider>
     )
