@@ -19,8 +19,11 @@ const QuestionSchema = new Schema({
             question: {
                 type: String,
             },
+            isInBackend: {
+                type: Boolean
+            },
             picture: {
-                type: String,   // use multer here
+                type: String,
             },
             option: {
                 type: Array

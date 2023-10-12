@@ -4,7 +4,7 @@ import UtilityContext from '../utility/UtilityContext';
 
 const DataState = (props) => {
 
-    const [backendHost, setBackendHost] = useState('http://localhost:5001')
+    const [backendHost, setBackendHost] = useState('http://localhost:5000/quizer')
 
     const utilContext = useContext(UtilityContext);
     const { setLogin, sendMess } = utilContext;

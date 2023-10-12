@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import UtilityContext from '../context/utility/UtilityContext';
 import DataContext from '../context/userData/DataContext';
 import { Link, useNavigate } from 'react-router-dom';
+import EngineContext from '../Engine/context/EngineContext';
 
 const CustomBtn = (props) => {
     return (
@@ -192,6 +193,95 @@ export const ForgotPasswordModal = () => {
                                     <button type="submit" className='btn btn-custom' disabled={!data.match}>Recover Account</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export const PastImageModal = () => {
+
+    const { handlePastImage, pastedImage, setPastedImage, insertedImg, setInsertedImg } = useContext(EngineContext)
+    
+    function handleOnChange(event) {
+        let file = event.target.files[0]
+        if (file) {
+            setPastedImage(null)
+            setInsertedImg(file)
+        }
+    }
+
+    const handleClearImg = () => {
+        setInsertedImg(null)
+        setPastedImage(null)
+        document.getElementById('insertImageInQuestionSetForm').reset()
+    }
+
+    useEffect(() => {
+        let field = document.getElementById("imgInputElement")
+        if (pastedImage) { 
+            setInsertedImg(null)
+            field.value = "Captured Images"
+        }
+
+        if(insertedImg){
+            field.value = insertedImg.name
+        }
+
+    }, [pastedImage, insertedImg])
+
+    return (
+        <>
+            <div className="modal fade" id="pastImgModal" tabIndex="-1" aria-labelledby="pastImgModalLabel" aria-hidden="true" style={{ fontSize: '160%', backdropFilter: 'blur(5px)' }}>
+                <div className="modal-dialog modal-dialog-centered modal-lg">
+                    <div className="modal-content bg-theam">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-3 ms-1 text-white letter-spacing-1px" id="pastImgModalLabel">Insert Image</h1>
+                            <button type="button" className="btn-close me-1 opacity-100" data-bs-dismiss="modal" aria-label="Close" style={{ filter: 'invert(1)' }}></button>
+                        </div>
+                        <div className="modal-body px-5 d-flex align-items-center flex-column">
+                            <form style={{ all: 'unset' }} className='w-100' id='insertImageInQuestionSetForm'>
+                                <div className='w-100 mb-4'>
+                                    <li className='text-white fw-lighter letter-spacing-1px list-style-disk'>You may drag-drop images or you can past it from clipboard or you can directly upload it</li>
+                                    <li className='text-white fw-lighter letter-spacing-1px list-style-disk'>After past / insert image close pop-up window</li>
+                                </div>
+
+                                <div className="w-100 my-3">
+                                    <div className="input-group">
+                                        <input type="text" name="" placeholder='If you want to past image from clipboard past it here' onPaste={handlePastImage} id="imgInputElement" />
+                                    </div>
+                                </div>
+
+                                <div className='w-100 d-flex justify-content-center align-items-center'>
+                                    <div className='drag-drop-background'>
+                                        <div className='d-none'>
+                                            <input type="file" id="uploadImg" name='uploadImg' className='bg-danger' onChange={handleOnChange} accept='image/*' />
+                                        </div>
+                                        {
+                                            pastedImage ?
+                                                <img src={pastedImage} alt="" id='preview' />
+                                                :
+                                                <img src={insertedImg && URL.createObjectURL(insertedImg)} alt="" id='preview' />
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className='w-100'>
+                                    <div className='mx-5 my-5'>
+                                        <div className='d-flex gap-5 justify-content-center'>
+                                            <button type="button" className="btn btn-custom px-5 width-fit" onClick={handleClearImg}>Clear Image</button>
+                                            <label htmlFor="uploadImg" className='btn btn-custom px-5 width-fit'>Insert Image</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <div className="col-2">
+                                <button type="button" className="btn btn-custom" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

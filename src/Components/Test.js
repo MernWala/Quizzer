@@ -14,6 +14,9 @@ const Test = () => {
     useEffect(() => {
         document.title = `Quizer || Code - ${param.qCode}`
         fetchTestApi(param.qCode);
+
+        console.log(qSetData && qSetData);
+
     }, [])
 
     const param = useParams();

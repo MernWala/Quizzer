@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Ignoring testing file
 temp.js
+
+# ignore old backed zip
+backend.zip

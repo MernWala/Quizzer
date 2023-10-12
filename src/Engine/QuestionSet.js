@@ -5,7 +5,7 @@ import UtilityContext from '../context/utility/UtilityContext';
 const Draft = () => {
 
   const eContext = useContext(EngineContext);
-  const { userAllQuestionSet, fetchAllQuestionData, handleDelete, countMarks, handleChoice } = eContext;
+  const { userAllQuestionSet, fetchAllQuestionData, handleDelete, handleChoice } = eContext;
 
   const UC = useContext(UtilityContext)
   const { sendMess } = UC
@@ -47,7 +47,7 @@ const Draft = () => {
                         <div className="tags-group col-4 d-flex justify-content-end">
                           {
                             data.isPublish ?
-                              <span className="btn btn-sm btn-warning text-white fw-bold q-card-tag-text py-0" style={{ cursor: 'default' }}>Published</span>
+                              <span className="btn btn-warning btn-sm text-white fw-bold q-card-tag-text py-0 pt-1 rounded-pill letter-spacing-1px" style={{ cursor: 'default' }}>Published</span>
                               :
                               <div className='d-flex gap-3'>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal2" className='btn btn-success fs-4 py-0' onClick={() => { data.qName && localStorage.setItem('quizer-quize-name', data.qName); saveLocal(data.quizeCode) }}>Publish</button>
@@ -65,7 +65,7 @@ const Draft = () => {
                           }}></i>
                         </span>
                         No of question - {data.questions.length} <br />
-                        Total Marks - {countMarks(data)}
+                        Total Marks - {data.totalMarks}
                       </p>
                       <div className="d-flex justify-content-between">
                         <button className="btn btn-danger btn-sm py-0 q-card-tag-text px-3" type="button" onClick={() => handleDelete(data._id)}>Delete</button>

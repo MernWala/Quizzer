@@ -61,7 +61,15 @@ const EditProfile = () => {
 
     const [selectedFile, setSelectedFile] = useState(null)
     const handleFileSelect = (event) => {
-        setSelectedFile(event.target.files[0]);
+        let file = event.target.files[0]
+
+        if (Math.round(file.size / 1024) <= 204) {
+            setSelectedFile(event.target.files[0]);
+            sendMess('info', `For update file profile you've to click 'Upload Profile' button`)
+        } else {
+            sendMess('warning', 'File size should be within 204 KB')
+            setSelectedFile(null)
+        }
     };
 
     const handleSubmitProfile = async (e) => {
@@ -72,7 +80,7 @@ const EditProfile = () => {
         }
 
         const formData = new FormData();
-        formData.append('profile_image', selectedFile);
+        formData.append('profile_image', selectedFile)
 
         await fetch(`${backendHost}/auth-register/account/update-profile/${userData.accountType}`, {
             method: 'POST',
@@ -87,7 +95,7 @@ const EditProfile = () => {
                 sendMess('info', result.message)
                 getProfile()
                 setMainImg(null)
-            } else { 
+            } else {
                 sendMess('warning', result.error)
                 setMainImg(null)
             }
@@ -108,10 +116,13 @@ const EditProfile = () => {
                     <div className='p-5 border-end border-color-theam'>
                         <form onSubmit={handleSubmitProfile}>
                             <div className="px-0 image-container">
-                                {mainImg ?
-                                    <img src={URL.createObjectURL(mainImg)} alt="" className='p-0' />
+                                {selectedFile ?
+                                    <img src={URL.createObjectURL(selectedFile)} alt="" className='p-0' />
                                     :
-                                    <img src={userData && userData.picture} alt="" className='p-0' />
+                                    mainImg ?
+                                        <img src={URL.createObjectURL(mainImg)} alt="" className='p-0' />
+                                        :
+                                        <img src={userData && userData.picture} alt="" className='p-0' />
                                 }
                             </div>
 

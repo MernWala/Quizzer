@@ -29,6 +29,26 @@ const getIndex = (arr, _id) => {
     });
 }
 
+// method to update marks in each time
+const handleUpdateMarks = async (mainId) => {
+    let updatedMarks = 0
+
+    await Question.findById(mainId).then(async (data) => {
+
+        let arr = data.questions
+
+        let calculateMarks = async () => {
+            arr.forEach((ele) => {
+                updatedMarks += ele.marks
+            })
+        }
+
+        await calculateMarks();
+
+        await Question.findByIdAndUpdate(mainId, { $set: { totalMarks: updatedMarks } })
+    })
+}
+
 // ROUTE 1 - Genrate question endpoint
 router.post('/generate/:id', async (req, res) => {
     const error = validationResult(req);
@@ -105,9 +125,11 @@ router.put('/add-question/', [
             ques.questions.push(qSet)
         }
 
-        const sent = await Question.findByIdAndUpdate(ques._id, { $set: ques }, { new: true })
-        res.status(200).json({ sent })
+        await Question.findByIdAndUpdate(ques._id, { $set: ques }, { new: true }).then(async () => {
+            await handleUpdateMarks(ques._id)    
+        })
 
+        return res.status(200).json({sent: "Question Added"})
     } catch (error) {
         res.status(500).json({ error })
         return;
@@ -134,7 +156,10 @@ router.delete('/delete-question/:mainId/:questionId', fetchuser, async (req, res
         }
         ques.questions = newArr;
 
-        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: false })
+        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: false }).then(async () => {
+            await handleUpdateMarks(req.params.mainId)
+        })
+
         res.status(200).json({ updated: newArr })
 
     } catch (error) {
@@ -169,7 +194,13 @@ router.put('/update-question/:mainId/:questionId', fetchuser, async (req, res) =
         };
 
         ques.questions[index] = newData;
-        await Question.findByIdAndUpdate(req.params.mainId, { $set: ques }, { new: true });
+        await Question.findByIdAndUpdate(
+            req.params.mainId,
+            { $set: ques }, { new: true }
+        ).then(async () => {
+            await handleUpdateMarks(req.params.mainId)
+        })
+
         res.status(200).json({ update: newData });
     } catch (error) {
         res.status(500).json({ error: error })
@@ -238,6 +269,7 @@ router.put(`/publish-question-set/:quizeCode`, fetchuser, async (req, res) => {
     }
 });
 
+// Route 8 - Deactivate question set for accepting response
 router.put('/off-response-qSet/:quizeCode', fetchuser, async (req, res) => {
     try {
         let user = req.user.id;

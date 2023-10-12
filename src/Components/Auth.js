@@ -124,7 +124,7 @@ const Auth = () => {
                                     <div className="input-group mx-3">
                                         <label htmlFor="password" className={`input-group-label ${credential.password && 'no-text'}`}>Your password*</label>
                                         {credential.password ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="password" id="password" onChange={onChange} required autoComplete='off' />
+                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="password" id="password" onChange={onChange} required />
                                         <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
                                     <div className='mx-3 w-100'>
@@ -150,7 +150,7 @@ const Auth = () => {
                                     <div className="input-group mx-3">
                                         <label className={`input-group-label ${stuCred.studentPassword && 'no-text'}`} htmlFor="studentPassword" id='pass_label_2'>Your password*</label>
                                         {stuCred.studentPassword ? <div className="no-text-reverse">&nbsp;</div> : ''}
-                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="studentPassword" id="studentPassword" onChange={onChange2} required autoComplete='off' />
+                                        <input type={eyeBtn === 'fa-eye-slash' ? 'password' : 'text'} name="studentPassword" id="studentPassword" onChange={onChange2} required />
                                         <i className={`fa-regular ${eyeBtn} pass-eye-color`} onClick={handleEyeBtn}></i>
                                     </div>
                                     <div className='mx-3 w-100'>

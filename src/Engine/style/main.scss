@@ -282,3 +282,20 @@
 .border-radius-5rem {
     border-radius: 5rem;
 }
+
+
+.drag-drop-background {
+    
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    img {
+        max-height: 50rem;
+        max-width: 100%;
+        object-fit: contain;
+    }
+}

@@ -7,7 +7,7 @@ import UtilityContext from '../context/utility/UtilityContext'
 const QuestionForm = (props) => {
 
   const enginContext = useContext(EngineContext);
-  const { handleOnChange, addQuestionApiCall, handleMultiSelect, multiSelect, modifyQuestionApiCall } = enginContext;
+  const { handleOnChange, addQuestionApiCall, handleMultiSelect, multiSelect, modifyQuestionApiCall, modifyQuestionData } = enginContext;
 
   const code = localStorage.getItem('quizer-quize-code');
   const utilContext = useContext(UtilityContext);
@@ -47,14 +47,14 @@ const QuestionForm = (props) => {
           }
 
           <div className="row question-form-main my-4">
-            <div className="question-form-closer p-0">
+            <div className="question-form-closer p-0 py-4">
               <form id='ques-form-main' onSubmit={!props.isModify ? addQuestionApiCall : handleModify}>
                 <div className="row mx-2 p-0">
                   <div className="question-form-input-group p-0">
                     {!props.isModify ?
                       <textarea name="question" cols="140" rows="4" spellCheck="true" placeholder='Enter question here*' onChange={handleOnChange} required />
                       :
-                      <textarea name="question" cols="140" rows="4" spellCheck="true" placeholder='Enter question here' onChange={handleOnChange} />
+                      <textarea name="question" cols="140" rows="4" spellCheck="true" placeholder='Enter question here' onChange={handleOnChange} defaultValue={modifyQuestionData.question} />
                     }
                   </div>
                 </div>
@@ -70,15 +70,15 @@ const QuestionForm = (props) => {
                         {!props.isModify ?
                           <input onChange={handleOnChange} type="text" name="option1" placeholder='Option 1*' required />
                           :
-                          <input onChange={handleOnChange} type="text" name="option1" placeholder='Option 1' />
+                          <input onChange={handleOnChange} type="text" name="option1" placeholder='Option 1' defaultValue={modifyQuestionData.option[0]} />
                         }
                         {!props.isModify ?
                           <input onChange={handleOnChange} type="text" name="option2" placeholder='Option 2*' required />
                           :
-                          <input onChange={handleOnChange} type="text" name="option2" placeholder='Option 2' />
+                          <input onChange={handleOnChange} type="text" name="option2" placeholder='Option 2' defaultValue={modifyQuestionData.option[1]} />
                         }
-                        <input onChange={handleOnChange} type="text" name="option3" placeholder='Option 3' />
-                        <input onChange={handleOnChange} type="text" name="option4" placeholder='Option 4' />
+                        <input onChange={handleOnChange} type="text" name="option3" placeholder='Option 3' defaultValue={modifyQuestionData.option[2] && modifyQuestionData.option[2]} />
+                        <input onChange={handleOnChange} type="text" name="option4" placeholder='Option 4' defaultValue={modifyQuestionData.option[3] && modifyQuestionData.option[3]} />
                       </div>
                     </div>
                   </div>
@@ -92,15 +92,15 @@ const QuestionForm = (props) => {
                         {!props.isModify ?
                           <input onChange={handleOnChange} type="text" name="answer1" placeholder='Answer 1*' required />
                           :
-                          <input onChange={handleOnChange} type="text" name="answer1" placeholder='Answer 1' />
+                          <input onChange={handleOnChange} type="text" name="answer1" placeholder='Answer 1' defaultValue={modifyQuestionData.answer[0]} />
                         }
                         {!props.isModify ?
                           <input onChange={handleOnChange} type="text" name="answer2" placeholder={!multiSelect ? 'Disabled' : 'Answer 2*'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} required />
                           :
-                          <input onChange={handleOnChange} type="text" name="answer2" placeholder={!multiSelect ? 'Disabled' : 'Answer 2'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} />
+                          <input onChange={handleOnChange} type="text" name="answer2" placeholder={!multiSelect ? 'Disabled' : 'Answer 2'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} defaultValue={modifyQuestionData.answer[1] && modifyQuestionData.answer[1]} />
                         }
-                        <input onChange={handleOnChange} type="text" name="answer3" placeholder={!multiSelect ? 'Disabled' : 'Answer 3'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} />
-                        <input onChange={handleOnChange} type="text" name="answer4" placeholder={!multiSelect ? 'Disabled' : 'Answer 4'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} />
+                        <input onChange={handleOnChange} type="text" name="answer3" placeholder={!multiSelect ? 'Disabled' : 'Answer 3'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} defaultValue={modifyQuestionData.answer[2] && modifyQuestionData.answer[2]} />
+                        <input onChange={handleOnChange} type="text" name="answer4" placeholder={!multiSelect ? 'Disabled' : 'Answer 4'} className={`${!multiSelect && 'disable-btn'}`} disabled={!multiSelect} defaultValue={modifyQuestionData.answer[3] && modifyQuestionData.answer[3]} />
                       </div>
                     </div>
                   </div>
@@ -117,17 +117,17 @@ const QuestionForm = (props) => {
                       {!props.isModify ?
                         <input onChange={handleOnChange} type="number" name="carriedMark" required />
                         :
-                        <input onChange={handleOnChange} type="number" name="carriedMark" />
+                        <input onChange={handleOnChange} type="number" name="carriedMark" defaultValue={ modifyQuestionData.marks} />
                       }
                     </div>
 
                     <div className="option-btn-group my-4">
-                      <input onChange={handleMultiSelect} type="checkbox" name="multipleAnswer" className='mx-0' />
+                      <input onChange={handleMultiSelect} type="checkbox" name="multipleAnswer" id='multipleAnswer' className='mx-0' checked={multiSelect} />
                       <label htmlFor="multipleAnswer" className='mx-2 text-white'>Allow Multiple Answer</label>
                     </div>
 
                     <div className="option-btn-group mb-4 ml-auto justify-content-start">
-                      <input onChange={handleOnChange} type="file" name="image" accept='image/*' className='inp-type-file btn p-0 cursor-pointer btn-custom text-white py-2 px-3' />
+                      <button type="button" className="btn btn-custom btn-shadow" data-bs-toggle="modal" data-bs-target="#pastImgModal">Add Image</button>
                     </div>
                   </div>
 

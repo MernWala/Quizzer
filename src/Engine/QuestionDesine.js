@@ -63,7 +63,13 @@ const QuestionDesine = (props) => {
                                                     </div>
                                                     <span className="mx-3">{sample.question}</span>
                                                 </div>
-                                                {/* add img tag here in future release */}
+
+                                                {sample.picture &&
+                                                    <div className='py-3 d-flex justify-content-start w-100 mx-5'>
+                                                        <img src={sample.picture} alt="" />
+                                                    </div>
+                                                }
+
                                             </div>
                                             <div className="row col col-2 mark-container me-1">
                                                 <span className="mark-text fit-content ms-auto">
@@ -71,6 +77,7 @@ const QuestionDesine = (props) => {
                                                 </span>
                                             </div>
                                         </div>
+
                                         <div className="option-container-main ms-5 ps-4 mt-3">
                                             <div className="option-container-closer">
                                                 {sample.multiAns ?

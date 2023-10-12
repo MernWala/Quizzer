@@ -78,6 +78,7 @@ const EngineState = (props) => {
             })
         } catch (error) {
             console.log(error);
+            sendMess("info", "Somthing went wrong")
         }
     }
 
@@ -97,6 +98,7 @@ const EngineState = (props) => {
                     "answer": genrateAnswerArray(questionData),
                     "marks": questionData.carriedMark,
                     "multiAns": multiSelect,
+                    "picture": questionData.u_picture ? questionData.u_picture : ""
                 })
             }).then(async (data) => {
                 const json = await data.json();
@@ -104,7 +106,6 @@ const EngineState = (props) => {
                     sendMess('success', 'Question added successfully');
                     setTimeout(() => {
                         e.target.reset()
-                        console.log(e);
                         setmultiSelect(false);
                         setQuestionData({})
                     }, 1500);
@@ -118,7 +119,7 @@ const EngineState = (props) => {
             })
         } catch (error) {
             console.log(error);
-            sendMess('warning', 'Somthing went wrong please try again');
+            sendMess("info", "Somthing went wrong")
         }
     }
 
@@ -132,7 +133,7 @@ const EngineState = (props) => {
                 },
                 body: JSON.stringify({
                     "u_question": questionData.question ? questionData.question : "",
-                    "u_picture": questionData.image ? questionData.image : "",
+                    "u_picture": questionData.u_picture ? questionData.u_picture : "",
                     "u_option": genrateOptionArray(questionData) ? genrateOptionArray(questionData) : [],
                     "u_answer": genrateAnswerArray(questionData) ? genrateAnswerArray(questionData) : [],
                     "u_multiAns": multiSelect === true ? true : false,
@@ -140,7 +141,6 @@ const EngineState = (props) => {
                 })
             }).then(async (data) => {
                 const res = await data.json()
-                console.log(res);
                 if (res.update) {
                     sendMess('success', 'Question updated sucessfull');
                     setTimeout(() => {
@@ -150,7 +150,7 @@ const EngineState = (props) => {
             });
         } catch (error) {
             console.log(error);
-            sendMess('warning', 'Somthing went wrong with servers');
+            sendMess("info", "Somthing went wrong")
         }
     }
 
@@ -177,13 +177,18 @@ const EngineState = (props) => {
                 })
             } catch (error) {
                 console.log(error);
+                sendMess("info", "Somthing went wrong")
             }
         }
     }
 
     const [multiSelect, setmultiSelect] = useState(false);
-    const handleMultiSelect = (e) => {
-        setmultiSelect(e.target.checked);
+    const handleMultiSelect = (e, value) => {
+        if (value) {
+            setmultiSelect(true);
+        } else {
+            setmultiSelect(e.target.checked);
+        }
     }
 
     const [selectedQuestionSet, setSelectedQuestionSet] = useState()
@@ -203,6 +208,7 @@ const EngineState = (props) => {
             })
         } catch (error) {
             console.log(error);
+            sendMess("info", "Somthing went wrong")
         }
     }
 
@@ -237,21 +243,46 @@ const EngineState = (props) => {
         localStorage.setItem('quizer-modify-question-id', id);
     }
 
-    const countMarks = (qSet) => {
-        let arr = qSet.questions;
-        let marks = 0;
-        arr.forEach(element => {
-            marks += element.marks
-        });
-        return marks
+    const [insertedImg, setInsertedImg] = useState(null)
+    const [pastedImage, setPastedImage] = useState(null)
+    const handlePastImage = async (event) => {
+        setInsertedImg(null)
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        const temp = async (items) => {
+            for (let index in items) {
+                var item = items[index];
+                if (item.kind === 'file') {
+                    var blob = item.getAsFile();
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        setPastedImage(event.target.result)
+                    };
+                    reader.readAsDataURL(blob);
+                }
+            }
+        }
+
+        await temp(items).then(() => {
+            setQuestionData({ ...questionData, u_picture: pastedImage })
+        })
     }
+
+    const [modifyQuestionData, setModifyQuestionData] = useState({
+        answer: [],
+        marks: '',
+        multiAns: false,
+        option: [],
+        picture: "",
+        question: '',
+        _id: ''
+    })
 
     return (
         <EngineContext.Provider value={{
             choice, handleChoice, handleOnChange, addQuestionApiCall, fetchAllQuestionData, userAllQuestionSet,
-            handleMultiSelect, multiSelect, selectedQuestionSet, fetchSelectedQuestionSet,
+            handleMultiSelect, multiSelect, setmultiSelect, selectedQuestionSet, fetchSelectedQuestionSet,
             handleDelete, handleDeleteQuestion, currentQset, handleCurrentQset, handleClickedQuestionId,
-            modifyQuestionApiCall, countMarks
+            modifyQuestionApiCall, setQuestionData, questionData, handlePastImage, pastedImage, setPastedImage, modifyQuestionData, setModifyQuestionData, insertedImg, setInsertedImg
         }}>
             {props.children}
         </EngineContext.Provider>
