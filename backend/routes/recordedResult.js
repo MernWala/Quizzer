@@ -29,8 +29,11 @@ router.get('/result', fetchUser, async (req, res) => {
         // finding all question set
         await QuestionSchema.find(
             { user: instId, isPublish: true }
-        ).then((mainData) => {
-            mainData.forEach(async (ele) => {
+        ).then(async (mainData) => {
+
+            for (let i = 0; i < mainData.length; i++) {
+                let ele = mainData[i]
+
                 // setting up main information
                 obj.main.qCode = ele.quizeCode
                 obj.main.totalMarks = ele.totalMarks
@@ -40,10 +43,13 @@ router.get('/result', fetchUser, async (req, res) => {
                 // setting up student information
                 await TestRecordSchema.find(
                     { qCode }
-                ).then((record) => {
+                ).then(async (record) => {
                     obj.main.responseCollected = record.length
 
-                    record.forEach(async (stuRecord) => {
+                    for (let i = 0; i < record.length; i++) {
+
+                        let stuRecord = record[i]
+
                         // getting student id
                         let stuId = stuRecord.stuId
 
@@ -62,12 +68,12 @@ router.get('/result', fetchUser, async (req, res) => {
 
                         // push student object to obj.table -> student Data
                         obj.table.push(student)
-                    })
+                    }
                 })
 
                 // push obj -> final array
                 finalArr.push(obj)
-            })
+            }
         }).then(() => {
             setTimeout(() => {
                 return res.status(200).json(finalArr)

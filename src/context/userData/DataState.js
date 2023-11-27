@@ -4,7 +4,7 @@ import UtilityContext from '../utility/UtilityContext';
 
 const DataState = (props) => {
 
-    const [backendHost, setBackendHost] = useState('http://localhost:5000/quizer')
+    const [backendHost, setBackendHost] = useState('http://localhost:5001')
 
     const utilContext = useContext(UtilityContext);
     const { setLogin, sendMess } = utilContext;
@@ -48,8 +48,9 @@ const DataState = (props) => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('quizer-auth-token')
-        return async () => {
+        const token = localStorage.getItem('quizer-auth-token');
+
+        (async () => {
             if (token) {
                 await loadData_inst(token).then(async (e) => {
                     if (e !== null) {
@@ -75,7 +76,7 @@ const DataState = (props) => {
             } else {
                 return;
             }
-        }
+        })();
     }, [])
 
     const [qSetData, setQSetData] = useState()
@@ -134,7 +135,8 @@ const DataState = (props) => {
                 "auth-token": localStorage.getItem('quizer-auth-token')
             }
         }).then(async (data) => {
-            setMainImg(await data.blob())
+            let response = await data.blob()
+            setMainImg(response)
         })
     }
 

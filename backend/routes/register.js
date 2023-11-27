@@ -286,31 +286,34 @@ router.post('/account/update-profile/:accountType', fetchuser, async (req, res) 
             })
 
         } else if (accountType === "Student") {
-            await Student.findById({ _id }).then((data) => {
-                multer({
-                    storage: multer.diskStorage({
-                        destination: (req, file, cb) => {
-                            cb(null, 'backend/uploads'); // Save uploaded files to the 'uploads' folder
-                        },
-                        filename: (req, file, cb) => {
-                            cb(null, _id + "-Student." + file.originalname.split('.')[1]); // Rename files to avoid conflicts
-                        },
-                    }),
-                    limits: { fileSize: uploadProfileLimit }, // Limit file size to 1 MB (adjust as needed)
-                }).single('profile_image')(req, res, async (err) => {
-                    if (err) {
-                        if (err.code === 'LIMIT_FILE_SIZE') {
-                            return res.status(413).json({ error: `File size exceeds the limit (${Math.floor(uploadProfileLimit / 1000)} KB)` });
+            await Student.findById({ _id }).then(async (data) => {
+                await Student.findById({ _id }).then(async (data) => {
+                    multer({
+                        storage: multer.diskStorage({
+                            destination: (req, file, cb) => {
+                                cb(null, 'backend/uploads'); // Save uploaded files to the 'uploads' folder
+                            },
+                            filename: (req, file, cb) => {
+                                fileExtention = file.originalname.split('.')[1]
+                                cb(null, _id + "-Student." + fileExtention); // Rename files to avoid conflicts
+                            },
+                        }),
+                        limits: { fileSize: uploadProfileLimit }, // Limit file size to 1 MB (adjust as needed)
+                    }).single('profile_image')(req, res, async (err) => {
+                        if (err) {
+                            if (err.code === 'LIMIT_FILE_SIZE') {
+                                return res.status(413).json({ error: `File size exceeds the limit (${Math.floor(uploadProfileLimit / 1000)} KB)` });
+                            }
+                            // Handle other multer errors here
+                            console.log(err);
+                            return res.status(500).json({ error: 'Something went wrong' });
                         }
-                        // Handle other multer errors here
-                        return res.status(500).json({ error: 'Something went wrong' });
-                    }
-
-                    await Student.findByIdAndUpdate({ _id }, { $set: { picture: _id + "." + fileExtention } })
-
-                    // If there are no errors, the file has been uploaded successfully
-                    return res.status(200).json({ message: 'Image uploaded successfully' });
-                });
+    
+                        await Student.findByIdAndUpdate({ _id }, { $set: { picture: _id + "." + fileExtention } })
+                        // If there are no errors, the file has been uploaded successfully
+                        return res.status(200).json({ message: 'Image uploaded successfully' });
+                    });
+                })
             })
         }
 

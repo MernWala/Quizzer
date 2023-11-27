@@ -92,7 +92,6 @@ const Navbar = () => {
                         </Link>
 
                         <div className='mx-3 d-flex justify-content-center align-items-center'>
-                            {/* !localStorage.getItem('userProfileData') ? */}
                             {
                                 !isLogin ?
                                     <Link to="/app/access-account" className='btn btn-login-custom'>Login</Link>
